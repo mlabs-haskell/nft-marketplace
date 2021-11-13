@@ -15,7 +15,7 @@ This folder uses Atomic Design's principle to split the UI parts into "small" co
 
 ## Pages
 
-All pages should have their own folder named after the page name.
+All pages should have their own folder named after the page name and styling if any.
 
 ## Styles
 

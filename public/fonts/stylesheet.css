@@ -2,6 +2,15 @@
 
 @font-face {
     font-family: 'poppins';
+    src: local('poppins'),
+        url('poppins-bold.woff2') format('woff2'),
+         url('poppins-bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'poppins';
     src: url('poppins-black.woff2') format('woff2'),
          url('poppins-black.woff') format('woff');
     font-weight: normal;
@@ -12,15 +21,6 @@
     font-family: 'poppins';
     src: url('poppins-blackitalic.woff2') format('woff2'),
          url('poppins-blackitalic.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
-}
-@font-face {
-    font-family: 'poppins';
-    src: local('poppins'),
-        url('poppins-bold.woff2') format('woff2'),
-         url('poppins-bold.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
