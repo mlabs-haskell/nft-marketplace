@@ -1,71 +1,71 @@
-h3{
-    margin: 0;
+h3 {
+  margin: 0;
 }
 
-p{
-    margin: 0;
+p {
+  margin: 0;
 }
 
-h3 > span, p {
-    font-weight: 300;
+h3 > span,
+p {
+  font-weight: 300;
 }
-.container{
-    width: 235px;
-    border-radius: 30px;
-}
-
-.footer{
-    background-color: #f1f1f1;
-    /* width: 100%; */
-    margin-top: 0;
-    border-radius: 0 0 30px 30px;
-    padding: 20px;
+.container {
+  width: 235px;
+  border-radius: 30px;
 }
 
-.header{
-    display: flex;
-    justify-content: space-between;
-    /* width: 100%; */
-    height: 252px;
-    border-radius: 30px 30px 0 0;
-    background-color: #C4C4C4;
-    padding: 10px;
-    position: relative;
+.footer {
+  background-color: #f1f1f1;
+  /* width: 100%; */
+  margin-top: 0;
+  border-radius: 0 0 30px 30px;
+  padding: 20px;
 }
 
-.span-container{
-    display: flex;
-    margin-top: 20px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  /* width: 100%; */
+  height: 252px;
+  border-radius: 30px 30px 0 0;
+  background-color: #c4c4c4;
+  padding: 10px;
+  position: relative;
 }
 
-.span{
-    width: 20px;
-    height: 20px;
-    background-color: #ECECEC;
-    border-radius: 50%;
-    display: inline-block;
+.span-container {
+  display: flex;
+  margin-top: 20px;
 }
 
-.span:nth-child(2){
-    background-color: #adadad;
+.span {
+  width: 20px;
+  height: 20px;
+  background-color: #ececec;
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.bid{
-    display: flex;
-    justify-content: space-between;
-    
+.span:nth-child(2) {
+  background-color: #adadad;
 }
 
-.absolute{
-    position: absolute;
-    right: 0;
-    bottom: 20px;
-    background-color: #595959;
-    color: #fff;
-    padding: 5px 30px 5px 10px;
-    border-radius: 10px 0px 0px 10px;
+.bid {
+  display: flex;
+  justify-content: space-between;
 }
 
-.bid-value{
-    margin-right: 10px;
+.absolute {
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+  background-color: #595959;
+  color: #fff;
+  padding: 5px 30px 5px 10px;
+  border-radius: 10px 0px 0px 10px;
+}
+
+.bid-value {
+  margin-right: 10px;
 }

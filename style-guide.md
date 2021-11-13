@@ -9,6 +9,7 @@ This folder contains components that appear on all pages e.g Navigation Bar
 ### UI
 
 This folder uses Atomic Design's principle to split the UI parts into "small" components in order to have a better reusability.
+
 - atoms are the smallest components of your application e.g button, text
 - molecules are combinations of atoms bonded together
 - organisms are combinations of molecules
