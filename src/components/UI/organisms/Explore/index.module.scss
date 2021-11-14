@@ -8,15 +8,30 @@ h2{
     font-size: 30px;
 }
 
-.card-container{ 
+.contatiner{
+    padding: 50px 0;
+
+    .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-container{ 
     display: grid;
     grid-gap: 20px;
     grid-template-columns: repeat(5, 1fr);
     grid-auto-rows: minmax(235px, auto);
-    justify-items: center;
+    margin-bottom: 50px;
 
     @media screen and (min-width: 1024px) {
         grid-template-columns: repeat(4, 1fr);
         
+    }
+    }
+
+    .btn{
+        display: flex;
+        justify-content: center;
     }
 }
