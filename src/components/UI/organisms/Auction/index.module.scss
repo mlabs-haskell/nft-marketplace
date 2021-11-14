@@ -1,0 +1,11 @@
+@import '../../../../assets/scss/abstracts/functions';
+@import '../../../../assets/scss/abstracts/variables';
+
+h2{
+    font-size: 30px;
+}
+
+.auction-container{
+    display: flex;
+    overflow: scroll;
+}

@@ -1,0 +1,39 @@
+@import '../../../../assets/scss/abstracts/functions';
+@import '../../../../assets/scss/abstracts/variables';
+
+.button{
+    border-radius: 37px;
+    width: 161px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+
+.button--small{
+    width: 104px;
+    height: 52px;
+}
+
+.btn--large{
+    width: 235px;
+    height: 50px;
+}
+
+.button--primary{
+    background-color: $dark10;
+    color: #fff;
+    border-color: $dark10;
+}
+.button--secondary{
+    background-color: $light;
+    color: #000;
+    border-color: $light;
+}
+.button--tertiary{
+    background-color: $light2;
+    color: #000;
+    border-color: $light2;
+}
