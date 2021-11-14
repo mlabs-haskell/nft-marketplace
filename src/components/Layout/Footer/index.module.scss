@@ -1,0 +1,52 @@
+@import '../../../assets/scss/abstracts/functions';
+@import '../../../assets/scss/abstracts/variables';
+
+.container{
+    background-color: $dark1;
+    color: #fff;
+    font-size: pxToRem(14);
+    width: 100%;
+    position: absolute;
+    left: 0;
+
+    .footer{
+        width: 80%;
+        margin: 0 auto;
+        padding-top: 100px;
+
+        p{
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        ul{
+            list-style: none;
+            padding: 0;
+
+            li{
+                font-weight: 200;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    .footer-base{
+        display: flex;
+        width: 80%;
+        margin: 0 auto;
+        justify-content: space-between;
+        padding-top: 50px;
+        padding-bottom: 50px;
+
+        span{
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        .language{
+            border-radius: 50%;
+            border: 1px solid #fff;
+            padding: 2px 5px;
+        }
+
+    }
+}

@@ -1,0 +1,16 @@
+@import '../../../../assets/scss/abstracts/functions';
+@import '../../../../assets/scss/abstracts/variables';
+
+.container{
+    background-color: $light2;
+    border-radius: 30px;
+    max-height: 500px;
+    max-width: 500px;
+    width: 235px;
+    height: 235px;
+    padding: 20px;
+
+    .button--light{
+        background-color: $light;
+    }
+}

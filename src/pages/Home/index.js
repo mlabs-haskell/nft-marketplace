@@ -1,23 +1,12 @@
 import React from "react";
-import { Card } from "../../component/UI/atoms/Card";
+import Auction from '../../components/UI/organisms/Auction'
+import Explore from "../../components/UI/organisms/Explore";
 
 function Home() {
   return (
     <div>
-      <h2 style={{ marginLeft: "30px" }}>Live auctions</h2>
-      <div
-        style={{
-          display: "flex",
-          overflow: "scroll",
-          justifyContent: "space-around",
-        }}
-      >
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </div>
+      <Auction/>
+      <Explore/>
     </div>
   );
 }
