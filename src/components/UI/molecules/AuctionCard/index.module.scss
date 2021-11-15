@@ -3,9 +3,18 @@
 
 .container{
   margin-right: 20px;
-}
-h3 {
+  display: inline-block;
+
+  h4{
+    margin-top: 0;
+  }
+
+  h3 {
     margin: 0;
+    span{
+      display: inline-block;
+      margin-left: 10px;
+     }
   }
   
   p {
@@ -15,6 +24,7 @@ h3 {
   h3 > span,
   p {
     font-weight: 300;
+    color: $dark10;
   }
   
   .footer {
@@ -22,12 +32,14 @@ h3 {
     margin-top: 0;
     border-radius: 0 0 30px 30px;
     height: 50px;
+    width: 232px;
   }
   
   .header {
     border-radius: 30px 30px 0 0;
     background-color: $light2;
     position: relative;
+    width: 232px;
 
     .header-text{
     display: flex;
@@ -37,7 +49,7 @@ h3 {
   
   .span-container {
     display: flex;
-    margin-top: 20px;
+    margin-top: 0px;
   }
   
   .span {
@@ -66,9 +78,14 @@ h3 {
     color: #fff;
     padding: 5px 30px 5px 10px;
     border-radius: 10px 0px 0px 10px;
+
+    p{
+      color: #fff;
+    }
   }
   
   .bid-value {
     margin-right: 10px;
   }
   
+}

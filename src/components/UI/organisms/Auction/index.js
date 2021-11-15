@@ -1,13 +1,14 @@
 import React from 'react';
 import AuctionCard from '../../molecules/AuctionCard';
+import Slider from '../../molecules/Slider';
 import styles from './index.module.scss';
 
 function Auction() {
   return (
     <div>
-      <h2>Live auctions</h2>
-      <div className={styles["auction-container"]}>
-        <AuctionCard
+      <h2 className={[styles.header]}>Live auctions</h2>
+      <Slider show={4}>
+      <AuctionCard
           bid="Bid 5,000 DAI"
           likes="167"
           amount="18 ETH"
@@ -55,7 +56,7 @@ function Auction() {
           quantity="1/1"
           time="22:14"
         />
-      </div>
+      </Slider>
     </div>
   );
 }
