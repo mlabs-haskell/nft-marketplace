@@ -13,9 +13,9 @@ export default {
       values: [{ name: 'bf-grey', value: '#F7F7F7' }],
     },
   },
-}
+} as ComponentMeta<typeof Box>;
 
-const Template = (args) => <Box {...args} />;
+const Template: ComponentStory<typeof Box> = (args) => <Box {...args} />;
 
 export const Default = Template.bind({});
 

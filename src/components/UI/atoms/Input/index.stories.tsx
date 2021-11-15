@@ -6,11 +6,11 @@ export default {
   title: 'Atoms/Input',
   component: Input,
   argTypes: {},
-}
+} as ComponentMeta<typeof Input>;
 
-const Template = (args) => <Input {...args} />;
+const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />;
 
 export const Normal = Template.bind({});
 Normal.args = {
-  label: 'text',
+  placeholder: 'text',
 };

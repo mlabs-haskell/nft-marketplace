@@ -3,7 +3,16 @@ import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 import heart from '../../../../assets/svg/heart-icon.svg';
 
-const AuctionCard = ({ title, amount, quantity, bid, likes, time }) => {
+interface Props {
+  title: string,
+  amount: string,
+  quantity: string,
+  bid: string,
+  likes: string,
+  time: string,
+}
+
+const AuctionCard = ({ title, amount, quantity, bid, likes, time }: Props) => {
   return (
     <div className={styles.container}>
       <Box boxClass={styles.header}>

@@ -2,7 +2,17 @@ import React from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames';
 
-const Button = ({ label, size, disabled, color, btnClass, onClick, style, ...props }) => {
+interface ButtonProps {
+  label: string,
+  size?: string,
+  disabled?: string,
+  color?: string,
+  btnClass?: string,
+  onClick?: () => void,
+  style?: string
+}
+
+const Button = ({ label, size, disabled, color, btnClass, onClick, style } : ButtonProps) => {
   let sizeClass = '';
   let disabledClass = '';
   let colorClass = '';
@@ -22,7 +32,7 @@ const Button = ({ label, size, disabled, color, btnClass, onClick, style, ...pro
     colorClass = styles[`button--${color}`];
   }
 
-  return <button className={classNames([styles.button, sizeClass, colorClass, disabledClass, btnClass])} onClick={onClick} style={style} {...props}>{label}</button>;
+  return <button className={classNames([styles.button, sizeClass, colorClass, disabledClass, btnClass])} onClick={onClick}>{label}</button>;
 };
 
 export default Button;

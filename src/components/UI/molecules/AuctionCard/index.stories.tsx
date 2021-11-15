@@ -1,12 +1,13 @@
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 import AuctionCard from '.';
 
 export default {
   title: 'Atoms/AuctionCard',
   component: AuctionCard,
   argTypes: {},
-}
+} as ComponentMeta<typeof AuctionCard>;
 
-const Template = (args) => <AuctionCard {...args} />;
+const Template: ComponentStory<typeof AuctionCard> = (args) => <AuctionCard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

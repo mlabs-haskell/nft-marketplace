@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 
-const Slider = ({ children, show }) => {
+interface SliderProps {
+  children: any,
+}
+
+const Slider = ({ children }: SliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [length, setLength] = useState(children.length);
 
