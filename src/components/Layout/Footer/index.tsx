@@ -8,7 +8,7 @@ const Footer = () => {
       <div className={`${styles.footer} row`}>
         <div className='col-lg-6'>
           <p>Get the latest Rarible updates</p>
-          <ButtonInput/>
+          <ButtonInput placeholder="Join our Newsletter"/>
         </div>
         <div className='col-lg-4'>
           <p>Rarible</p>

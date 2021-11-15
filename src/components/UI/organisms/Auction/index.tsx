@@ -6,8 +6,8 @@ import styles from './index.module.scss';
 function Auction() {
   return (
     <div>
-      <h2 className={[styles.header]}>Live auctions</h2>
-      <Slider show={4}>
+      <h2 className={styles.header}>Live auctions</h2>
+      <Slider>
       <AuctionCard
           bid="Bid 5,000 DAI"
           likes="167"

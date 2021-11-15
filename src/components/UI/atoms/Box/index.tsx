@@ -2,7 +2,13 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './index.module.scss'
 
-const Box = ({children, boxClass, color}) => {
+interface BoxProps {
+  boxClass?: string,
+  color?: string,
+  children?: any
+}
+
+const Box = ({children, boxClass, color}:BoxProps) => {
     let colorClass = '';
 
   // set size class
