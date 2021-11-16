@@ -1,6 +1,6 @@
-import Auction from '../../components/UI/organisms/Auction'
-import Explore from "../../components/UI/organisms/Explore";
-import Header from "../../components/UI/organisms/Header";
+import Auction from '../../components/UI/organisms/Home/Auction'
+import Explore from "../../components/UI/organisms/Home/Explore";
+import Header from "../../components/UI/organisms/Home/Header";
 
 function Home() {
   return (

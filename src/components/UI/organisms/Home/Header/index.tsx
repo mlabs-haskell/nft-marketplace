@@ -1,6 +1,6 @@
 import React from 'react';
-import CaptionCard from '../../molecules/CaptionCard';
-import Slider from '../../molecules/Slider';
+import CaptionCard from '../../../molecules/CaptionCard';
+import Slider from '../../../molecules/Slider';
 import styles from './index.module.scss';
 
 const Header = () => {
