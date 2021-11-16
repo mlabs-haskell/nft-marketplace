@@ -8,24 +8,40 @@
     justify-content: space-between;
     align-items: center;
 
-    img{
-        width: 30px;
+    // img{
+    //     width: 30px;
+    // }
+    .logo{
+        display: flex;
+         .logo-icon{
+             margin-right: 100px;
+         }
     }
 
     .nav-links{
-        width: 50%;
+        width: 25%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         ul{
             display: flex;
             list-style: none;
             align-items: center;
-            width: 85%;
+            width: 50%;
             justify-content: space-between;
             font-size: pxToRem(14);
             
-            li{
+            .nav{
                 cursor: pointer;
+                color: $light2;
+                text-decoration: none;
+            }
+
+            .active-nav{
+                background-image: $gradientBlue;
+                text-decoration: none;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
             }
     
             .signin-btn{

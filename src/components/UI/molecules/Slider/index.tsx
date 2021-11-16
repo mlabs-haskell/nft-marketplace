@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
+import { useEffect, useState } from 'react';
+import right from '../../../../assets/svg/arrow-right.svg'
 import styles from './index.module.scss';
 
 interface SliderProps {
   children: any,
+  sliderClass?: string,
 }
 
-const Slider = ({ children }: SliderProps) => {
+const Slider = ({ children, sliderClass }: SliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [length, setLength] = useState(children.length);
 
@@ -27,7 +30,7 @@ const Slider = ({ children }: SliderProps) => {
   }, [children]);
 
   return (
-    <div className={styles['slider-container']}>
+    <div className={classNames([styles['slider-container'], sliderClass])}>
       <div className={styles['slider-wrapper']}>
         {currentIndex > 0 && (
           <button onClick={prev} className={styles["left-arrow"]}>
@@ -36,7 +39,7 @@ const Slider = ({ children }: SliderProps) => {
         )}
         <div className={styles['slider-content-wrapper']}>
           <div
-            className={styles['slider-content']}
+            className={classNames([styles['slider-content']])}
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {children}
@@ -44,7 +47,7 @@ const Slider = ({ children }: SliderProps) => {
         </div>
         {currentIndex < length - 1 && (
           <button onClick={next} className={styles["right-arrow"]}>
-            &gt;
+            <img src={right} alt="arrow-right" />
           </button>
         )}
       </div>

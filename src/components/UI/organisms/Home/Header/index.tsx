@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 const Header = () => {
   return (
     <div className={styles.contatiner}>
-      <Slider >
+      <Slider sliderClass={styles.slides}>
         <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
         <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
         <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />

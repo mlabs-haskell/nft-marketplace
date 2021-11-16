@@ -1,23 +1,18 @@
-import React, { Children } from 'react';
-import Box from '../../atoms/Box';
+import classNames from 'classnames';
 import styles from './index.module.scss';
 
 interface Props {
-    tabs: string[];
-    children: any;
+    title: string,
+    active?: boolean,
+    onClick?: (e: any) => void;
 }
 
-const Tab = ({tabs, children}:Props) => {
+const Tab = ({title, active, onClick}:Props) => {
+
     return (
-        <Box boxClass={styles.container}>
-            <ul className={styles["tab-container"]}>
-                {tabs.map((tab, index) => (
-                    <li key={index}>{tab}</li>
-                ))}
-                <li className={styles["active-tab"]}>hello</li>
-            </ul>
-            {children}
-        </Box>
+        <p onClick={onClick} className={classNames([`${active ? styles["active-tab"] : styles.inActive}`])}>
+            {title}
+        </p>
     )
 }
 

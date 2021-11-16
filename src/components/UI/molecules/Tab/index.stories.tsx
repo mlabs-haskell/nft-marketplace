@@ -11,5 +11,5 @@ const Template: ComponentStory <typeof Tab> = (args) => <Tab {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  tabs: ['owners', 'Bids', 'History']
+  title: "tag"
 };
