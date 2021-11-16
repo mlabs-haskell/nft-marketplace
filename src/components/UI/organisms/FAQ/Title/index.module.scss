@@ -1,0 +1,18 @@
+@import '/src/assets/scss/abstracts/functions';
+@import '/src/assets/scss/abstracts/variables';
+
+.titleWrapper {
+    margin-bottom: 40px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: pxToRem(24);
+    margin: 20px 0 5px;
+}
+
+.subtitle {
+    font-weight: 400;
+    font-size: pxToRem(14);
+    color: $dark2;
+}
