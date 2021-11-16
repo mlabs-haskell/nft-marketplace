@@ -1,6 +1,6 @@
 import React from 'react';
-import AuctionCard from '../../molecules/AuctionCard';
-import Slider from '../../molecules/Slider';
+import AuctionCard from '../../../molecules/AuctionCard';
+import Slider from '../../../molecules/Slider';
 import styles from './index.module.scss';
 
 function Auction() {

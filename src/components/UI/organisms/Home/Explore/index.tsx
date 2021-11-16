@@ -1,7 +1,7 @@
 import React from 'react';
-import CaptionCard from '../../molecules/CaptionCard';
+import CaptionCard from '../../../molecules/CaptionCard';
 import styles from './index.module.scss';
-import Button from '../../atoms/Button';
+import Button from '../../../atoms/Button';
 
 const Explore = () => {
   return (
