@@ -1,7 +1,8 @@
 import React from 'react';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
-import heart from '../../../../assets/svg/heart-icon.svg';
+import heart from '../../../../assets/svg/like-heart.svg';
+import image1 from '../../../../assets/svg/image1.svg';
 
 interface Props {
   imgUrl: string;
@@ -11,12 +12,15 @@ interface Props {
 function ItemPhotoCard({ imgUrl, likeCount }: Props) {
   return (
     <div className={styles.container}>
-      <Box boxClass={styles.photobox}>
-        <div className={styles.heart}>
-          <img src={heart} alt="heart" className={styles.photo} />
-          <p className={styles['like-count']}>{likeCount}</p>
+      <div className={styles.photobox}>
+        <img src={image1} alt="nft-image" />
+        <div className={styles.heartAbsolute}>
+          <div className={styles.heartContainer}>
+            <img src={heart} alt="heart" className={styles.heart} />
+            <p className={styles['like-count']}>{likeCount}</p>
+          </div>
         </div>
-      </Box>
+      </div>
     </div>
   );
 }

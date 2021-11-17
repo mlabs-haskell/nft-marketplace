@@ -1,20 +1,26 @@
 :root {
-    --screen-height: 100px;
-  }
-  
-  // colors
-  $dark: #494949;
-  $dark10: #8a8a8a;
-  $dark60: #595959;
-  $dark1: #383838;
-  $dark2: #929292;
-  $light: #F3F2F2;
-  $light2: #c4c4c4;
-  $gradientBlue: linear-gradient(#4D6AD0, #75ACFF);
-  $lightTextColor: #c1c1c1;
-  $auctionBorder: linear-gradient(#FF7C02, #FFF509, #FF2CD0, #FF7C02);
-  $red: #DE0000;
-  $primary: #5D97EF;
-  $light3: #EBEBEB;
-  $darkBlue: #2B4581;
-  $lightBlue: #3983F2;
+  --screen-height: 100px;
+}
+
+// colors
+/// dark
+$dark: #494949;
+$dark10: #8a8a8a;
+$dark60: #595959;
+$dark1: #383838;
+$dark2: #929292;
+$dark3: #333333;
+
+/// light
+$light: #f3f2f2;
+$light2: #c4c4c4;
+$light3: #ebebeb;
+$light4: #c2c2c2;
+
+$gradientBlue: linear-gradient(#4d6ad0, #75acff);
+$lightTextColor: #c1c1c1;
+$auctionBorder: linear-gradient(#ff7c02, #fff509, #ff2cd0, #ff7c02);
+$red: #de0000;
+$primary: #5d97ef;
+$darkBlue: #2b4581;
+$lightBlue: #3983f2;
