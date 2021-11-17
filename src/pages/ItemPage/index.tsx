@@ -11,7 +11,7 @@ const ItemPage = () => {
   return (
     <div>
     <div style={{ display: 'flex' }}>
-      <ItemPhotoCard imgUrl="" likeCount="167" />
+      <ItemPhotoCard imgUrl="" likeCount="167"/>
       <ItemDetails
         title="SPIRIT SEED - SYNTHETIC"
         subTitle="Not for sale.100 editions"
