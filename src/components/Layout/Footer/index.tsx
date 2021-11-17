@@ -1,52 +1,51 @@
-import React from 'react';
 import ButtonInput from '../../UI/molecules/ButtonInput';
 import styles from './index.module.scss';
+import instagram from '../../../assets/svg/instagram.svg';
+import twitter from '../../../assets/svg/twitter.svg';
+import messenger from '../../../assets/svg/messanger.svg';
+import meta from '../../../assets/svg/meta.svg';
+import youtube from '../../../assets/svg/youtube.svg';
 
 const Footer = () => {
   return (
     <div className={styles.container}>
       <div className={`${styles.footer} row`}>
         <div className='col-lg-6'>
-          <p>Get the latest Rarible updates</p>
-          <ButtonInput placeholder="Join our Newsletter"/>
-        </div>
-        <div className='col-lg-4'>
-          <p>Rarible</p>
-          <ul>
-            <li>Explore</li>
-            <li>Help center</li>
-            <li>Blog</li>
-            <li>Jobs21</li>
-            <li>Become a partner</li>
-            <li>Bug bounty</li>
+          <p>Get the latest Seabug updates</p>
+          <ButtonInput placeholder="Your Email.:" btnClass={styles.button}/>
+          <ul className={styles["social-links"]}>
+            <li><img src={instagram} alt="instagram" /></li>
+            <li><img src={meta} alt="meta" /></li>
+            <li><img src={messenger} alt="messenger" /></li>
+            <li><img src={twitter} alt="twitter" /></li>
+            <li><img src={youtube} alt="youtube" /></li>
           </ul>
         </div>
-        <div className='col-lg-2'>
-          <p>Community</p>
+        <div className='col-lg-3'>
+          <p>Seabug</p>
           <ul>
-            <li>RARI Token</li>
-            <li>Discussion</li>
-            <li>Voting</li>
-            <li>Suggest feature</li>
-            <li>Rarible protocol</li>
-            <li>Subscribe</li>
+            <li>FAQ - 1</li>
+            <li>FAQ - 1</li>
+            <li>FAQ - 1</li>
+            <li>FAQ - 1</li>
+            <li>FAQ - 1</li>
+            <li>FAQ - 1</li>
           </ul>
+        </div>
+        <div className='col-lg-3'>
+          <p>Language</p>
+          
         </div>
       </div>
       <div className={`${styles["footer-base"]} row`}>
-        <div className='col-lg-6'>
+        <div className='col-lg-9'>
           <p>
             Terms
             <span>Privacy policy</span>
           </p>
         </div>
-        <div className='col-lg-4'>
+        <div className='col-lg-3'>
           <p>© Rarible, Inc. All rights reserved.</p>
-        </div>
-        <div className='col-lg-2'>
-          <p>
-            Language <span className={styles.language}>En</span>
-          </p>
         </div>
       </div>
     </div>

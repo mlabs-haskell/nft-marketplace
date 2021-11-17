@@ -6,7 +6,6 @@
   display: block;
   max-width: 232px;
   background-color: #fff;
-  position: relative;
   border-radius: 30px;
   box-shadow: 0px 4px 33px rgba(0, 0, 0, 0.06);
 
@@ -20,8 +19,31 @@
     color: $dark10;
   }
 
-  & > img{
-    width: 232px;
+  .image{
+    width: 209px;
+    margin: 0 auto;
+    position: relative;
+
+    img{
+      width: 100%;
+      border-radius: 11px;
+    }
+    .absolute {
+      position: absolute;
+      right: 0;
+      top: -10px;
+      background-color: #fff;
+      color: #fff;
+      padding: 5px 15px 5px;
+      border: 1px solid $red;
+      border-radius: 7px;
+      z-index: 99;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.16);
+  
+      p{
+        color: #000;
+      }
+    }
   }
   
   .footer {
@@ -79,29 +101,6 @@
   .bid {
     display: flex;
     justify-content: space-between;
-  }
-  
-  .absolute {
-    position: absolute;
-    right: 0;
-    bottom: 65px;
-    background-color: rgba($color: #fff, $alpha: 0.7);
-    color: #fff;
-    padding: 5px 30px 5px 15px;
-    border: 1px solid $red;
-    border-right: none;
-    border-radius: 20px 0px 0px 20px;
-    z-index: 99;
-
-    p{
-      color: #000;
-
-      span{
-        display: inline-block;
-        margin-left: 5px;
-        color: $primary;
-      }
-    }
   }
   
   .bid-value {

@@ -28,12 +28,14 @@ const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image
             <span className={styles.span}></span>
             <span className={styles.span}><img src={more} alt="more" /></span>
           </div>
-          <div className={styles.absolute}>
-            <p>{time} <span>Left</span></p>
-          </div>
         </div>
       </div>
-      <img src={image} alt="nft-item" />
+      <div className={styles.image}>
+        <img src={image} alt="nft-item" />
+        <div className={styles.absolute}>
+          <p>{time}</p>
+        </div>
+      </div>
       <div className={styles.footer}>
         <div className={styles.amount}>
           <h3>
