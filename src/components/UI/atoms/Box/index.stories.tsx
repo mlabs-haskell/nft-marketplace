@@ -22,4 +22,5 @@ export const Default = Template.bind({});
 export const WithChildren = Template.bind({});
 WithChildren.args = {
   children: <Button label="Button" />,
+  color: 'light'
 };
