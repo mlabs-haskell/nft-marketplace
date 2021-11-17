@@ -1,0 +1,25 @@
+@import '../../../../assets/scss/abstracts/functions';
+@import '../../../../assets/scss/abstracts/variables';
+
+.container {
+  margin-top: 48px;
+  margin-left: 105px;
+  margin-right: 92px;
+  display: inline-block;
+
+  h3 {
+    margin: 0;
+  }
+  h4 {
+    margin: 0;
+    color: $dark2;
+  }
+
+  h6 {
+    color: $dark2;
+  }
+
+  .tab-bar {
+    width: 100%;
+  }
+}
