@@ -3,20 +3,13 @@ import classNames from 'classnames';
 import styles from './index.module.scss'
 
 interface BoxProps {
-  boxClass?: string,
-  color?: string,
+  boxClass?: string | string[],
   children?: any
 }
 
-const Box = ({children, boxClass, color}:BoxProps) => {
-    let colorClass = '';
-
-  // set size class
-  if (color !== 'dark') {
-    colorClass = styles[`button--${color}`];
-  }
+const Box = ({ children, boxClass }:BoxProps) => {
     return (
-        <div className={classNames([styles.container, boxClass, colorClass])}>
+        <div className={classNames([styles.container, boxClass])}>
             {children}
         </div>
     )
