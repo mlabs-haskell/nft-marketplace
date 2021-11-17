@@ -8,9 +8,9 @@ interface Props {
   title: string,
   amount: string,
   quantity: string,
-  bid: string,
+  bid?: string,
   likes: string,
-  time: string,
+  time?: string,
   caption?: string,
   image: string,
 }
