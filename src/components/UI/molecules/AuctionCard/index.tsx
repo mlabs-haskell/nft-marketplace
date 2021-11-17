@@ -33,7 +33,7 @@ const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image
           </div>
         </div>
       </div>
-      <img src={image} />
+      <img src={image} alt="nft-item" />
       <div className={styles.footer}>
         <div className={styles.amount}>
           <h3>
