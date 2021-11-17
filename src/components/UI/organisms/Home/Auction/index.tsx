@@ -1,9 +1,9 @@
 import React from 'react';
-import AuctionCard from '../../../molecules/AuctionCard';
 import Slider from '../../../molecules/Slider';
 import image1 from '../../../../../assets/svg/image1.svg';
 import image2 from '../../../../../assets/svg/image2.svg';
 import styles from './index.module.scss';
+import AuctionCard from '../../../molecules/AuctionCard';
 
 function Auction() {
   return (
