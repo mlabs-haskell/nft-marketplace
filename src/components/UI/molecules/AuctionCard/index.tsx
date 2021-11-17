@@ -3,14 +3,15 @@ import styles from './index.module.scss';
 import heart from '../../../../assets/svg/heart-icon.svg';
 import filled from '../../../../assets/svg/filled-heart.svg';
 import more from '../../../../assets/svg/more-icon.svg';
+import Box from '../../atoms/Box';
 
 interface Props {
   title: string,
   amount: string,
   quantity: string,
-  bid: string,
+  bid?: string,
   likes: string,
-  time: string,
+  time?: string,
   caption?: string,
   image: string,
 }
