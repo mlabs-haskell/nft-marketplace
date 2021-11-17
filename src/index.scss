@@ -1,15 +1,20 @@
+@import './assets/scss/abstracts/functions';
+@import './assets/scss/abstracts/variables';
+
 body{
     width: 90%;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: #F8FBFF;;
 }
 
 h2{
     font-weight: 400;
     font-size: 30px;
+    color: $primary;
 }
 h3{
     font-size: 16px;
+    color: $primary;
 }
 p{
     font-weight: 400;

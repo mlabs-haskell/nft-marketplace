@@ -1,9 +1,15 @@
-import React from 'react';
+// import {useState} from 'react';
 import ItemDetails from '../../components/UI/molecules/ItemDetails';
 import ItemPhotoCard from '../../components/UI/molecules/ItemPhotoCard';
+// import Box from '../../components/UI/atoms/Box';
+// import Tab from '../../components/UI/molecules/Tab';
+// import styles from './index.module.scss';
 
 const ItemPage = () => {
+  // const [active, setActive] = useState('owners');
+  // const tabs = ['owners', 'Bids', 'History'];
   return (
+    <div>
     <div style={{ display: 'flex' }}>
       <ItemPhotoCard imgUrl="" likeCount="167" />
       <ItemDetails
@@ -17,6 +23,23 @@ const ItemPage = () => {
         bidsData=""
         historyData=""
       />
+    </div>
+      {/* <Box boxClass={styles.container}>
+            <div className={styles["tab-container"]}>
+            {tabs.map((tab, index) => (
+                <Tab
+                    key={index}
+                    title={tab}
+                    onClick={() => setActive(tab)}
+                    active= {active === tab}
+                />
+            ))}
+            </div>
+            <div className={styles.content}>
+            {active === 'owners' && <p>hi</p>}
+            {active === 'Bids' && <p>bye</p>}
+            </div>
+        </Box> */}
     </div>
   );
 };

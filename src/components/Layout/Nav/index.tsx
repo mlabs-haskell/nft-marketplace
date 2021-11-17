@@ -1,27 +1,28 @@
-import React from 'react';
-import person from '../../../assets/svg/navIcons/person-icon.svg';
-import wallet from '../../../assets/svg/navIcons/wallet-icon.svg';
-import Button from '../../UI/atoms/Button';
+import { NavLink } from 'react-router-dom';
+import logo from '../../../assets/svg/navIcons/logo.svg';
+import wallet from '../../../assets/svg/navIcons/wallet.svg';
+import SearchInput from '../../UI/molecules/SearchInput';
 import styles from './index.module.scss';
 
 const NavBar = () => {
   return (
     <div className={styles.container}>
-      <div>
-        <h4>NFTLabs</h4>
+      <div className={styles.logo}>
+        <img className={styles["logo-icon"]} src={logo} alt="ntt" />
+        <SearchInput placeholder="search"/>
       </div>
       <div className={styles["nav-links"]}>
         <ul>
-          <li>Explore</li>
-          <li>Create</li>
-          <li>Help</li>
-          <li><Button label="Sign In" color="primary"/></li>
+        <li> <NavLink exact className={styles.nav} to="/" activeClassName={`${styles['active-nav']} active-nav`}>Explore</NavLink></li>
+        {/* <li><NavLink className={styles.nav} to="/explore" activeClassName={`${styles['active-nav']} active-nav`}>Create</NavLink></li> */}
+        <li><NavLink className={styles.nav} to="/help" activeClassName={`${styles['active-nav']} active-nav`}>Help</NavLink></li>
+        {/* <li><Button label="Sign In" color="primary"/></li> */}
         </ul>
         <ul className={styles.icon}>
-          <li>
+          {/* <li>
             <img src={person} alt="profile" />
-          </li>
-          <li>
+          </li> */}
+          <li className='mt-3'>
             <img src={wallet} alt="wallet" />
           </li>
         </ul>

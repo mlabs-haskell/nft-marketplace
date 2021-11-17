@@ -1,7 +1,8 @@
-import React from 'react';
-import Box from '../../atoms/Box';
+import {useState} from 'react';
 import styles from './index.module.scss';
 import heart from '../../../../assets/svg/heart-icon.svg';
+import filled from '../../../../assets/svg/filled-heart.svg';
+import more from '../../../../assets/svg/more-icon.svg';
 
 interface Props {
   title: string,
@@ -10,38 +11,44 @@ interface Props {
   bid: string,
   likes: string,
   time: string,
+  caption?: string,
+  image: string,
 }
 
-const AuctionCard = ({ title, amount, quantity, bid, likes, time }: Props) => {
+const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image }: Props) => {
+  const [liked, setLiked] = useState(false);
+
   return (
     <div className={styles.container}>
-      <Box boxClass={styles.header}>
+      <div className={styles.header}>
         <div className={styles['header-text']}>
-          <h4>{title}</h4>
+          <p>{title}</p>
+          <p>{caption}</p>
           <div className={styles['span-container']}>
             <span className={styles.span}></span>
-            <span className={styles.span}></span>
-            <span className={styles.span}></span>
+            <span className={styles.span}><img src={more} alt="more" /></span>
           </div>
           <div className={styles.absolute}>
-            <p>{time} Left</p>
+            <p>{time} <span>Left</span></p>
           </div>
         </div>
-      </Box>
-      <Box color="light" boxClass={styles.footer}>
-        <div>
+      </div>
+      <img src={image} alt="nft-item" />
+      <div className={styles.footer}>
+        <div className={styles.amount}>
           <h3>
-            {amount} <span>{quantity}</span>
+            {amount}
           </h3>
-          <div className={styles.bid}>
-            <p>{bid}</p>
-            <div style={{ display: 'flex' }}>
-              <p className={styles['bid-value']}>{likes}</p>
-              <img src={heart} alt="heart"></img>
-            </div>
+          <p>{quantity}</p>
+        </div>
+        <div className={styles.bid}>
+          <p>{bid}</p>
+          <div style={{ display: 'flex' }}>
+            <p className={styles['bid-value']}>{likes}</p>
+            <img src={liked ? filled : heart} alt="heart" onClick={() => setLiked(!liked)}></img>
           </div>
         </div>
-      </Box>
+      </div>
     </div>
   );
 };

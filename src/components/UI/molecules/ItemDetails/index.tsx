@@ -15,7 +15,7 @@ interface Props {
   historyData: string;
 }
 
-function ItemDetails({
+const ItemDetails = ({
   title,
   subTitle,
   tessellationClass,
@@ -25,10 +25,10 @@ function ItemDetails({
   ownersData,
   bidsData,
   historyData,
-}: Props) {
+}: Props) => {
   return (
     <div className={styles.container}>
-      <h3>{title}</h3>
+      <h4 className={styles.title}>{title}</h4>
       <h4>{subTitle}</h4>
 
       <div style={{ display: 'flex' }}>
