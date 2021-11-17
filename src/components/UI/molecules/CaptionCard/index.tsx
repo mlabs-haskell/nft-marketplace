@@ -1,5 +1,6 @@
 import React from 'react';
-import Box from '../../atoms/Box'
+import Box from '../../atoms/Box';
+import styles from './index.module.scss';
 
 interface Props {
     title: string,
@@ -10,7 +11,7 @@ interface Props {
 function CaptionCard({title, name, className}: Props) {
     return (
         <Box boxClass= {className}>
-            <h3>{title}</h3>
+            <h4 className={styles.title}>{title}</h4>
             <p> <span>{name}</span></p>
         </Box>
     )

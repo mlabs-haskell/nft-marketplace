@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react'
 import Button from '../../atoms/Button';
 import Input from '../../atoms/Input';
@@ -5,13 +6,14 @@ import styles from './index.module.scss'
 
 interface Props {
     placeholder: string,
+    btnClass?: string,
 }
 
-function ButtonInput({placeholder}: Props) {
+function ButtonInput({placeholder, btnClass}: Props) {
     return (
-        <div className={styles.container}>
+        <div className={classNames([styles.container], btnClass)}>
             <Input placeholder={placeholder} textClass={styles["input-box"]}/>
-            <Button label="send" size="small" color="primary"/>
+            <Button label="send" size="small" color="tertiary" btnClass={btnClass}/>
         </div>
     )
 }
