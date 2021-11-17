@@ -18,7 +18,6 @@
     grid-gap: 20px;
     grid-template-columns: repeat(5, 1fr);
     grid-auto-rows: minmax(235px, auto);
-    margin-bottom: 50px;
 
     @media screen and (min-width: 1024px) {
         grid-template-columns: repeat(4, 1fr);

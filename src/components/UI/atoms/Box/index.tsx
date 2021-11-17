@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './index.module.scss'
 
 interface BoxProps {
-  boxClass?: string,
+  boxClass?: string | string[],
   children?: any
 }
 
