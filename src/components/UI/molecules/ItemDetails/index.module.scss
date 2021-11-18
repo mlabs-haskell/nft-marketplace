@@ -8,19 +8,62 @@
   display: inline-block;
 
   .title {
-    margin: 0;
-    color: #000;
+    font-weight: 700;
+    color: $primary;
+    font-size: pxToRem(24);
   }
-  h4 {
+
+  .subtitle {
+    font-weight: 500;
+    font-size: pxToRem(14);
+    font-style: normal;
+    color: $light4;
+    margin-right: 6px;
+  }
+
+  .creator-name {
+    font-weight: 500;
+    font-size: pxToRem(14);
+    color: black;
+    margin-left: 18px;
+  }
+
+  .value {
+    font-weight: 600;
+    font-size: pxToRem(14);
+    color: $dark3;
+  }
+
+  .value1 {
+    font-weight: 700;
+    font-size: pxToRem(14);
+    color: $primary;
+  }
+
+  .description {
+    font-weight: 400;
+    font-size: pxToRem(14);
+    color: black;
+  }
+
+  .userphoto {
+    width: 47;
+    height: 47;
+  }
+
+  h3,
+  h4,
+  h6 {
     margin: 0;
     color: $dark2;
   }
 
-  h6 {
-    color: $dark2;
+  div {
+    display: flex;
   }
 
   .tab-bar {
     width: 100%;
+    margin-top: 36px;
   }
 }

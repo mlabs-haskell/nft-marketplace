@@ -4,6 +4,7 @@ import heart from '../../../../assets/svg/heart-icon.svg';
 import filled from '../../../../assets/svg/filled-heart.svg';
 import more from '../../../../assets/svg/more-icon.svg';
 import Box from '../../atoms/Box';
+import { Link } from 'react-router-dom';
 
 interface Props {
   title: string,
@@ -21,6 +22,7 @@ const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image
 
   return (
     <Box boxClass={styles.container}>
+      <Link to="/itempage">
       <div className={styles.header}>
         <div className={styles['header-text']}>
           <p>{title}</p>
@@ -52,6 +54,7 @@ const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image
           </div>
         </div>
       </div>
+      </Link>
     </Box>
   );
 };
