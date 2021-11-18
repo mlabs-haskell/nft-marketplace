@@ -2,26 +2,8 @@
 @import '../../assets/scss/abstracts/variables';
 
 .container{
-    width: 490px;
-    height: 147px;
-    padding-top: 0;
-    margin-bottom: 50px;
-.tab-container{
     display: flex;
-    list-style: none;
     justify-content: space-between;
-    margin-top: 0px;
-    padding: 0;
-    cursor: pointer;
-
-    & .active-tab{
-        margin: -20px;
-    }
-}
-.content{
-    background-color: $light;
-    margin: -20px;
-    height: 100%;
-    border-radius: 0 0 30px 30px;
-}
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
