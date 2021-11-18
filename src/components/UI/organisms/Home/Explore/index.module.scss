@@ -5,27 +5,40 @@
 @import '../../../../../assets/scss/abstracts/variables';
 
 .contatiner{
-    padding: 50px 0;
+    padding: 55px 0;
 
     .header{
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 40px;
+
+        h2 {
+            font-size: pxToRem(30);
+            font-weight: 700;
+            margin: 0;
+        }
     }
 
     .card-container{ 
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: minmax(235px, auto);
-
-    @media screen and (min-width: 1024px) {
-        grid-template-columns: repeat(4, 1fr);
+        columns: 5;
+        max-height: 1000px;
+        overflow: hidden;
+        column-gap: 0;
         
-    }
+        // display: grid;
+        // align-items: flex-start;
+        // grid-template-columns: repeat(5, 1fr);
+        // grid-auto-rows: minmax(235px, auto);
+
+        @media screen and (max-width: 1024px) {
+            columns: 4;
+            // grid-template-columns: repeat(4, 1fr);
+        }
     }
 
     .btn{
+        margin-top: 70px;
         display: flex;
         justify-content: center;
     }

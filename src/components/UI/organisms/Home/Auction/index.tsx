@@ -14,9 +14,9 @@ function Auction() {
           bid="Bid 5,000 DAI"
           likes="167"
           amount="18 ETH"
-          title="Ape  Pixel "
+          title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
           quantity="1/1"
-          time="22:14"
+          time="22:14:15"
           image={image1}
         />
         <AuctionCard

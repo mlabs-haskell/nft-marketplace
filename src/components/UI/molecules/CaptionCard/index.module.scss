@@ -3,14 +3,18 @@
 
 .container{
     background-color: $light2;
+    color: #fff;
 
-.title{
-    margin: 0;
-    font-size: 20px;
-}
+    .title{
+        margin: 0;
+        font-size: pxToRem(18);
+        line-height: 1;
+        font-weight: 700;
+    }
 
-p{
-    margin-top: 0px;
-}
+    p{
+        margin-top: 0px;
+        font-weight: 400;
+    }
 }
   

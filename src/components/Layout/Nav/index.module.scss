@@ -3,7 +3,7 @@
 
 .container{
     max-width: 100%;
-    height: 10vh;
+    padding: 36px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -14,27 +14,30 @@
     .logo{
         display: flex;
          .logo-icon{
-             margin-right: 100px;
+             margin-right: 36px;
          }
     }
 
     .nav-links{
-        width: 25%;
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         align-items: center;
+
         ul{
-            display: flex;
-            list-style: none;
+            display: inline-flex;
             align-items: center;
-            width: 50%;
-            justify-content: space-between;
+            list-style: none;
             font-size: pxToRem(14);
+            font-weight: 700;
+            padding: 0;
+            margin: 0;
             
             .nav{
                 cursor: pointer;
+                display: inline-block;
                 color: $light2;
                 text-decoration: none;
+                margin-right: 33px;
             }
 
             .active-nav{
@@ -55,9 +58,16 @@
                 color: #fff;
             }
         }
+
         .icon{
-            width: 15%;
+            // width: 15%;
+            margin: 0;
+
         }
     }
+}
 
+.wallet-icon {
+    height: 44px;
+    overflow: hidden;
 }

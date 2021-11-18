@@ -34,7 +34,7 @@ const Slider = ({ children, sliderClass }: SliderProps) => {
       <div className={styles['slider-wrapper']}>
         {currentIndex > 0 && (
           <button onClick={prev} className={styles["left-arrow"]}>
-            &lt;
+            <img src={right} alt="arrow-left" />
           </button>
         )}
         <div className={styles['slider-content-wrapper']}>
