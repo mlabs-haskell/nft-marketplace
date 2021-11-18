@@ -1,0 +1,22 @@
+@import '../../../../assets/scss/abstracts/functions';
+@import '../../../../assets/scss/abstracts/variables';
+
+.container {
+  position: relative;
+  background-color: $light2;
+  width: 47px;
+  height: 47px;
+  border-radius: 17px;
+
+  img {
+    border-radius: 17px;
+  }
+
+  .check {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 18px;
+    height: 18px;
+  }
+}

@@ -8,7 +8,7 @@ function Routes() {
     <div>
       <Switch>
         <Route exact path="/" children={<Home />} />
-        <Route exact path="/itempage" children={<ItemPage />} />
+        <Route exact path="/itempage" children={<ItemPage/>} />
         <Route exact path="/help" children={<FAQ />} />
       </Switch>
     </div>

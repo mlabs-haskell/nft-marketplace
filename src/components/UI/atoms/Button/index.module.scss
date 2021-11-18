@@ -24,7 +24,7 @@
 .button--secondary{
     background-color: #fff;
     color: $primary;
-    border-color: $primary;
+    border: 1px solid $primary;
 }
 .button--primary{
     background-color: $primary;

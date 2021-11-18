@@ -4,6 +4,7 @@
 .container {
   margin-left: 93px;
   margin-top: 48px;
+  padding: 0px;
   display: inline-block;
 
   .photobox {
@@ -12,9 +13,20 @@
     position: relative;
     width: 660px;
     height: 660px;
+
+    img {
+      width: 100%;
+      border-radius: 30px;
+    }
   }
 
-  .heart {
+  .heartAbsolute {
+    position: absolute;
+    top: 28px;
+    right: 33px;
+  }
+
+  .heartContainer {
     position: relative;
     display: flex;
     width: 64px;
@@ -26,7 +38,7 @@
     align-items: center;
   }
 
-  .photo {
+  .heart {
     position: absolute;
     top: 0px;
     left: 0px;
