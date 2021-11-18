@@ -17,8 +17,8 @@ h3{
     color: $primary;
 }
 p{
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: 300;
+    font-size: pxToRem(14);
 }
 a{
     text-decoration: none;

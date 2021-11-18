@@ -1,9 +1,6 @@
-import React from 'react';
 import styles from './index.module.scss';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
-import image1 from '../../../../../assets/svg/image1.svg';
-import image2 from '../../../../../assets/images/Jokong.png';
 
 const Explore = () => {
   return (

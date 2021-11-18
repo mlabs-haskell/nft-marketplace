@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import React from 'react'
 import Button from '../../atoms/Button';
 import Input from '../../atoms/Input';
 import styles from './index.module.scss'

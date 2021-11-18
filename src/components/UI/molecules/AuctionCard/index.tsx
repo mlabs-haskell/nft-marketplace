@@ -55,7 +55,6 @@ const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image
 
   return (
     <Box boxClass={styles.container}>
-      <Link to="/itempage">
         <div className={styles.header}>
           <div className={styles['header-text']}>
             <p className={styles.title}>{title}</p>
@@ -70,17 +69,18 @@ const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image
             </div>
           </div>
         </div>
-        <div className={styles.image}>
-          <img src={image} alt="nft-item" />
-          {time && <div className={styles["time-wrapper"]}>
-            <span className={styles.time}>{time}</span>
-          </div>}
-          {isExplore && quantity && <p className={styles.quantity}>{quantity}</p>}
-        </div>
+        <Link to="/itempage">
+          <div className={styles.image}>
+            <img src={image} alt="nft-item" />
+            {time && <div className={styles["time-wrapper"]}>
+              <span className={styles.time}>{time}</span>
+            </div>}
+            {isExplore && quantity && <p className={styles.quantity}>{quantity}</p>}
+          </div>
+        </Link>
         <div className={styles.footer}>
           {renderCurrectFooter()}
         </div>
-      </Link>
     </Box>
   );
 };
