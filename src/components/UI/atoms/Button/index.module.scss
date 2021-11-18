@@ -2,7 +2,7 @@
 @import '../../../../assets/scss/abstracts/variables';
 
 .button{
-    border-radius: 37px;
+    border-radius: 16px;
     width: 161px;
     height: 44px;
     display: flex;
@@ -21,16 +21,12 @@
     width: 235px;
     height: 50px;
 }
-.button--primary{
-    background-image: $gradientBlue;
-    color: #fff;
-}
 .button--secondary{
     background-color: #fff;
     color: $primary;
-    border-color: $primary;
+    border: 1px solid $primary;
 }
-.button--tertiary{
-    background-color: $lightBlue;
+.button--primary{
+    background-color: $primary;
     color: #fff;
 }

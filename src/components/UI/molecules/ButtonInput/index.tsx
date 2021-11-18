@@ -13,7 +13,7 @@ function ButtonInput({placeholder, btnClass}: Props) {
     return (
         <div className={classNames([styles.container], btnClass)}>
             <Input placeholder={placeholder} textClass={styles["input-box"]}/>
-            <Button label="send" size="small" color="tertiary" btnClass={btnClass}/>
+            <Button label="send" size="small" color="primary" btnClass={btnClass}/>
         </div>
     )
 }

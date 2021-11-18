@@ -91,8 +91,8 @@ const ItemDetails = ({
           justifyContent: 'space-between',
         }}
       >
-        <Button label="Place a bid" size="medium" color="" />
-        <Button label="Share" size="medium" color="" />
+        <Button label="Place a bid" size="medium" color="secondary" />
+        <Button label="Share" size="medium" color="primary" />
       </div>
       <div style={{ marginTop: 18, marginBottom: 60 }}>
         <h6>There's no bids yet. Be the first!</h6>

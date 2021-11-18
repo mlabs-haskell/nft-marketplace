@@ -1,5 +1,3 @@
-import React from 'react';
-import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 import check from '../../../../assets/svg/check-fill.svg';
 

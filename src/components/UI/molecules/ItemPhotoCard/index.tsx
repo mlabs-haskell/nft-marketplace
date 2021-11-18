@@ -1,5 +1,4 @@
 import React from 'react';
-import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 import heart from '../../../../assets/svg/like-heart.svg';
 import image1 from '../../../../assets/svg/image1.svg';
@@ -13,7 +12,7 @@ function ItemPhotoCard({ imgUrl, likeCount }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.photobox}>
-        <img src={image1} alt="nft-image" />
+        <img src={image1} alt="nft" />
         <div className={styles.heartAbsolute}>
           <div className={styles.heartContainer}>
             <img src={heart} alt="heart" className={styles.heart} />
