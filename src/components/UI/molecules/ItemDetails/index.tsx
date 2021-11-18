@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '../../atoms/Box';
 import UserPhoto from '../UserPhoto';
 import Button from '../../atoms/Button';
 import styles from './index.module.scss';
 import image2 from '../../../../assets/svg/image2.svg';
+import girl from '../../../../assets/svg/girl.svg';
 
 interface Props {
   title: string;
@@ -32,71 +33,108 @@ const ItemDetails = ({
   bidsData,
   historyData,
 }: Props) => {
+  const [ContentState, setContentState] = useState('owners');
+  const ContentSwitching = (el: any) => {
+    const contents = ['owners', 'bids', 'history'];
+    contents.forEach((contentName: string) => {
+      const wrapperElement: HTMLElement | null =
+        document.getElementById(contentName);
+      if (el.target.id !== contentName) {
+        if (wrapperElement?.classList.contains(styles.active)) {
+          wrapperElement.classList.remove(styles.active);
+        }
+      } else {
+        if (!wrapperElement?.classList.contains(styles.active)) {
+          wrapperElement?.classList.add(styles.active);
+          setContentState(contentName);
+        }
+      }
+    });
+  };
+
   return (
-    <div className={styles.container}>
-      <h4 className={styles.title}>{title}</h4>
-      <div style={{ marginTop: 12 }}>
-        <div>
-          <h4 className={styles.subtitle}>On Sales for:</h4>
-          <h4 className={styles.value}>{saleValue}</h4>
-        </div>
-        <div style={{ marginLeft: 36 }}>
-          <h4 className={styles.subtitle}>Highest Bid:</h4>
-          <h4 className={styles.value}>{topBidValue}</h4>
-        </div>
+    <div className={styles.content}>
+      <h2>{title}</h2>
+      <div className={styles.row}>
+        <p>
+          On sale for: <span>{saleValue}</span>
+        </p>
+        <p>
+          Highest bid: <span>{topBidValue}</span>
+        </p>
       </div>
-
-      <div style={{ marginTop: 27 }}>
-        <h4 className={styles.subtitle} style={{ width: 170 }}>
-          Tessellation Class:
-        </h4>
-        <h6 className={styles.value1}>{tessellationClass}</h6>
+      <div className={styles.row}>
+        <p>Tessellation Class:</p>
+        <p className={styles.blue}>{tessellationClass}</p>
       </div>
-
-      <div style={{ marginTop: 14 }}>
-        <h4 className={styles.subtitle} style={{ width: 170 }}>
-          Seed:
-        </h4>
-        <h6 className={styles.value1}>{seedValue}</h6>
+      <div className={styles.row}>
+        <p>Seed: </p>
+        <p className={styles.blue}>{seedValue}</p>
       </div>
-
-      <h6
-        className={styles.description}
-        style={{ display: 'inline-block', marginTop: 36 }}
-      >
+      <p className={styles.description}>
         {description}{' '}
-        <span style={{ color: '#3983F2', fontWeight: 600 }}>Read more</span>
-      </h6>
-
-      <div style={{ marginTop: 36 }}>
-        <h4
-          className={styles.subtitle}
-          style={{ marginRight: 9, color: 'black' }}
+        <span id="hidden" className={styles.hidden}>
+          this is hidden content{' '}
+        </span>
+        <span
+          onClick={(thisElement) => {
+            const el: HTMLElement | null = document.getElementById('hidden');
+            const input = thisElement.target as HTMLElement;
+            if (el?.style.display === 'inline') {
+              input.innerText = 'Read more';
+              el.style.display = 'none';
+            } else {
+              input.innerText = 'Hide';
+              el!.style.display = 'inline';
+            }
+          }}
+          className={styles.button}
         >
-          Creator:
-        </h4>
-        <span className={styles.subtitle}>{creatorValue}</span>
+          Read more
+        </span>
+      </p>
+      <p className={styles.creator}>
+        Creator: <span>{creatorValue}</span>
+      </p>
+      <div className={styles.creator_img}>
+        <UserPhoto imgUrl={girl} isChecked={true} />
+        <p>{creatorName}</p>
       </div>
-
-      <div style={{ alignItems: 'center', marginTop: 9 }}>
-        <UserPhoto imgUrl={image2} isChecked={true} />
-        <h4 className={styles['creator-name']}>{creatorName}</h4>
+      <div className={styles.block}>
+        <div className={styles.block__buttons}>
+          <button
+            onClick={ContentSwitching}
+            id="owners"
+            className={styles.active}
+          >
+            Owners
+          </button>
+          <button onClick={ContentSwitching} id="bids">
+            Bids
+          </button>
+          <button onClick={ContentSwitching} id="history">
+            History
+          </button>
+        </div>
+        <div className={styles.block__content}>
+          <UserPhoto imgUrl={girl} isChecked={true} />
+          <div>
+            <p>
+              {creatorName}
+              <br />
+              <span>100 editions not for sale</span>
+            </p>
+          </div>
+          <p style={{ marginLeft: '50px' }}>Content for {ContentState}</p>
+        </div>
       </div>
-
-      <Box boxClass={styles['tab-bar']}></Box>
-      <div
-        style={{
-          marginTop: 27,
-          width: '100%',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Button label="Place a bid" size="medium" color="secondary" />
-        <Button label="Share" size="medium" color="primary" />
+      <div className={styles.buttons}>
+        <button>Place a bid</button>
+        <button>BUY</button>
       </div>
-      <div style={{ marginTop: 18, marginBottom: 60 }}>
-        <h6>There's no bids yet. Be the first!</h6>
-      </div>
+      <p style={{ fontSize: '12px', lineHeight: '18px', marginBottom: '36px' }}>
+        There's no bids yet. Be the first!
+      </p>
     </div>
   );
 };
