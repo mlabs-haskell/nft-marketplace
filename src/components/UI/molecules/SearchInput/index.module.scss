@@ -2,15 +2,16 @@
 @import '../../../../assets/scss/abstracts/variables';
 
 .input{
-    width: 332px;
+    width: 580px;
     height: 44px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 20px;
-    border-radius: 30px;
+    padding-left: 30px;
     background: #fff;
-    box-shadow: 0px 6px 22px rgba(0, 0, 0, 0.03);
+    border-radius: 16px;
+    box-shadow: 0px 4px 33px rgba(0, 0, 0, 0.06);
+    font-weight: 400;
 
     img{
         width: 20px;
@@ -23,11 +24,13 @@
     .left{
         display: flex;
         align-items: center;
+        width: 100%;
 
         input{
             outline: none;
             border: none;
             margin-left: 10px;
+            width: 100%;
     
             &::placeholder{
                 color: $lightTextColor;

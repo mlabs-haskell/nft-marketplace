@@ -1,7 +1,6 @@
-import React from 'react';
-import CaptionCard from '../../../molecules/CaptionCard';
 import styles from './index.module.scss';
 import Button from '../../../atoms/Button';
+import AuctionCard from '../../../molecules/AuctionCard';
 
 const Explore = () => {
   return (
@@ -11,16 +10,72 @@ const Explore = () => {
         <Button label="My Collection" color="primary" />
       </div>
       <div className={styles['card-container']}>
-        <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
-        <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
-        <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
-        <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
-        <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
-        <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
-        <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
-        <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
-        <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
-        <CaptionCard title="Meelo" name="By Hennkok" className={styles.card} />
+        <AuctionCard
+          likes="167"
+          amount="0.005 ETH "
+          title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
+          image={'https://picsum.photos/200/200'}
+          isExplore={true}
+          quantity="1/1"
+        />
+        <AuctionCard
+          likes="167"
+          amount="0.005 ETH "
+          title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
+          image={'https://picsum.photos/200/300'}
+          isExplore={true}
+          quantity="1/1"
+        />
+        <AuctionCard
+          likes="167"
+          amount="0.005 ETH "
+          title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
+          image={'https://picsum.photos/200/250'}
+          isExplore={true}
+          quantity="1/1"
+        />
+        <AuctionCard
+          likes="167"
+          amount="0.005 ETH "
+          title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
+          image={'https://picsum.photos/200/200'}
+          isExplore={true}
+        />
+        <AuctionCard
+          likes="167"
+          amount="0.005 ETH "
+          title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
+          image={'https://picsum.photos/200/200'}
+          isExplore={true}
+        />
+        <AuctionCard
+          likes="167"
+          amount="0.005 ETH "
+          title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
+          image={'https://picsum.photos/200/300'}
+          isExplore={true}
+        />
+        <AuctionCard
+          likes="167"
+          amount="0.005 ETH "
+          title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
+          image={'https://picsum.photos/200/250'}
+          isExplore={true}
+        />
+        <AuctionCard
+          likes="167"
+          amount="0.005 ETH "
+          title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
+          image={'https://picsum.photos/200/200'}
+          isExplore={true}
+        />
+        <AuctionCard
+          likes="167"
+          amount="0.005 ETH "
+          title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
+          image={'https://picsum.photos/200/300'}
+          isExplore={true}
+        />
       </div>
       <div className={styles.btn}>
         <Button label="Load More" color="primary" size="large" />
