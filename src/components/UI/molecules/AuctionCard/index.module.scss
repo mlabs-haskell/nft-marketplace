@@ -2,7 +2,6 @@
 @import '../../../../assets/scss/abstracts/variables';
 
 .container{
-  margin-right: 20px;
   margin-bottom: 20px;
   display: block;
   max-width: 190px;
@@ -11,6 +10,9 @@
   page-break-inside: avoid;
   break-inside: avoid;
 
+  &.explore {
+    max-width: 100%;
+  }
 
   h3 {
     margin: 0;
