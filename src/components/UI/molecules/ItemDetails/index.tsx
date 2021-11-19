@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import UserPhoto from '../UserPhoto';
 import styles from './index.module.scss';
 import girl from '../../../../assets/svg/girl.svg';
 import Button from '../../atoms/Button';
+import Box from '../../atoms/Box';
+import Tab from '../Tab';
 
 interface Props {
   title: string;
@@ -31,43 +33,23 @@ const ItemDetails = ({
   bidsData,
   historyData,
 }: Props) => {
-  const [ContentState, setContentState] = useState('owners');
-  const ContentSwitching = (el: any) => {
-    const contents = ['owners', 'bids', 'history'];
-    contents.forEach((contentName: string) => {
-      const wrapperElement: HTMLElement | null =
-        document.getElementById(contentName);
-      if (el.target.id !== contentName) {
-        if (wrapperElement?.classList.contains(styles.active)) {
-          wrapperElement.classList.remove(styles.active);
-        }
-      } else {
-        if (!wrapperElement?.classList.contains(styles.active)) {
-          wrapperElement?.classList.add(styles.active);
-          setContentState(contentName);
-        }
-      }
-    });
-  };
+  const [active, setActive] = useState('owners');
+  const tabs = ['owners', 'Bids', 'History'];
 
   return (
-    <div className={styles.content}>
-      <h2>{title}</h2>
-      <div className={styles.row}>
-        <p>
-          On sale for: <span>{saleValue}</span>
-        </p>
-        <p>
-          Highest bid: <span>{topBidValue}</span>
-        </p>
-      </div>
-      <div className={styles.row}>
-        <p>Tessellation Class:</p>
-        <p className={styles.blue}>{tessellationClass}</p>
-      </div>
-      <div className={styles.row}>
-        <p>Seed: </p>
-        <p className={styles.blue}>{seedValue}</p>
+    <div className={styles.container}>
+      <h2 className={styles.title}>{title}</h2>
+      <div className={styles["top-text"]}>
+        <ul>
+          <li>On Sales for: <span>{saleValue}</span></li>
+          <li>Tessellation Class:</li>
+          <li>Seed:</li>
+        </ul>
+        <ul>
+          <li>Highest Bid: <span>{topBidValue}</span></li>
+          <li><h3>{tessellationClass}</h3></li>
+          <li><h3>{seedValue}</h3></li>
+        </ul>
       </div>
       <p className={styles.description}>
         {description}{' '}
@@ -98,23 +80,20 @@ const ItemDetails = ({
         <UserPhoto imgUrl={girl} isChecked={true} />
         <p>{creatorName}</p>
       </div>
-      <div className={styles.block}>
-        <div className={styles.block__buttons}>
-          <button
-            onClick={ContentSwitching}
-            id="owners"
-            className={styles.active}
-          >
-            Owners
-          </button>
-          <button onClick={ContentSwitching} id="bids">
-            Bids
-          </button>
-          <button onClick={ContentSwitching} id="history">
-            History
-          </button>
+      <Box boxClass={styles["box-container"]}>
+        <div className={styles["tab-container"]}>
+          {tabs.map((tab, index) => (
+            <Tab
+              key={index}
+              title={tab}
+              onClick={() => setActive(tab)}
+              active= {active === tab}
+            />
+          ))}
         </div>
-        <div className={styles.block__content}>
+        <div className={styles.content}>
+          {active === 'owners' && 
+          <div className={styles.block__content}>
           <UserPhoto imgUrl={girl} isChecked={true} />
           <div>
             <p>
@@ -123,12 +102,14 @@ const ItemDetails = ({
               <span>100 editions not for sale</span>
             </p>
           </div>
-          <p style={{ marginLeft: '50px' }}>Content for {ContentState}</p>
+          <p style={{ marginLeft: '50px' }}>Content for </p>
+        </div>}
+          {active === 'Bids' && <p>bye</p>}
         </div>
-      </div>
+      </Box>
       <div className={styles.buttons}>
-        <Button label="Place a bid" color="secondary" />
-        <Button label="BUY" color="primary" />
+        <Button label="Place a bid" color="secondary" btnClass={styles.btn} />
+        <Button label="BUY" color="primary" btnClass={styles.btn} />
       </div>
       <p style={{ fontSize: '12px', lineHeight: '18px', marginBottom: '36px' }}>
         There's no bids yet. Be the first!
