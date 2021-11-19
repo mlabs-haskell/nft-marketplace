@@ -1,10 +1,8 @@
-import {useState} from 'react';
-import Box from '../../atoms/Box';
+import React, { useState } from 'react';
 import UserPhoto from '../UserPhoto';
-import Button from '../../atoms/Button';
 import styles from './index.module.scss';
-import image2 from '../../../../assets/svg/image2.svg';
-import Tab from '../../molecules/Tab';
+import girl from '../../../../assets/svg/girl.svg';
+import Button from '../../atoms/Button';
 
 interface Props {
   title: string;
@@ -33,66 +31,108 @@ const ItemDetails = ({
   bidsData,
   historyData,
 }: Props) => {
-  const [active, setActive] = useState('owners');
-  const tabs = ['owners', 'Bids', 'History'];
+  const [ContentState, setContentState] = useState('owners');
+  const ContentSwitching = (el: any) => {
+    const contents = ['owners', 'bids', 'history'];
+    contents.forEach((contentName: string) => {
+      const wrapperElement: HTMLElement | null =
+        document.getElementById(contentName);
+      if (el.target.id !== contentName) {
+        if (wrapperElement?.classList.contains(styles.active)) {
+          wrapperElement.classList.remove(styles.active);
+        }
+      } else {
+        if (!wrapperElement?.classList.contains(styles.active)) {
+          wrapperElement?.classList.add(styles.active);
+          setContentState(contentName);
+        }
+      }
+    });
+  };
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>{title}</h2>
-
-      <div className={styles["top-text"]}>
-        <ul>
-          <li>On Sales for: <span>{saleValue}</span></li>
-          <li>Tessellation Class:</li>
-          <li>Seed:</li>
-        </ul>
-        <ul>
-          <li>Highest Bid: <span>{topBidValue}</span></li>
-          <li><h3>{tessellationClass}</h3></li>
-          <li><h3>{seedValue}</h3></li>
-        </ul>
+    <div className={styles.content}>
+      <h2>{title}</h2>
+      <div className={styles.row}>
+        <p>
+          On sale for: <span>{saleValue}</span>
+        </p>
+        <p>
+          Highest bid: <span>{topBidValue}</span>
+        </p>
       </div>
-
+      <div className={styles.row}>
+        <p>Tessellation Class:</p>
+        <p className={styles.blue}>{tessellationClass}</p>
+      </div>
+      <div className={styles.row}>
+        <p>Seed: </p>
+        <p className={styles.blue}>{seedValue}</p>
+      </div>
       <p className={styles.description}>
         {description}{' '}
-        <span style={{ color: '#3983F2' }}>Read more</span>
+        <span id="hidden" className={styles.hidden}>
+          this is hidden content{' '}
+        </span>
+        <span
+          onClick={(thisElement) => {
+            const el: HTMLElement | null = document.getElementById('hidden');
+            const input = thisElement.target as HTMLElement;
+            if (el?.style.display === 'inline') {
+              input.innerText = 'Read more';
+              el.style.display = 'none';
+            } else {
+              input.innerText = 'Hide';
+              el!.style.display = 'inline';
+            }
+          }}
+          className={styles.button}
+        >
+          Read more
+        </span>
       </p>
-
-      <div className={styles["creator-name"]}>
-        <h4 className={styles.subtitle}>
-          Creator: <span className={styles.subtitle}>{creatorValue}</span>
-        </h4>
+      <p className={styles.creator}>
+        Creator: <span>{creatorValue}</span>
+      </p>
+      <div className={styles.creator_img}>
+        <UserPhoto imgUrl={girl} isChecked={true} />
+        <p>{creatorName}</p>
       </div>
-
-      <div className={styles.img}>
-        <UserPhoto imgUrl={image2} isChecked={true} />
-        <h4>{creatorName}</h4>
-      </div>
-
-      <Box boxClass={styles["box-container"]}>
-        <div className={styles["tab-container"]}>
-          {tabs.map((tab, index) => (
-            <Tab
-              key={index}
-              title={tab}
-              onClick={() => setActive(tab)}
-              active= {active === tab}
-            />
-          ))}
+      <div className={styles.block}>
+        <div className={styles.block__buttons}>
+          <button
+            onClick={ContentSwitching}
+            id="owners"
+            className={styles.active}
+          >
+            Owners
+          </button>
+          <button onClick={ContentSwitching} id="bids">
+            Bids
+          </button>
+          <button onClick={ContentSwitching} id="history">
+            History
+          </button>
         </div>
-        <div className={styles.content}>
-          {active === 'owners' && <p>hi</p>}
-          {active === 'Bids' && <p>bye</p>}
+        <div className={styles.block__content}>
+          <UserPhoto imgUrl={girl} isChecked={true} />
+          <div>
+            <p>
+              {creatorName}
+              <br />
+              <span>100 editions not for sale</span>
+            </p>
+          </div>
+          <p style={{ marginLeft: '50px' }}>Content for {ContentState}</p>
         </div>
-      </Box>
-
-      <div className={styles["btn-container"]}>
-        <Button label="Place a bid" size="medium" color="secondary" btnClass={styles.btn} />
-        <Button label="Share" size="medium" color="primary" btnClass={styles.btn} />
       </div>
-      <div>
-        <p>There's no bids yet. Be the first!</p>
+      <div className={styles.buttons}>
+        <Button label="Place a bid" color="secondary" />
+        <Button label="BUY" color="primary" />
       </div>
+      <p style={{ fontSize: '12px', lineHeight: '18px', marginBottom: '36px' }}>
+        There's no bids yet. Be the first!
+      </p>
     </div>
   );
 };

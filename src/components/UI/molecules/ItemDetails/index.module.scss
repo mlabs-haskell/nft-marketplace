@@ -1,105 +1,165 @@
 @import '../../../../assets/scss/abstracts/functions';
 @import '../../../../assets/scss/abstracts/variables';
 
-.container {
-  max-width: 490px;
-
-  h2{
-    margin-top: 0;
-  }
-  h3, h4, p, span{
-    font-size: pxToRem(14);
-    font-weight: 400;
-  }
-  h4{
-    span{
-      margin-left: 10px;
-      color: $lightText;
-    }
-  }
-
-  .title {
+.content {
+  margin-top: 10px;
+  margin-left: 105px;
+  margin-right: 92px;
+  display: inline-block;
+  width: 500px;
+  h2 {
+    text-transform: uppercase;
     color: $primary;
-    font-size: pxToRem(24);
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 12px;
   }
-  .top-text{
-    display: flex;
-    margin-top: 10px;
-
-    ul{
-      list-style: none;
-      margin: 0;
-      padding: 0;
-
-      &:first-child{
-        margin-right: 30px;
-      }
-
-      li{
-        font-weight: 400;
-        font-size: pxToRem(14);
-        font-style: normal;
-        color: $light4;
-        margin-right: 6px;
-        margin-bottom: 20px;
-
-        span{
-          color: #000;
-          font-weight: 400;
-          margin-left: 10px;
-        }
-      }
+  h2,
+p {
+  margin: 0;
+}
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 14px;
+  &:first-of-type {
+    margin-bottom: 27px;
+    margin-top: 20px;
+  }
+  &:last-of-type {
+    margin-bottom: 36px;
+  }
+  p {
+    font-size: 14px;
+    &:first-of-type {
+      width: 140px;
+      margin-right: 36px;
+    }
+    color: $secondary;
+    span {
+      color: $dark3;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    &.blue {
+      color: $primary;
+      font-weight: 700;
     }
   }
-  .creator-name {
-    margin-top: 0;
-  }
+}
 
-  .description {
-    font-weight: 300;
-    font-size: pxToRem(14);
-    color: black;
-    line-height: 26px;
-    margin: 0;
-  }
-
-  .img{
-    display: flex;
-    align-items: center;
-    h4{
-      margin-left: 25px;
-    }
-  }
-  .btn{
-    width: 47%;
-  }
-
- 
-  .box-container{
-    display: block;
-    margin: 20px 0;
-    padding: 0;
-    box-shadow: 0px 4px 33px rgba(0, 0, 0, 0.06);
-  
-    .tab-container{
-      display: flex;
-      list-style: none;
-      justify-content: space-between;
-      margin: 0 auto;
-      padding-top: 15px;
-      width: 85%;
+p.description {
+  font-size: 14px;
+  line-height: 25px;
+  color: black;
+  max-width: 457px;
+  margin-bottom: 20px;
+  span {
+    &.button {
+      color: $primary;
+      font-weight: 500;
       cursor: pointer;
     }
-    .content{
-        color: $lightText;
-        margin: 0 20px;
-        padding: 10px;
+    &.hidden {
+      display: none;
     }
   }
-  .btn-container{
+}
+.creator {
+  margin-top: 36px;
+  color: black;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  span {
+    font-size: 14px;
+    line-height: 21px;
+    color: $dark2;
+  }
+}
+img.mark {
+  position: absolute;
+  right: -2px;
+  bottom: 5px;
+}
+.creator_img {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 36px;
+  p {
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: -0.02em;
+    margin-left: 18px;
+  }
+  div {
+    position: relative;
+    width: 47px;
+    height: 47px;
+  }
+}
+.block {
+  padding: 18px 18px 28px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 4px 33px rgba(0, 0, 0, 0.06);
+  &__content {
     display: flex;
-    margin-top: 25px;
-    width: 100%;
-    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    .img {
+      position: relative;
+      margin-right: 18px;
+    }
+    p {
+      font-size: 14px;
+      line-height: 21px;
+      letter-spacing: -0.02em;
+      margin-left: 18px;
+      span {
+        font-size: 12px;
+        line-height: 18px;
+        color: #a2a2a2;
+      }
+    }
+  }
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 19px;
+    button {
+      cursor: pointer;
+      background-color: white;
+      color: $secondary;
+      font-size: 14px;
+      line-height: 21px;
+      padding: 6px 40px;
+      border-radius: 13px;
+    }
+  }
+}
+button.active {
+  background-color: $primary;
+  color: white;
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 28px;
+  margin-bottom: 18px;
+  button {
+    cursor: pointer;
+    width: 47%;
+    height: 50px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 21px;
+    transition: 0.3s;
   }
 }
