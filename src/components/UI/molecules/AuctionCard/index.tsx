@@ -54,7 +54,7 @@ const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image
   }
 
   return (
-    <Box boxClass={styles.container}>
+    <Box boxClass={`${styles.container} ${isExplore && styles.explore}`}>
         <div className={styles.header}>
           <div className={styles['header-text']}>
             <p className={styles.title}>{title}</p>

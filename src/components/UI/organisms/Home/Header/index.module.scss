@@ -6,33 +6,38 @@
 
 .contatiner{
     padding-bottom: 54px;
+}
 
-    .card-container{ 
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: minmax(235px, auto);
-
-    @media screen and (min-width: 1024px) {
-        grid-template-columns: repeat(4, 1fr);
-        
+.slide {
+    display: flex;
+    justify-content: space-between;
+    
+    .card {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
     }
-    }
+}
 
-    // .slides{
-    //     display: grid;
-    //     grid-template-columns: repeat(5, 1fr);
-    //     grid-gap: 10px;
-    // }
+.small-cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
 
     .card{
-        width: 235px;
-        height: 235px;
-        margin-right: 20px;
+        width: calc(33.33% - 52px);
+        height: 195px;
+        padding: 20px;
+        margin-bottom: 20px;
     }
+}
 
-    .card:nth-child(1){
-        height: 500px;
-        width: 500px;
+.big-card-wrapper {
+    width: calc(40% - 20px);
+
+    .card {
+        height: 440px;
     }
 }
