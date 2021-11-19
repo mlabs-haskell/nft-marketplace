@@ -1,9 +1,10 @@
-import React from 'react';
+import {useState} from 'react';
 import Box from '../../atoms/Box';
 import UserPhoto from '../UserPhoto';
 import Button from '../../atoms/Button';
 import styles from './index.module.scss';
 import image2 from '../../../../assets/svg/image2.svg';
+import Tab from '../../molecules/Tab';
 
 interface Props {
   title: string;
@@ -32,70 +33,65 @@ const ItemDetails = ({
   bidsData,
   historyData,
 }: Props) => {
+  const [active, setActive] = useState('owners');
+  const tabs = ['owners', 'Bids', 'History'];
+
   return (
     <div className={styles.container}>
-      <h4 className={styles.title}>{title}</h4>
-      <div style={{ marginTop: 12 }}>
-        <div>
-          <h4 className={styles.subtitle}>On Sales for:</h4>
-          <h4 className={styles.value}>{saleValue}</h4>
-        </div>
-        <div style={{ marginLeft: 36 }}>
-          <h4 className={styles.subtitle}>Highest Bid:</h4>
-          <h4 className={styles.value}>{topBidValue}</h4>
-        </div>
+      <h2 className={styles.title}>{title}</h2>
+
+      <div className={styles["top-text"]}>
+        <ul>
+          <li>On Sales for: <span>{saleValue}</span></li>
+          <li>Tessellation Class:</li>
+          <li>Seed:</li>
+        </ul>
+        <ul>
+          <li>Highest Bid: <span>{topBidValue}</span></li>
+          <li><h3>{tessellationClass}</h3></li>
+          <li><h3>{seedValue}</h3></li>
+        </ul>
       </div>
 
-      <div style={{ marginTop: 27 }}>
-        <h4 className={styles.subtitle} style={{ width: 170 }}>
-          Tessellation Class:
-        </h4>
-        <h6 className={styles.value1}>{tessellationClass}</h6>
-      </div>
-
-      <div style={{ marginTop: 14 }}>
-        <h4 className={styles.subtitle} style={{ width: 170 }}>
-          Seed:
-        </h4>
-        <h6 className={styles.value1}>{seedValue}</h6>
-      </div>
-
-      <h6
-        className={styles.description}
-        style={{ display: 'inline-block', marginTop: 36 }}
-      >
+      <p className={styles.description}>
         {description}{' '}
-        <span style={{ color: '#3983F2', fontWeight: 600 }}>Read more</span>
-      </h6>
+        <span style={{ color: '#3983F2' }}>Read more</span>
+      </p>
 
-      <div style={{ marginTop: 36 }}>
-        <h4
-          className={styles.subtitle}
-          style={{ marginRight: 9, color: 'black' }}
-        >
-          Creator:
+      <div className={styles["creator-name"]}>
+        <h4 className={styles.subtitle}>
+          Creator: <span className={styles.subtitle}>{creatorValue}</span>
         </h4>
-        <span className={styles.subtitle}>{creatorValue}</span>
       </div>
 
-      <div style={{ alignItems: 'center', marginTop: 9 }}>
+      <div className={styles.img}>
         <UserPhoto imgUrl={image2} isChecked={true} />
-        <h4 className={styles['creator-name']}>{creatorName}</h4>
+        <h4>{creatorName}</h4>
       </div>
 
-      <Box boxClass={styles['tab-bar']}></Box>
-      <div
-        style={{
-          marginTop: 27,
-          width: '100%',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Button label="Place a bid" size="medium" color="secondary" />
-        <Button label="Share" size="medium" color="primary" />
+      <Box boxClass={styles["box-container"]}>
+        <div className={styles["tab-container"]}>
+          {tabs.map((tab, index) => (
+            <Tab
+              key={index}
+              title={tab}
+              onClick={() => setActive(tab)}
+              active= {active === tab}
+            />
+          ))}
+        </div>
+        <div className={styles.content}>
+          {active === 'owners' && <p>hi</p>}
+          {active === 'Bids' && <p>bye</p>}
+        </div>
+      </Box>
+
+      <div className={styles["btn-container"]}>
+        <Button label="Place a bid" size="medium" color="secondary" btnClass={styles.btn} />
+        <Button label="Share" size="medium" color="primary" btnClass={styles.btn} />
       </div>
-      <div style={{ marginTop: 18, marginBottom: 60 }}>
-        <h6>There's no bids yet. Be the first!</h6>
+      <div>
+        <p>There's no bids yet. Be the first!</p>
       </div>
     </div>
   );
