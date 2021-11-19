@@ -5,8 +5,10 @@ import twitter from '../../../assets/svg/twitter.svg';
 import messenger from '../../../assets/svg/messanger.svg';
 import meta from '../../../assets/svg/meta.svg';
 import youtube from '../../../assets/svg/youtube.svg';
+import Dropdown from '../../UI/molecules/Dropdown';
 
 const Footer = () => {
+  const option = ["English", "Spanish"]
   return (
     <div className={styles.container}>
       <div className={`${styles.footer} row`}>
@@ -34,7 +36,7 @@ const Footer = () => {
         </div>
         <div className='col-lg-3'>
           <p>Language</p>
-          
+          <Dropdown options={option} />
         </div>
       </div>
       <div className={`${styles["footer-base"]} row`}>
