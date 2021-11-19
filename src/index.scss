@@ -1,12 +1,18 @@
 @import './assets/scss/abstracts/functions';
 @import './assets/scss/abstracts/variables';
 
-body{
-    width: 90%;
-    margin: 0 auto;
-    background-color: #F8FBFF;;
-}
 
+button {
+  border: none;
+  outline: none;
+  font-weight: 300;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  width: 90%;
+  margin: 0 auto;
+  background-color: #FBFEFF;
+}
 h2{
     font-weight: 400;
     font-size: 30px;
@@ -18,7 +24,7 @@ h3{
 }
 p{
     font-weight: 300;
-    font-size: 14px;
+    font-size: pxToRem(14);
 }
 a{
     text-decoration: none;
