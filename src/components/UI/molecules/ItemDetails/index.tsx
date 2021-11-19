@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import Box from '../../atoms/Box';
 import UserPhoto from '../UserPhoto';
-import Button from '../../atoms/Button';
 import styles from './index.module.scss';
-import image2 from '../../../../assets/svg/image2.svg';
 import girl from '../../../../assets/svg/girl.svg';
+import Button from '../../atoms/Button';
 
 interface Props {
   title: string;
@@ -129,8 +127,8 @@ const ItemDetails = ({
         </div>
       </div>
       <div className={styles.buttons}>
-        <button>Place a bid</button>
-        <button>BUY</button>
+        <Button label="Place a bid" color="secondary" />
+        <Button label="BUY" color="primary" />
       </div>
       <p style={{ fontSize: '12px', lineHeight: '18px', marginBottom: '36px' }}>
         There's no bids yet. Be the first!

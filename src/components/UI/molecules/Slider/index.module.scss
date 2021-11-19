@@ -3,6 +3,7 @@
 
 .slider-container {
     width: 100%;
+    // max-width: 1275px;
     display: flex;
     flex-direction: column;
 
@@ -44,10 +45,15 @@
         border: none;
         background-color: transparent;
         font-size: 30px;
+        cursor: pointer;
     }
     
     .left-arrow {
         left: -50px;
+
+        img {
+            transform: rotate(180deg);
+        }
     }
     
     .right-arrow {
