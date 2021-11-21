@@ -54,10 +54,16 @@
         img {
             transform: rotate(180deg);
         }
+        @media only screen and (max-width: 480px){
+            left: -20px;
+        };
     }
     
     .right-arrow {
         right: -50px;
+        @media only screen and (max-width: 480px){
+            right: 0px;
+        };
     }
     
     .slider-content.show-2 > * {

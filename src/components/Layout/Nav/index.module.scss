@@ -14,6 +14,9 @@
     .logo{
         display: flex;
          .logo-icon{
+            @media only screen and (max-width: 480px){
+                width: 90%;
+            };
              margin-right: 36px;
          }
     }
@@ -38,6 +41,9 @@
                 color: $light2;
                 text-decoration: none;
                 margin-right: 33px;
+                @media only screen and (max-width: 480px){
+                    margin-right: 13px
+                };
             }
 
             .active-nav{

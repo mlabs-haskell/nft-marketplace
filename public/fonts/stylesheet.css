@@ -12,7 +12,7 @@
   font-family: "poppins";
   src: url("poppins-black.woff2") format("woff2"),
     url("poppins-black.woff") format("woff");
-  font-weight: 500;
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -36,7 +36,7 @@
   font-family: "poppins";
   src: url("poppins-extrabold.woff2") format("woff2"),
     url("poppins-extrabold.woff") format("woff");
-  font-weight: 700;
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }

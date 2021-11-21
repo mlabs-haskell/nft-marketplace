@@ -3,9 +3,10 @@
 
 .input{
     border-radius: 37px;
-    max-height: 52px;
     border: 1px solid $dark1;
-    max-width: 300px;
     padding: 20px;
     outline: none;
+    @media only screen and (max-width: 480px){
+        width: 100%;
+    };
 }

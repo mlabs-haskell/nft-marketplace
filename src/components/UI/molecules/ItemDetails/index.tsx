@@ -18,6 +18,9 @@ interface Props {
   ownersData: string;
   bidsData: string;
   historyData: string;
+  type:string;
+  handleParentFunction: () =>void;
+
 }
 
 const ItemDetails = ({
@@ -32,6 +35,8 @@ const ItemDetails = ({
   ownersData,
   bidsData,
   historyData,
+  type,
+  handleParentFunction,
 }: Props) => {
   const [active, setActive] = useState('owners');
   const tabs = ['owners', 'Bids', 'History'];
@@ -108,8 +113,14 @@ const ItemDetails = ({
         </div>
       </Box>
       <div className={styles.buttons}>
-        <Button label="Place a bid" color="secondary" btnClass={styles.btn} />
-        <Button label="BUY" color="primary" btnClass={styles.btn} />
+        {type === "BUY" ? 
+          (<>
+          <Button label="Place a bid" color="secondary" btnClass={styles.btn} />
+          <Button label={type} color="primary" btnClass={styles.btn}  onClick={handleParentFunction}/>
+          </>) : (<>
+          <Button label="Start Auction" color="secondary" btnClass={styles.btn} />
+          <Button label={type} color="primary" btnClass={styles.btn}  onClick={handleParentFunction}/>
+          </>)}
       </div>
       <p style={{ fontSize: '12px', lineHeight: '18px', marginBottom: '36px' }}>
         There's no bids yet. Be the first!
