@@ -10,10 +10,19 @@
     border: 1px solid #fff;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     cursor: pointer;
-    p{
-        color: #fff;
-        margin-left: 20px;
+    color: #fff;
+    padding-left: 20px;
+
+    .left{
+        display: flex;
+        align-items: center;
+        width: 50px;
+        
+        span{
+            margin-top: 5px;
+        }
     }
     .option{
         position: absolute;
@@ -29,7 +38,7 @@
             padding: 0;
 
             li{
-                color: $darkBlue;
+                color: #000;
                 margin-bottom: 10px;
                 &:last-child{
                     margin-bottom: 0;
