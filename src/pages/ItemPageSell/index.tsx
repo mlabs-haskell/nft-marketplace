@@ -1,8 +1,8 @@
 import { useState}  from "react";
 import ItemDetails from '../../components/UI/molecules/ItemDetails';
-import ItemSell from '../../components/UI/molecules/ItemSell';
 import ItemPhotoCard from '../../components/UI/molecules/ItemPhotoCard';
 import styles from './index.module.scss';
+import SellModal from "../../components/UI/organisms/SellPage/SellModal";
 
 const ItemPageSell = () => {
 
@@ -31,9 +31,9 @@ const ItemPageSell = () => {
           type="SELL"
           handleParentFunction={handleItemSell}
         />
-      <ItemSell 
-      display={itemSell}
-      handleParentFunction={handleItemSell}
+      <SellModal 
+        display={itemSell}
+        handleParentFunction={handleItemSell}
       />
       </div>
   );

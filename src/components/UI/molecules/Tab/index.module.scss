@@ -1,5 +1,8 @@
 @import '../../../../assets/scss/abstracts/functions';
 @import '../../../../assets/scss/abstracts/variables';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
 
 .active-tab{
         background-color: $primary;
@@ -9,12 +12,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 50%;
         box-shadow: 0px 16px 13px -12px rgba(0, 0, 0, 0.15);
+        padding: 8px 50px;
+        @media only screen and (max-width: 480px){
+            padding: 8px 20px;
+        };
 }
 
 .inActive{
     color: $lightText;
     margin: 0;
-    margin-top: 10px;
+    padding: 8px 50px;
+    @media only screen and (max-width: 480px){
+        padding: 8px 20px;
+    };
 }

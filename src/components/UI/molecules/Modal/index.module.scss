@@ -1,0 +1,43 @@
+@import '../../../../assets/scss/abstracts/functions';
+@import '../../../../assets/scss/abstracts/variables';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
+
+.container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($color: #000000, $alpha: 0.3);
+    z-index: 100;
+
+    .box{
+        border-radius: 16px;
+        padding-top: 0;
+
+        @media only screen and (max-width: 480px){
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+
+        h3{
+            background-color: $darkBlue;
+            margin: 0 -25px;
+            border-radius: 16px 16px 0 0;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-size: 24px;
+
+        @media only screen and (max-width: 480px){
+            padding: 30px;
+        }
+        }
+    }
+}

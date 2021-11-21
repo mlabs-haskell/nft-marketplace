@@ -18,7 +18,7 @@ const ItemPage = () => {
         ownersData="Defacer#od"
         bidsData=""
         historyData=""
-        type="BUY"
+        type="SELL"
         handleParentFunction={() => {}}
       />
     </div>
