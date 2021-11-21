@@ -1,0 +1,18 @@
+@import '../../../../assets/scss/abstracts/functions';
+@import '../../../../assets/scss/abstracts/variables';
+
+.info{
+    position: relative;
+    p{
+        border: 1px solid $lightText;
+        border-radius: 5px;
+        width: fit-content;
+        padding: 2px 10px;
+        position: absolute;
+        top: -40px;
+        right: 0;
+    }
+    img{
+        width: 15px;
+    }
+}

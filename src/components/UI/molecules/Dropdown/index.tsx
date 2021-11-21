@@ -3,12 +3,15 @@ import classNames from 'classnames';
 import arrow from '../../../../assets/svg/dropdown.svg';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss'
+import Info from '../../atoms/Info';
 
 interface Props {
     options: string[],
+    dropdownClass?: string,
+    infoText?: string,
 }
 
-function Dropdown({options}: Props) {
+function Dropdown({options, dropdownClass, infoText}: Props) {
     const [option, setOption] = useState(false);
     const [activeOption, setActiveOption] = useState(0);
     const [value, setValue] = useState(options[0]);
@@ -19,10 +22,12 @@ function Dropdown({options}: Props) {
       };
     return (
         <div
-            onClick={() => setOption(!option)}
-            className={classNames([styles.container])}
+            className={classNames([styles.container, dropdownClass])}
         >
-            <p>{value}</p>
+            <div className={styles.left}>
+                {infoText && <span><Info infoText={infoText}/></span> }
+                <p>{value}</p>
+            </div>
             {option ?
             <Box boxClass={styles.option}>
             <ul onClick={() => setOption(!option)} role="presentation">
@@ -37,7 +42,8 @@ function Dropdown({options}: Props) {
             </ul>
             </Box>
             : ''}
-            <img src={arrow} alt="arrow-down"/>
+            <img src={arrow} alt="arrow-down" 
+                onClick={() => setOption(!option)}/>
         </div>
     )
 }

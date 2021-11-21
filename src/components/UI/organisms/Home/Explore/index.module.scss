@@ -22,9 +22,8 @@
 
     .card-container{ 
         columns: 5;
-        max-height: 1000px;
         overflow: hidden;
-        column-gap: 0;
+        column-gap: 20px;
         
         // display: grid;
         // align-items: flex-start;
@@ -35,6 +34,9 @@
             columns: 4;
             // grid-template-columns: repeat(4, 1fr);
         }
+        @media only screen and (max-width: 480px){
+            columns: 1;
+        };
     }
 
     .btn{

@@ -3,6 +3,9 @@
 
 .container{
     width: 350px;
+    @media only screen and (max-width: 480px){
+        width: 300px;
+    };
     height: 52px;
     border-radius: 39px;
     background-color: #fff;
