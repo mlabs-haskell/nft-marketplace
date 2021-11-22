@@ -1,8 +1,4 @@
-:root {
-  --screen-height: 100px;
-}
-
-// colors
+// COLORS
 /// dark
 $dark: #494949;
 $dark10: #8a8a8a;
@@ -17,10 +13,19 @@ $light2: #c4c4c4;
 $light3: #ebebeb;
 $light4: #c2c2c2;
 $lightText: #d3d3d3;
-
-$gradientBlue: linear-gradient(#4d6ad0, #75acff);
 $lightTextColor: #c1c1c1;
-$auctionBorder: linear-gradient(#ff7c02, #fff509, #ff2cd0, #ff7c02);
+
 $red: #de0000;
 $darkBlue: #2b4581;
 $primary: #3983f2;
+
+
+// GRADIENTS
+$gradientBlue: linear-gradient(#4d6ad0, #75acff);
+$auctionBorder: linear-gradient(#ff7c02, #fff509, #ff2cd0, #ff7c02);
+
+
+// MEDIA BREAKPOINTS
+$breakpointLaptop: 1329px;
+$breakpointTablet: 1023px;
+$breakpointPhone: 767px; // prev value was 480px
