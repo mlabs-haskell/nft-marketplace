@@ -8,9 +8,10 @@
     justify-content: space-between;
     align-items: center;
 
-    // img{
-    //     width: 30px;
-    // }
+    @media only screen and (max-width: $breakpointPhone) {
+        padding: 25px 0;
+    }
+
     .logo{
         display: flex;
          .logo-icon{
@@ -23,7 +24,6 @@
 
     .nav-links{
         display: flex;
-        // justify-content: space-between;
         align-items: center;
 
         ul{
@@ -66,7 +66,6 @@
         }
 
         .icon{
-            // width: 15%;
             margin: 0;
 
         }

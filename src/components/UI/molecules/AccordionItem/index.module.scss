@@ -3,39 +3,63 @@
 
 .accordionItem {
     overflow: hidden;
-    
-    &:first-child {
-        border-radius: 30px 30px 0 0;
-    }
+    border-radius: 20px;
+    box-shadow: 0px 4px 33px rgba(0, 0, 0, 0.06);
+    margin-bottom: 15px;
 
-    &:last-child {
-        border-radius: 0 0 30px 30px;
+    @media only screen and (max-width: $breakpointPhone){
+        border-radius: 15px;
     }
 }
 
 .accordionItemActive {
     .accordionHeader {
-        background: #999999;
         border-bottom-left-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
+
+        .button {
+            border-bottom-right-radius: 20px;
+        }
     }
 }
 
 .accordionHeader {
-    height: 70px;
-    padding: 0 40px;
+    height: 60px;
+    padding-right: 30px;
     display: flex;
     align-items: center;
-    background: $light2;
-    font-weight: 400;
+    font-weight: 600;
     cursor: pointer;
+    color: $primary;
+
+    .button {
+        width: 80px;  
+        height: 100%;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: $primary;
+        margin-right: 20px;
+    }
+
+    @media only screen and (max-width: $breakpointPhone){
+        height: 50px;
+
+        .button {
+            width: 60px;
+
+            img {
+                transform: scale(0.9);
+            }
+        }
+    }
 }
 
 
 .accordionBody {
     padding: 40px;
     font-size: pxToRem(14);
-    background: $light3;
     font-weight: 400;
 
     div,
@@ -48,11 +72,34 @@
     h2, h3, h4 {
         margin: 0 0 24px;
         font-weight: 700;
+        color: #252935;
         font-size: pxToRem(16);
     }
 
     img {
         border-radius: 30px;
+        max-width: 100%;
+    }
+
+    @media only screen and (max-width: $breakpointPhone){
+        padding: 20px 25px;
+
+        div,
+        p,
+        ul {
+            margin-bottom: 15px;
+        } 
+
+        h2, 
+        h3, 
+        h4 {
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        img {
+            border-radius: 15px;
+        }
     }
 }
 
