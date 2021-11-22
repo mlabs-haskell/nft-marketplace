@@ -1,5 +1,7 @@
 import styles from './index.module.scss';
 import Markdown from 'markdown-to-jsx';
+import minusIcon from '../../../../assets/svg/minus-icon.svg'
+import plusIcon from '../../../../assets/svg/plus-icon.svg'
 
 interface Props {
   title: string
@@ -21,8 +23,10 @@ const AccordionItem = ({ title, text, isActive, id, onItemClick }: Props) => {
 
   return (
     <section className={`${styles.accordionItem} ${isActive ? styles.accordionItemActive : ''}`}>
-      <div onClick={onHeaderClick}
-        className={styles.accordionHeader}>
+      <div onClick={onHeaderClick} className={styles.accordionHeader}>
+        <span className={styles.button}>
+          <img src={isActive ? minusIcon : plusIcon} alt="plus" />
+        </span>
         {title}
       </div>
       {isActive &&

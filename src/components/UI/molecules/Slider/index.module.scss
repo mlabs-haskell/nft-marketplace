@@ -54,14 +54,14 @@
         img {
             transform: rotate(180deg);
         }
-        @media only screen and (max-width: 480px){
+        @media only screen and (max-width: $breakpointPhone){
             left: -20px;
         };
     }
     
     .right-arrow {
         right: -50px;
-        @media only screen and (max-width: 480px){
+        @media only screen and (max-width: $breakpointPhone){
             right: 0px;
         };
     }

@@ -11,7 +11,7 @@
     z-index: 99999;
     justify-self: center;
 
-    @media only screen and (max-width: 480px){
+    @media only screen and (max-width: $breakpointPhone){
         width: 290px;
         top:45%;
     };
@@ -60,7 +60,7 @@
                 height: 48px;
                 width: 290px;
 
-                @media only screen and (max-width: 480px){
+                @media only screen and (max-width: $breakpointPhone){
                     width: 230px;
                 };
 
@@ -87,7 +87,7 @@
                 justify-content: flex-end;
                 padding-top: 65px;
                 right: 35px;
-                @media only screen and (max-width: 480px){
+                @media only screen and (max-width: $breakpointPhone){
                     right: 15px;
                 };
 
@@ -124,7 +124,7 @@
                 height: 100px;
                 width: 290px;
 
-                @media only screen and (max-width: 480px){
+                @media only screen and (max-width: $breakpointPhone){
                     width: 230px;
                 };
 
@@ -155,7 +155,7 @@
             height: 50px;
             width: 317px;
             
-            @media only screen and (max-width: 480px){
+            @media only screen and (max-width: $breakpointPhone){
                 width: 250px;
             };
             left: 35px;

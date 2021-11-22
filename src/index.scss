@@ -1,6 +1,9 @@
 @import './assets/scss/abstracts/functions';
 @import './assets/scss/abstracts/variables';
 
+:root {
+  --screen-height: 100px;
+}
 
 button {
   border: none;
