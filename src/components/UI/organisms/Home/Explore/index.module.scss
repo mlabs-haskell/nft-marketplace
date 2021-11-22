@@ -19,7 +19,13 @@
             margin: 0;
         }
     }
-
+    .button{
+        display: flex;
+        
+        button:nth-child(1){
+            margin-right: 20px;
+        }
+    }
     .card-container{ 
         columns: 5;
         overflow: hidden;

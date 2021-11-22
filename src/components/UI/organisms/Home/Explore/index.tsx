@@ -7,7 +7,10 @@ const Explore = () => {
     <div className={styles.contatiner}>
       <div className={styles.header}>
         <h2>Explore</h2>
-        <Button label="My Collection" color="primary" />
+        <div className={styles.button}>
+          <Button label="My Sales" color="secondary" />
+          <Button label="My Collection" color="primary" />
+        </div>
       </div>
       <div className={styles['card-container']}>
         <AuctionCard

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../assets/svg/navIcons/logo.svg';
 import wallet from '../../../assets/svg/navIcons/wallet.svg';
 import SearchInput from '../../UI/molecules/SearchInput';
@@ -8,7 +8,9 @@ const NavBar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <img className={styles["logo-icon"]} src={logo} alt="ntt" />
+        <Link to="/">
+          <img className={styles["logo-icon"]} src={logo} alt="seabug" />
+        </Link>
         <SearchInput placeholder="Search" />
       </div>
       <div className={styles["nav-links"]}>
