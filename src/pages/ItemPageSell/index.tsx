@@ -9,7 +9,7 @@ const ItemPageSell = () => {
     const [itemSell, setItemSell] = useState(false);
 
     const handleItemSell = () => {
-
+      
         setItemSell(!itemSell)
       };
 

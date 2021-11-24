@@ -27,10 +27,10 @@ const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image
         <>
           <div className={styles.bid}>
             <h3>{amount}</h3>
-            <div className={styles['likes-wrapper']}>
+            {/* <div className={styles['likes-wrapper']}>
               <p className={styles['bid-value']}>{likes}</p>
               <img src={liked ? filled : heart} alt="heart" onClick={() => setLiked(!liked)}></img>
-            </div>
+            </div> */}
           </div>
         </>
       )
@@ -39,14 +39,14 @@ const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image
         <>
           <div className={styles.amount}>
             <h3>{amount}</h3>
-            {quantity && <p>{quantity}</p>}
+            {/* {quantity && <p>{quantity}</p>} */}
           </div>
           <div className={styles.bid}>
             <p>{bid}</p>
-            <div className={styles['likes-wrapper']}>
+            {/* <div className={styles['likes-wrapper']}>
               <p className={styles['bid-value']}>{likes}</p>
               <img src={liked ? filled : heart} alt="heart" onClick={() => setLiked(!liked)}></img>
-            </div>
+            </div> */}
           </div>
         </>
       )
@@ -60,9 +60,9 @@ const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image
             <p className={styles.title}>{title}</p>
             <p>{caption}</p>
             <div className={styles['span-container']}>
-              <span className={styles.span}>
+              {/* <span className={styles.span}>
                 <img src="https://picsum.photos/id/33/32/32" alt="avatar" className={styles.avatar} />
-              </span>
+              </span> */}
               <span className={styles.span}>
                 <img src={dots} className={styles.dots} alt="more" />
               </span>

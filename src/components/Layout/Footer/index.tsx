@@ -41,13 +41,14 @@ const Footer = () => {
       </div>
       <div className={`${styles["footer-base"]} row`}>
         <div className='col-lg-9'>
+          <p>Brought to you by MLabs</p>
+        </div>
+        <div className={`${styles["footer-text"]} col-lg-3`}>
           <p>
             Terms
             <span>Privacy policy</span>
           </p>
-        </div>
-        <div className='col-lg-3'>
-          <p>© Rarible, Inc. All rights reserved.</p>
+          <p>© Seabug, Inc. All rights reserved.</p>
         </div>
       </div>
     </div>

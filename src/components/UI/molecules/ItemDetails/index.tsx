@@ -47,13 +47,13 @@ const ItemDetails = ({
       <div className={styles["top-text"]}>
         <ul>
           <li>On Sales for: <span>{saleValue}</span></li>
-          <li>Tessellation Class:</li>
-          <li>Seed:</li>
+          {/* <li>Tessellation Class:</li>
+          <li>Seed:</li> */}
         </ul>
         <ul>
           <li>Highest Bid: <span>{topBidValue}</span></li>
-          <li><h3>{tessellationClass}</h3></li>
-          <li><h3>{seedValue}</h3></li>
+          {/* <li><h3>{tessellationClass}</h3></li>
+          <li><h3>{seedValue}</h3></li> */}
         </ul>
       </div>
       <p className={styles.description}>
