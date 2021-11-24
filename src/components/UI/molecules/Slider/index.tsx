@@ -6,14 +6,15 @@ import styles from './index.module.scss';
 interface SliderProps {
   children: any,
   sliderClass?: string,
+  show: number,
 }
 
-const Slider = ({ children, sliderClass }: SliderProps) => {
+const Slider = ({ children, sliderClass, show }: SliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [length, setLength] = useState(children.length);
 
   const next = () => {
-    if (currentIndex < length - 1) {
+    if (currentIndex < length - show) {
       setCurrentIndex((prevState) => prevState + 1);
     }
   };
@@ -39,13 +40,13 @@ const Slider = ({ children, sliderClass }: SliderProps) => {
         )}
         <div className={styles['slider-content-wrapper']}>
           <div
-            className={classNames([styles['slider-content']])}
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            className={classNames([styles['slider-content'], `show-${show}`])}
+            style={{ transform: `translateX(-${currentIndex * (100 / show)}%)`}}
           >
             {children}
           </div>
         </div>
-        {currentIndex < length - 1 && (
+        {currentIndex < length - show && (
           <button onClick={next} className={styles["right-arrow"]}>
             <img src={right} alt="arrow-right" />
           </button>
