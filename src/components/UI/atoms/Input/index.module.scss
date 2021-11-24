@@ -6,7 +6,7 @@
     border: 1px solid $dark1;
     padding: 20px;
     outline: none;
-    @media only screen and (max-width: 480px){
+    @media only screen and (max-width: $breakpointPhone){
         width: 100%;
     };
 }
