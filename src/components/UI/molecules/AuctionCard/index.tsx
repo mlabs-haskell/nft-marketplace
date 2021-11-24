@@ -1,7 +1,7 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import styles from './index.module.scss';
-import heart from '../../../../assets/svg/heart-icon.svg';
-import filled from '../../../../assets/svg/filled-heart.svg';
+// import heart from '../../../../assets/svg/heart-icon.svg';
+// import filled from '../../../../assets/svg/filled-heart.svg';
 import dots from '../../../../assets/svg/dots.svg';
 import Box from '../../atoms/Box';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,7 @@ interface Props {
 }
 
 const AuctionCard = ({ title, amount, quantity, bid, likes, time, caption, image, isExplore }: Props) => {
-  const [liked, setLiked] = useState(false);
+  // const [liked, setLiked] = useState(false);
 
   const renderCurrectFooter = () => {
     if (isExplore) {
