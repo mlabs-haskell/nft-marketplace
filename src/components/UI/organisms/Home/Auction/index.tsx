@@ -28,7 +28,7 @@ function Auction() {
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
             time="22:14:15"
-            image={image1}
+            image={image2}
           />
         
           <AuctionCard
@@ -48,7 +48,7 @@ function Auction() {
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
             time="22:14:15"
-            image={image1}
+            image={image2}
           />
         
           <AuctionCard
@@ -68,7 +68,7 @@ function Auction() {
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
             time="22:14:15"
-            image={image1}
+            image={image2}
           />
         
           <AuctionCard
