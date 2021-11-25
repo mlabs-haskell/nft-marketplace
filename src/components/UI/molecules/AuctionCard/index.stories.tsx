@@ -15,6 +15,5 @@ Default.args = {
     amount: "300 ETH",
     quantity: "1/1",
     bid: "20",
-    likes: "100",
     time: "22:14"
 };

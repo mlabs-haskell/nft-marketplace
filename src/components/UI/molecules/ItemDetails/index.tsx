@@ -1,7 +1,8 @@
+/* eslint-disable */
 import { useState } from 'react';
 import UserPhoto from '../UserPhoto';
 import styles from './index.module.scss';
-import girl from '../../../../assets/svg/girl.svg';
+import girl from 'assets/svg/girl.svg';
 import Button from '../../atoms/Button';
 import Box from '../../atoms/Box';
 import Tab from '../Tab';
@@ -19,7 +20,7 @@ interface Props {
   bidsData: string;
   historyData: string;
   type:string;
-  handleParentFunction: () =>void;
+  handleParentFunction?: () =>void;
 
 }
 

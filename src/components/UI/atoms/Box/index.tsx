@@ -1,24 +1,23 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import classNames from 'classnames';
-import styles from './index.module.scss'
+import styles from './index.module.scss';
 
 interface BoxProps {
-  boxClass?: string | string[],
-  children?: any,
-  style?: any,
-  onClick?: any,
+  boxClass?: string | string[];
+  children?: any;
+  style?: React.CSSProperties;
+  onClick?: any;
 }
 
-const Box = ({ children, boxClass, style, onClick }:BoxProps) => {
-    return (
-        <div
-            className={classNames([styles.container, boxClass])}
-            style={style ? style : null}
-            onClick={onClick}
-        >
-            {children}
-        </div>
-    )
-}
+const Box = ({ children, boxClass, onClick, ...props }: BoxProps) => (
+  <div
+    className={classNames([styles.container, boxClass])}
+    {...props}
+    onClick={onClick}
+    role="presentation"
+  >
+    {children}
+  </div>
+);
 
-export default Box
+export default Box;

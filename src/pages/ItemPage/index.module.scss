@@ -1,14 +1,15 @@
 @import '../../assets/scss/abstracts/functions';
 @import '../../assets/scss/abstracts/variables';
 
-.container{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 30px 0 60px 0;
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+  margin-bottom: 60px;
 
-    @media only screen and (max-width: $breakpointPhone){
-        flex-direction: column;
-    }
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+  }
 }
