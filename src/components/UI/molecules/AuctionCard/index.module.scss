@@ -9,9 +9,11 @@
   border-radius: 30px;
   page-break-inside: avoid;
   break-inside: avoid;
+  margin-right: 20px;
 
   &.explore {
     max-width: 100%;
+    margin-right: 0;
   }
 
   h3 {
@@ -56,7 +58,7 @@
     .span {
       width: 32px;
       height: 32px;
-      background-color: #ececec;
+      background-color: $primary;
       border-radius: 50%;
       display: inline-flex;
       margin-left: -4px;

@@ -17,11 +17,31 @@
         overflow: hidden;
         width: 100%;
         height: 100%;
+
+        .slider-content.show-2 > * {
+            width: 50%;
+        }
+        
+        .slider-content.show-3 > * {
+            width: calc(100% / 3);
+        }
+        
+        .slider-content.show-4 > * {
+            width: calc(100% / 4);
+
+            @media only screen and (max-width: $breakpointPhone){
+                width: 100%;
+            };
+        }
+
+        .slider-content.show-5 > * {
+            width: calc(100% / 5);
+        }
     }
     
     .slider-content {
         display: flex;
-        transition: all 250ms linear;
+        transition: all .8s linear;
         -ms-overflow-style: none;  /* hide scrollbar in IE and Edge */
         scrollbar-width: none;  /* hide scrollbar in Firefox */
     }
@@ -54,28 +74,16 @@
         img {
             transform: rotate(180deg);
         }
-        @media only screen and (max-width: 480px){
+        @media only screen and (max-width: $breakpointPhone){
             left: -20px;
         };
     }
     
     .right-arrow {
         right: -50px;
-        @media only screen and (max-width: 480px){
+        @media only screen and (max-width: $breakpointPhone){
             right: 0px;
         };
-    }
-    
-    .slider-content.show-2 > * {
-        width: 50%;
-    }
-    
-    .slider-content.show-3 > * {
-        width: calc(100% / 3);
-    }
-    
-    .slider-content.show-4 > * {
-        width: calc(100% / 4);
     }
 }
 

@@ -14,7 +14,7 @@
         align-items: center;
         box-shadow: 0px 16px 13px -12px rgba(0, 0, 0, 0.15);
         padding: 8px 50px;
-        @media only screen and (max-width: 480px){
+        @media only screen and (max-width: $breakpointPhone){
             padding: 8px 20px;
         };
 }
@@ -23,7 +23,7 @@
     color: $lightText;
     margin: 0;
     padding: 8px 50px;
-    @media only screen and (max-width: 480px){
+    @media only screen and (max-width: $breakpointPhone){
         padding: 8px 20px;
     };
 }
