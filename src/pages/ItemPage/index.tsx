@@ -1,8 +1,9 @@
+import React from 'react';
 import ItemDetails from '../../components/UI/molecules/ItemDetails';
 import ItemPhotoCard from '../../components/UI/molecules/ItemPhotoCard';
 import styles from './index.module.scss';
 
-const ItemPage = () => {
+function ItemPage(){
   return (
     <div className={styles.container}>
       <ItemPhotoCard imgUrl="" likeCount="167" />
@@ -19,7 +20,7 @@ const ItemPage = () => {
         bidsData=""
         historyData=""
         type="SELL"
-        handleParentFunction={() => {}}
+        handleParentFunction={() => { return }}
       />
     </div>
   );
