@@ -1,3 +1,4 @@
+/* eslint-disable */
 import ButtonInput from '../../UI/molecules/ButtonInput';
 import styles from './index.module.scss';
 import instagram from '../../../assets/svg/instagram.svg';
