@@ -20,7 +20,7 @@ interface Props {
   bidsData: string;
   historyData: string;
   type:string;
-  handleParentFunction: () =>void;
+  handleParentFunction?: () =>void;
 
 }
 
