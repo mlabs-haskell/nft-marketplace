@@ -1,20 +1,18 @@
-/* eslint-disable */
-import { useState}  from "react";
+import { useState } from 'react';
 import ItemDetails from '../../components/UI/molecules/ItemDetails';
 import ItemPhotoCard from '../../components/UI/molecules/ItemPhotoCard';
 import styles from './index.module.scss';
-import SellModal from "../../components/UI/organisms/SellPage/SellModal";
+import SellModal from '../../components/UI/organisms/SellPage/SellModal';
 
 const ItemPageSell = () => {
+  const [itemSell, setItemSell] = useState(false);
 
-    const [itemSell, setItemSell] = useState(false);
-
-    const handleItemSell = () => {
-      
-        setItemSell(!itemSell)
-      };
+  const handleItemSell = () => {
+    setItemSell(!itemSell);
+  };
 
   return (
+    <>
       <div className={styles.container}>
         <ItemPhotoCard imgUrl="" likeCount="167" />
         <ItemDetails
@@ -32,11 +30,13 @@ const ItemPageSell = () => {
           type="SELL"
           handleParentFunction={handleItemSell}
         />
-      <SellModal 
-        display={itemSell}
-        handleParentFunction={handleItemSell}
-      />
       </div>
+      {itemSell ? (
+        <SellModal display={itemSell} handleParentFunction={handleItemSell} />
+      ) : (
+        ''
+      )}
+    </>
   );
 };
 
