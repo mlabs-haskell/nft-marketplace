@@ -1,8 +1,32 @@
+/* eslint-disable */
 import styles from './index.module.scss';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
+import { useCallback, useEffect } from 'react';
+import { addImage, getImage } from '../../../../../api/image';
 
 const Explore = () => {
+  const fetchImages = useCallback(async () => {
+    try {
+      const response = await getImage();
+      console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
+  }, []);
+  const fetchImagesId = useCallback(async () => {
+    try {
+      const response = await addImage({image: "@Downloads/1.png", title: "first"});
+      console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
+  }, []);
+
+  useEffect(()=>{
+    fetchImages();
+    fetchImagesId();
+  })
   return (
     <div className={styles.contatiner}>
       <div className={styles.header}>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import classNames from 'classnames';
 import {useEffect} from 'react'
 import Box from '../../atoms/Box';

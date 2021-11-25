@@ -1,3 +1,4 @@
+/* eslint-disable */
 import styles from './index.module.scss';
 import search from '../../../../assets/svg/search.svg';
 import arrow from '../../../../assets/svg/arrow-down.svg';

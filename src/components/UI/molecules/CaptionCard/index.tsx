@@ -1,5 +1,5 @@
+/* eslint-disable */
 import classNames from 'classnames';
-import React from 'react';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 

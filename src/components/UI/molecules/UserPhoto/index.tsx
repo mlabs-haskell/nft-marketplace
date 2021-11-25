@@ -1,3 +1,4 @@
+/* eslint-disable */
 import styles from './index.module.scss';
 import check from '../../../../assets/svg/check-fill.svg';
 

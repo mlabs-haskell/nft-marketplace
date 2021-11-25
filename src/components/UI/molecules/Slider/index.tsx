@@ -1,3 +1,4 @@
+/* eslint-disable */
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import right from '../../../../assets/svg/arrow-right.svg'

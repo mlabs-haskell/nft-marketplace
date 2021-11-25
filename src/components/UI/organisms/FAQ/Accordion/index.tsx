@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState } from 'react';
 import styles from './index.module.scss';
 import AccordionItem from '../../../molecules/AccordionItem'
