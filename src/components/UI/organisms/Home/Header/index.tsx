@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable */
 import CaptionCard from '../../../molecules/CaptionCard';
 import Slider from '../../../molecules/Slider';
 import styles from './index.module.scss';

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import styles from './index.module.scss';
 import Markdown from 'markdown-to-jsx';
 import minusIcon from '../../../../assets/svg/minus-icon.svg'

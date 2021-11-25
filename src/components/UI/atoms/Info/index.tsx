@@ -1,3 +1,4 @@
+/* eslint-disable */
 import styles from './index.module.scss';
 import {useState} from 'react';
 import question from '../../../../assets/svg/question-mark.svg';

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../assets/svg/navIcons/logo.svg';
 import wallet from '../../../assets/svg/navIcons/wallet.svg';

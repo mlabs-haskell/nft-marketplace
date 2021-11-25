@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+/* eslint-disable */
 import styles from './index.module.scss';
 // import heart from '../../../../assets/svg/heart-icon.svg';
 // import filled from '../../../../assets/svg/filled-heart.svg';

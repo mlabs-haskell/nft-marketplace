@@ -1,8 +1,9 @@
-import Auction from '../../components/UI/organisms/Home/Auction'
+/* eslint-disable */
+import Auction from '../../components/UI/organisms/Home/Auction';
 import Explore from "../../components/UI/organisms/Home/Explore";
 import Header from "../../components/UI/organisms/Home/Header";
 
-function Home() {
+const Home = () => {
   return (
     <div>
       <Header/>

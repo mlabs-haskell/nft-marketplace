@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState}  from "react";
 import ItemDetails from '../../components/UI/molecules/ItemDetails';
 import ItemPhotoCard from '../../components/UI/molecules/ItemPhotoCard';
