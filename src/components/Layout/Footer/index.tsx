@@ -8,22 +8,32 @@ import youtube from '../../../assets/svg/youtube.svg';
 import Dropdown from '../../UI/molecules/Dropdown';
 
 const Footer = () => {
-  const option = ["English", "Spanish"]
+  const option = ['English', 'Spanish'];
   return (
     <div className={styles.container}>
       <div className={`${styles.footer} row`}>
-        <div className='col-lg-6'>
+        <div className="col-lg-6">
           <p>Get the latest Seabug updates</p>
-          <ButtonInput placeholder="Your Email.:" btnClass={styles.button}/>
-          <ul className={styles["social-links"]}>
-            <li><img src={instagram} alt="instagram" /></li>
-            <li><img src={meta} alt="meta" /></li>
-            <li><img src={messenger} alt="messenger" /></li>
-            <li><img src={twitter} alt="twitter" /></li>
-            <li><img src={youtube} alt="youtube" /></li>
+          <ButtonInput placeholder="Your Email.:" btnClass={styles.button} />
+          <ul className={styles['social-links']}>
+            <li>
+              <img src={instagram} alt="instagram" />
+            </li>
+            <li>
+              <img src={meta} alt="meta" />
+            </li>
+            <li>
+              <img src={messenger} alt="messenger" />
+            </li>
+            <li>
+              <img src={twitter} alt="twitter" />
+            </li>
+            <li>
+              <img src={youtube} alt="youtube" />
+            </li>
           </ul>
         </div>
-        <div className='col-lg-3'>
+        <div className="col-lg-3">
           <p>Seabug</p>
           <ul>
             <li>FAQ - 1</li>
@@ -34,16 +44,16 @@ const Footer = () => {
             <li>FAQ - 1</li>
           </ul>
         </div>
-        <div className='col-lg-3'>
+        <div className="col-lg-3">
           <p>Language</p>
           <Dropdown options={option} />
         </div>
       </div>
-      <div className={`${styles["footer-base"]} row`}>
-        <div className='col-lg-9'>
+      <div className={`${styles['footer-base']} row`}>
+        <div className="col-lg-9">
           <p>Brought to you by MLabs</p>
         </div>
-        <div className={`${styles["footer-text"]} col-lg-3`}>
+        <div className={`${styles['footer-text']} col-lg-3`}>
           <p>
             Terms
             <span>Privacy policy</span>

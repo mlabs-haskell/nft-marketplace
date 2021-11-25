@@ -1,10 +1,26 @@
+/* eslint-disable */
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import axios, {AxiosRequestConfig} from 'axios';
 import reportWebVitals from "./reportWebVitals";
 
 import "./assets/scss/app.scss";
 import './index.scss'
+
+axios.interceptors.request.use((config: AxiosRequestConfig) => {
+  const token = localStorage.getItem('token');
+  if (token != null) {
+    config.headers.common.Authorization = `${token}`;
+  }
+  config.baseURL = process.env.REACT_APP_BASE_URL;
+
+  config.headers.common['Content-Type'] = 'application/json';
+  config.headers.common.Accept = 'application/json';
+  console.log(config);
+
+  return config;
+})
 
 ReactDOM.render(
   <React.StrictMode>
