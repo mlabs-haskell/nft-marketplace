@@ -1,4 +1,3 @@
-/* eslint-disable */
 import ItemDetails from 'components/UI/molecules/ItemDetails';
 import ItemPhotoCard from 'components/UI/molecules/ItemPhotoCard';
 import styles from './index.module.scss';

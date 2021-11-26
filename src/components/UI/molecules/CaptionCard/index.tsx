@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import classNames from 'classnames';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
@@ -12,7 +11,7 @@ interface Props {
 
 const CaptionCard = ({ title, name, imagePath, className }: Props) => (
   <Box
-    boxClass={classNames(className, styles.container)}
+    boxClass={classNames(styles.container, className)}
     style={{ backgroundImage: `url(${imagePath})` }}
   >
     <h4 className={styles.title}>{title}</h4>

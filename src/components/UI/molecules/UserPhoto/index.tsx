@@ -1,4 +1,3 @@
-/* eslint-disable */
 import styles from './index.module.scss';
 import check from '../../../../assets/svg/check-fill.svg';
 
@@ -7,7 +6,8 @@ interface Props {
   isChecked: boolean;
 }
 
-const UserPhoto = ({ imgUrl, isChecked }: Props) => {
+const UserPhoto = (props: Props) => {
+  const { imgUrl, isChecked } = props;
   return (
     <div className={styles.container}>
       <img src={imgUrl} alt="userPhoto" />

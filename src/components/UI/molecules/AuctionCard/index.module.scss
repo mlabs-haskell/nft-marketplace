@@ -1,7 +1,7 @@
 @import '../../../../assets/scss/abstracts/functions';
 @import '../../../../assets/scss/abstracts/variables';
 
-.container{
+.container {
   margin-bottom: 20px;
   display: block;
   max-width: 190px;
@@ -19,7 +19,7 @@
   h3 {
     margin: 0;
   }
-  
+
   p {
     margin: 0;
     font-weight: 300;
@@ -40,21 +40,21 @@
     background-color: #fff;
     padding-bottom: 15px;
 
-    .header-text{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-      p{
+    .header-text {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      p {
         color: #000;
         font-weight: 400;
       }
     }
-    
+
     .span-container {
       display: flex;
       margin-top: 0px;
     }
-    
+
     .span {
       width: 32px;
       height: 32px;
@@ -74,7 +74,7 @@
     .avatar {
       border-radius: 50%;
     }
-    
+
     .span:nth-child(2) {
       background-color: $primary;
       display: flex;
@@ -82,23 +82,23 @@
     }
   }
 
-  .image{
+  .image {
     margin: 0 auto;
     position: relative;
     width: calc(100% + 20px);
     margin-left: -10px;
 
-    img{
+    img {
       width: 100%;
       border-radius: 11px;
       box-shadow: 0px 15px 22px -8px rgba(2, 134, 255, 0.33);
     }
-    
+
     .time-wrapper {
       position: absolute;
       right: 0;
       top: -10px;
-      background: linear-gradient(45deg, #FF7C02, #FFF509);
+      background: linear-gradient(45deg, #ff7c02, #fff509);
       padding: 2px;
       z-index: 99;
       box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.16);
@@ -117,7 +117,7 @@
       background: #fff;
     }
   }
-  
+
   .footer {
     background-color: #fff;
     margin-top: 10px;
@@ -128,7 +128,7 @@
       align-items: center;
     }
 
-    .amount{
+    .amount {
       display: flex;
       justify-content: space-between;
     }
@@ -136,11 +136,11 @@
       display: flex;
       justify-content: space-between;
     }
-    
+
     .bid-value {
       margin-right: 10px;
-  
-      .liked{
+
+      .liked {
         color: $red;
       }
     }

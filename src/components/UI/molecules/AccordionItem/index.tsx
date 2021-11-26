@@ -1,41 +1,47 @@
-/* eslint-disable */
-import styles from './index.module.scss';
 import Markdown from 'markdown-to-jsx';
-import minusIcon from '../../../../assets/svg/minus-icon.svg'
-import plusIcon from '../../../../assets/svg/plus-icon.svg'
+import styles from './index.module.scss';
+import minusIcon from '../../../../assets/svg/minus-icon.svg';
+import plusIcon from '../../../../assets/svg/plus-icon.svg';
 
 interface Props {
-  title: string
-  text: string
-  isActive: boolean
-  id: string
-  onItemClick: (id: string) => void
+  title: string;
+  text: string;
+  isActive: boolean;
+  id: string;
+  onItemClick: (id: string) => void;
 }
 
 const AccordionItem = ({ title, text, isActive, id, onItemClick }: Props) => {
-
   const onHeaderClick = () => {
     if (isActive) {
-      onItemClick('')
+      onItemClick('');
     } else {
-      onItemClick(id)
+      onItemClick(id);
     }
-  }
+  };
 
   return (
-    <section className={`${styles.accordionItem} ${isActive ? styles.accordionItemActive : ''}`}>
-      <div onClick={onHeaderClick} className={styles.accordionHeader}>
+    <section
+      className={`${styles.accordionItem} ${
+        isActive ? styles.accordionItemActive : ''
+      }`}
+    >
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onHeaderClick}
+        className={styles.accordionHeader}
+      >
         <span className={styles.button}>
           <img src={isActive ? minusIcon : plusIcon} alt="plus" />
         </span>
         {title}
       </div>
-      {isActive &&
+      {isActive && (
         <div className={styles.accordionBody}>
-          <Markdown>
-            {text}
-          </Markdown>
-        </div>}
+          <Markdown>{text}</Markdown>
+        </div>
+      )}
     </section>
   );
 };

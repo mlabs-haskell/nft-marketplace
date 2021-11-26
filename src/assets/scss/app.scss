@@ -1,12 +1,12 @@
-@import "bootstrap/scss/bootstrap-grid.scss";
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins/breakpoints";
+@import 'bootstrap/scss/bootstrap-grid.scss';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
 // abstracts
-@import "abstracts/variables";
-@import "abstracts/functions";
-@import "abstracts/text";
+@import 'abstracts/variables';
+@import 'abstracts/functions';
+@import 'abstracts/text';
 
 // base
-@import "base/reset";
-@import "base/typography";
+@import 'base/reset';
+@import 'base/typography';

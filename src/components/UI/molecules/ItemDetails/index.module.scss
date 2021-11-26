@@ -5,20 +5,23 @@
   max-width: 490px;
   margin-left: 105px;
 
-  @media only screen and (max-width: $breakpointPhone){
+  @media only screen and (max-width: $breakpointPhone) {
     width: 100%;
     margin: 0 auto;
     margin-top: 30px;
-  };
+  }
 
-  h2{
+  h2 {
     margin-top: 0;
   }
-  h3, h4, p, span{
+  h3,
+  h4,
+  p,
+  span {
     font-size: pxToRem(14);
   }
-  h4{
-    span{
+  h4 {
+    span {
       margin-left: 10px;
       color: $lightText;
     }
@@ -28,27 +31,27 @@
     color: $primary;
     font-size: pxToRem(24);
   }
-  .top-text{
+  .top-text {
     display: flex;
     margin-top: 10px;
 
-    ul{
+    ul {
       list-style: none;
       margin: 0;
       padding: 0;
 
-      &:first-child{
+      &:first-child {
         margin-right: 30px;
       }
 
-      li{
+      li {
         font-size: pxToRem(14);
         font-style: normal;
         color: $light4;
         margin-right: 6px;
         margin-bottom: 20px;
 
-        span{
+        span {
           color: #000;
           font-weight: 400;
           margin-left: 10px;
@@ -110,13 +113,13 @@
       height: 47px;
     }
   }
-  .box-container{
+  .box-container {
     display: block;
     margin: 20px 0;
     padding: 0;
     box-shadow: 0px 4px 33px rgba(0, 0, 0, 0.06);
-  
-    .tab-container{
+
+    .tab-container {
       display: flex;
       list-style: none;
       justify-content: space-between;
@@ -125,10 +128,10 @@
       width: 85%;
       cursor: pointer;
     }
-    .content{
-        color: $lightText;
-        margin: 0 20px;
-        padding: 10px;
+    .content {
+      color: $lightText;
+      margin: 0 20px;
+      padding: 10px;
     }
     .block {
       padding: 18px 18px 28px;
@@ -157,14 +160,14 @@
       }
     }
   }
-  .buttons{
+  .buttons {
     display: flex;
     margin-top: 25px;
     width: 100%;
     justify-content: space-between;
 
-  .btn{
-    width: 47%;
-  }
+    .btn {
+      width: 47%;
+    }
   }
 }

@@ -13,12 +13,12 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 export const Normal = Template.bind({});
 Normal.args = {
   label: 'Button',
-  color: 'secondary'
+  color: 'secondary',
 };
 
 export const Small = Template.bind({});
 Small.args = {
   size: 'small',
   label: 'Button',
-  color: 'primary'
+  color: 'primary',
 };
