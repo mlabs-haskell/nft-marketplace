@@ -3,11 +3,10 @@ import check from '../../../../assets/svg/check-fill.svg';
 
 interface Props {
   imgUrl: string;
-  isChecked: boolean;
 }
 
 const UserPhoto = (props: Props) => {
-  const { imgUrl, isChecked } = props;
+  const { imgUrl } = props;
   return (
     <div className={styles.container}>
       <img src={imgUrl} alt="userPhoto" />

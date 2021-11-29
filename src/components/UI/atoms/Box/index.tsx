@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import classNames from 'classnames';
 import styles from './index.module.scss';
 

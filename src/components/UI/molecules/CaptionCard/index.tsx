@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import classNames from 'classnames';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
