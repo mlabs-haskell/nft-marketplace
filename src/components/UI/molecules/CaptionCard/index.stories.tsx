@@ -5,12 +5,14 @@ export default {
   title: 'Atoms/CaptionCard',
   component: CaptionCard,
   argTypes: {},
-} as ComponentMeta <typeof CaptionCard>
+} as ComponentMeta<typeof CaptionCard>;
 
-const Template: ComponentStory <typeof CaptionCard> = (args) => <CaptionCard {...args} />;
+const Template: ComponentStory<typeof CaptionCard> = (args) => (
+  <CaptionCard {...args} />
+);
 
 export const Default = Template.bind({});
 Default.args = {
   name: 'John English',
-  title: 'hello'
+  title: 'hello',
 };

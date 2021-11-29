@@ -4,40 +4,40 @@
 @import '../../../../../assets/scss/abstracts/functions';
 @import '../../../../../assets/scss/abstracts/variables';
 
-.contatiner{
-    padding-bottom: 54px;
+.contatiner {
+  padding-bottom: 54px;
 }
 
 .slide {
-    display: flex;
-    justify-content: space-between;
-    
-    .card {
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-    }
+  display: flex;
+  justify-content: space-between;
+
+  .card {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
 }
 
 .small-cards-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
 
-    .card{
-        width: calc(33.33% - 52px);
-        height: 195px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
+  .card {
+    width: calc(33.33% - 52px);
+    height: 195px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
 }
 
 .big-card-wrapper {
-    width: calc(40% - 20px);
+  width: calc(40% - 20px);
 
-    .card {
-        height: 440px;
-    }
+  .card {
+    height: 440px;
+  }
 }

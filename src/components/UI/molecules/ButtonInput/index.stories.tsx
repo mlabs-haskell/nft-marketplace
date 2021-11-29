@@ -5,9 +5,11 @@ export default {
   title: 'Atoms/ButtonInput',
   component: ButtonInput,
   argTypes: {},
-} as ComponentMeta <typeof ButtonInput>
+} as ComponentMeta<typeof ButtonInput>;
 
-const Template: ComponentStory <typeof ButtonInput> = (args) => <ButtonInput {...args} />;
+const Template: ComponentStory<typeof ButtonInput> = (args) => (
+  <ButtonInput {...args} />
+);
 
 export const Default = Template.bind({});
 Default.args = {

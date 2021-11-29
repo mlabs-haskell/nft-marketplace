@@ -2,27 +2,27 @@
 @import '/src/assets/scss/abstracts/variables';
 
 .titleWrapper {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 
-    @media only screen and (max-width: $breakpointPhone){
-        margin-bottom: 20px;
-    }
+  @media only screen and (max-width: $breakpointPhone) {
+    margin-bottom: 20px;
+  }
 }
 
 .title {
-    font-weight: 700;
-    font-size: pxToRem(30);
-    color: $primary;
-    margin: 20px 0 5px;
+  font-weight: 700;
+  font-size: pxToRem(30);
+  color: $primary;
+  margin: 20px 0 5px;
 
-    @media only screen and (max-width: $breakpointPhone){
-        font-size: pxToRem(20);
-        margin-top: 10px;
-    }
+  @media only screen and (max-width: $breakpointPhone) {
+    font-size: pxToRem(20);
+    margin-top: 10px;
+  }
 }
 
 .subtitle {
-    font-weight: 400;
-    font-size: pxToRem(14);
-    color: $lightText;
+  font-weight: 400;
+  font-size: pxToRem(14);
+  color: $lightText;
 }

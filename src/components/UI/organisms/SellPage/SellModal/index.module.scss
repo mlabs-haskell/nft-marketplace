@@ -2,71 +2,70 @@
 @import '../../../../../assets/scss/abstracts/variables';
 
 .body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 20px;
+  width: 317px;
+  margin: 0 auto;
+  .description {
+    height: 100px;
+    width: 90%;
+    left: 35px;
+    top: 111px;
+    border: 1px solid #d3d3d3;
+    border-radius: 16px;
+    padding: 17px 17px;
+
+    &::placeholder {
+      color: $lightText;
+    }
+  }
+  .title {
+    font-size: 20px;
+    font-style: 400;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-align: left;
+  }
+
+  .inputBox {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-bottom: 20px;
-    width: 317px;
-    margin: 0 auto;
-    .description{
-        height: 100px;
-        width: 90%;
-        left: 35px;
-        top: 111px;
-        border: 1px solid #D3D3D3;
-        border-radius: 16px;
-        padding: 17px 17px;
-    
-        &::placeholder{
-            color: $lightText;
-        }
+    justify-content: space-between;
+    border: 1px solid $lightText;
+    border-radius: 16px;
+    width: 100%;
+  }
+
+  .input {
+    height: 48px;
+    border-radius: 16px;
+    border: none;
+    padding: 0px 17px;
+
+    &::placeholder {
+      color: $lightText;
     }
-        .title {
-            font-size: 20px;
-            font-style: 400;
-            font-weight: 500;
-            letter-spacing: -0.02em;
-            text-align: left;
-        };
+  }
 
-        .inputBox{
-            display: flex;
-            justify-content: space-between;
-            border: 1px solid $lightText;
-            border-radius: 16px;
-            width: 100%;
-        }
+  .dropdown {
+    border: 1px solid $lightText;
+    background-color: #fff;
+    color: #afafaf;
+    border: none;
+    width: 100px;
 
-        .input{
-            height: 48px;
-            border-radius: 16px;
-            border: none;
-            padding: 0px 17px;
-
-            &::placeholder{
-                color: $lightText;
-            };
-        }
-
-        .dropdown{
-            border: 1px solid $lightText;
-            background-color: #fff;
-            color: #afafaf;
-            border: none;
-            width: 100px;
-
-            img {
-                height: 30px;
-                filter: invert(77%) sepia(1%) saturate(0%) hue-rotate(57deg) brightness(91%) contrast(0%);
-            }
-        }
-
-    .button{
-       margin-top: 30px;
-       .btn{
-           width: 100%;
-       }
+    img {
+      height: 30px;
+      filter: invert(77%) sepia(1%) saturate(0%) hue-rotate(57deg)
+        brightness(91%) contrast(0%);
     }
+  }
+
+  .button {
+    margin-top: 30px;
+    .btn {
+      width: 100%;
+    }
+  }
 }
-
-

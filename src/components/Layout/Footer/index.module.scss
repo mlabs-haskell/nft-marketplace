@@ -1,70 +1,69 @@
 @import '../../../assets/scss/abstracts/functions';
 @import '../../../assets/scss/abstracts/variables';
 
-.container{
-    background-color: $darkBlue;
-    color: #fff;
-    font-size: pxToRem(14);
-    width: 100%;
-    position: absolute;
-    left: 0;
+.container {
+  background-color: $darkBlue;
+  color: #fff;
+  font-size: pxToRem(14);
+  width: 100%;
+  position: absolute;
+  left: 0;
 
-    .footer{
-        width: 80%;
-        margin: 0 auto;
-        padding-top: 100px;
+  .footer {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 100px;
 
-        @media only screen and (max-width: $breakpointPhone){
-            padding-top: 30px;
-        };
-
-        p{
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        ul{
-            list-style: none;
-            padding: 0;
-
-            li{
-                font-weight: 300;
-                margin-bottom: 10px;
-            }
-        }
-        .button{
-            border-radius: 18px;
-        }
-        .social-links{
-            display: flex;
-            margin-top: 30px;
-        }
+    @media only screen and (max-width: $breakpointPhone) {
+      padding-top: 30px;
     }
-    .footer-base{
-        display: flex;
-        width: 80%;
-        margin: 0 auto;
-        justify-content: space-between;
-        padding-bottom: 50px;
 
-        p:last-child{
-            color: #C7DDFF;
-        }
-
-        .footer-text{
-            margin-top: -30px;
-        }
-
-        span{
-            display: inline-block;
-            margin-left: 20px;
-        }
-
-        .language{
-            border-radius: 50%;
-            border: 1px solid #fff;
-            padding: 2px 5px;
-        }
-
+    p {
+      margin-bottom: 20px;
+      width: 100%;
     }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        font-weight: 300;
+        margin-bottom: 10px;
+      }
+    }
+    .button {
+      border-radius: 18px;
+    }
+    .social-links {
+      display: flex;
+      margin-top: 30px;
+    }
+  }
+  .footer-base {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: space-between;
+    padding-bottom: 50px;
+
+    p:last-child {
+      color: #c7ddff;
+    }
+
+    .footer-text {
+      margin-top: -30px;
+    }
+
+    span {
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    .language {
+      border-radius: 50%;
+      border: 1px solid #fff;
+      padding: 2px 5px;
+    }
+  }
 }
