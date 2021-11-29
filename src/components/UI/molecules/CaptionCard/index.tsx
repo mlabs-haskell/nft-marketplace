@@ -12,7 +12,7 @@ interface Props {
 
 const CaptionCard = ({ title, name, imagePath, className }: Props) => (
   <Box
-    boxClass={classNames(className, styles.container)}
+    boxClass={classNames(styles.container, className)}
     style={{ backgroundImage: `url(${imagePath})` }}
   >
     <h4 className={styles.title}>{title}</h4>

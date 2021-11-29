@@ -14,22 +14,22 @@ body {
   font-family: 'Poppins', sans-serif;
   width: 90%;
   margin: 0 auto;
-  background-color: #FBFEFF;
+  background-color: #fbfeff;
 }
-h2{
-    font-weight: 400;
-    font-size: 30px;
-    color: $primary;
+h2 {
+  font-weight: 400;
+  font-size: 30px;
+  color: $primary;
 }
-h3{
-    font-size: 16px;
-    color: $primary;
+h3 {
+  font-size: 16px;
+  color: $primary;
 }
-p{
-    font-weight: 300;
-    font-size: pxToRem(14);
+p {
+  font-weight: 300;
+  font-size: pxToRem(14);
 }
-a{
-    text-decoration: none;
-    outline: none;
+a {
+  text-decoration: none;
+  outline: none;
 }

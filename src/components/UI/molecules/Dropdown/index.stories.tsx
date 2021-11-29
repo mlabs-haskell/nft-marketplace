@@ -5,11 +5,13 @@ export default {
   title: 'Atoms/Dropdown',
   component: Dropdown,
   argTypes: {},
-} as ComponentMeta <typeof Dropdown>
+} as ComponentMeta<typeof Dropdown>;
 
-const Template: ComponentStory <typeof Dropdown> = (args) => <Dropdown {...args} />;
+const Template: ComponentStory<typeof Dropdown> = (args) => (
+  <Dropdown {...args} />
+);
 
 export const Default = Template.bind({});
 Default.args = {
-    options: ["English", "Spanish"]
+  options: ['English', 'Spanish'],
 };

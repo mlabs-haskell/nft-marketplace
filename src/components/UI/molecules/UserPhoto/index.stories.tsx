@@ -14,5 +14,4 @@ const Template: ComponentStory<typeof UserPhoto> = (args) => (
 export const Default = Template.bind({});
 Default.args = {
   imgUrl: '',
-  isChecked: true,
 };

@@ -1,78 +1,77 @@
 @import '../../../assets/scss/abstracts/functions';
 @import '../../../assets/scss/abstracts/variables';
 
-.container{
-    max-width: 100%;
-    padding: 36px 0;
+.container {
+  max-width: 100%;
+  padding: 36px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media only screen and (max-width: $breakpointPhone) {
+    padding: 25px 0;
+  }
+
+  .logo {
     display: flex;
-    justify-content: space-between;
+    .logo-icon {
+      @media only screen and (max-width: $breakpointPhone) {
+        width: 90%;
+      }
+      margin-right: 36px;
+    }
+  }
+
+  .nav-links {
+    display: flex;
     align-items: center;
 
-    @media only screen and (max-width: $breakpointPhone) {
-        padding: 25px 0;
-    }
+    ul {
+      display: inline-flex;
+      align-items: center;
+      list-style: none;
+      font-size: pxToRem(14);
+      font-weight: 700;
+      padding: 0;
+      margin: 0;
 
-    .logo{
-        display: flex;
-         .logo-icon{
-            @media only screen and (max-width: $breakpointPhone){
-                width: 90%;
-            };
-             margin-right: 36px;
-         }
-    }
+      .nav {
+        cursor: pointer;
+        display: inline-block;
+        color: $light2;
+        text-decoration: none;
+        margin-right: 33px;
+        @media only screen and (max-width: $breakpointPhone) {
+          margin-right: 13px;
+        }
+      }
 
-    .nav-links{
+      .active-nav {
+        background-image: $gradientBlue;
+        text-decoration: none;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .signin-btn {
+        background-color: $dark10;
+        border-radius: 37px;
+        width: 161px;
+        height: 44px;
         display: flex;
+        justify-content: center;
         align-items: center;
-
-        ul{
-            display: inline-flex;
-            align-items: center;
-            list-style: none;
-            font-size: pxToRem(14);
-            font-weight: 700;
-            padding: 0;
-            margin: 0;
-            
-            .nav{
-                cursor: pointer;
-                display: inline-block;
-                color: $light2;
-                text-decoration: none;
-                margin-right: 33px;
-                @media only screen and (max-width: $breakpointPhone){
-                    margin-right: 13px
-                };
-            }
-
-            .active-nav{
-                background-image: $gradientBlue;
-                text-decoration: none;
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-    
-            .signin-btn{
-                background-color: $dark10;
-                border-radius: 37px;
-                width: 161px;
-                height: 44px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: #fff;
-            }
-        }
-
-        .icon{
-            margin: 0;
-
-        }
+        color: #fff;
+      }
     }
+
+    .icon {
+      margin: 0;
+    }
+  }
 }
 
 .wallet-icon {
-    height: 44px;
-    overflow: hidden;
+  height: 44px;
+  overflow: hidden;
 }

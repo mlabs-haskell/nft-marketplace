@@ -1,4 +1,3 @@
-/* eslint-disable */
 import classNames from 'classnames';
 import Button from '../../atoms/Button';
 import Input from '../../atoms/Input';

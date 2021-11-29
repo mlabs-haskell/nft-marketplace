@@ -4,9 +4,9 @@
 
 If you are working a full day the expectation is:
 
-* a minimum of 2 mergable PRs per day
-* avoid using rebase, only use PR merges or 'git merge'
-* avoid squashing commits and force-pushing (unless security credentials were accidentally committed)
+- a minimum of 2 mergable PRs per day
+- avoid using rebase, only use PR merges or 'git merge'
+- avoid squashing commits and force-pushing (unless security credentials were accidentally committed)
 
 PRs will be reviewed and merged on a daily basis.
 
