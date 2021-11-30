@@ -26,7 +26,12 @@
     }
   },
   "rules": {
-    "prettier/prettier": ["error"],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "no-unused-vars": "off",
     "quotes": [
       "warn",
@@ -52,23 +57,19 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
-    "@typescript-eslint/no-use-before-define": [
-      "error",
-      {
-        "functions": false,
-        "classes": true,
-        "variables": true,
-        "typedefs": true
-      }
-    ],
+    //report incorrect errors
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "lines-between-class-members": "off",
     "no-lone-blocks": 0,
     "import/extensions": 0,
     "no-lonely-if": 0,
+    "no-param-reassign": "off",
     "no-useless-escape": 0,
     "react/jsx-fragments": 0,
     "import/no-extraneous-dependencies": "off",

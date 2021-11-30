@@ -63,34 +63,6 @@ const ItemDetails = ({
         <UserPhoto imgUrl={girl} />
         <p>{creatorName}</p>
       </div>
-      <Box boxClass={styles['box-container']}>
-        <div className={styles['tab-container']}>
-          {tabs.map((tab) => (
-            <Tab
-              key={uuidv4()}
-              title={tab}
-              onClick={() => setActive(tab)}
-              active={active === tab}
-            />
-          ))}
-        </div>
-        <div className={styles.content}>
-          {active === 'owners' && (
-            <div className={styles.block__content}>
-              <UserPhoto imgUrl={girl} />
-              <div>
-                <p>
-                  {creatorName}
-                  <br />
-                  <span>100 editions not for sale</span>
-                </p>
-              </div>
-              <p style={{ marginLeft: '50px' }}>Content for </p>
-            </div>
-          )}
-          {active === 'Bids' && <p>bye</p>}
-        </div>
-      </Box>
       <div className={styles.buttons}>
         {type === 'BUY' ? (
           <>

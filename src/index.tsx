@@ -1,10 +1,8 @@
-/* eslint-disable */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import axios, { AxiosRequestConfig } from 'axios';
 import reportWebVitals from './reportWebVitals';
-
+import App from './App';
 import './assets/scss/app.scss';
 import './index.scss';
 
