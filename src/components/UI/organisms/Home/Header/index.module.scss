@@ -11,7 +11,10 @@
 .slide {
   display: flex;
   justify-content: space-between;
-
+  
+  @media only screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
   .card {
     background-repeat: no-repeat;
     background-size: cover;
@@ -20,14 +23,16 @@
 }
 
 .small-cards-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
+  columns: 3;
   width: 60%;
 
+  @media only screen and (max-width: 1024px) {
+    columns: 2;
+    width: 100%;
+    margin-top: 24px;
+  }
+
   .card {
-    width: calc(33.33% - 52px);
     height: 195px;
     padding: 20px;
     margin-bottom: 20px;
@@ -36,8 +41,18 @@
 
 .big-card-wrapper {
   width: calc(40% - 20px);
+    
+  @media only screen and (max-width: 1024px) {
+    width: 100%;
+  }
 
   .card {
     height: 440px;
+    @media only screen and (max-width: 1024px) {
+      height: 340px;
+    }
+    @media only screen and (max-width: $breakpointPhone) {
+      height: 240px;
+    }
   }
 }

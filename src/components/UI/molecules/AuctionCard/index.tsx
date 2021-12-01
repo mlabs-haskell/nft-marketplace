@@ -13,6 +13,7 @@ interface Props {
   caption?: string;
   image: string;
   isExplore?: boolean;
+  isAuction?: boolean;
 }
 
 const AuctionCard = ({
@@ -24,6 +25,7 @@ const AuctionCard = ({
   caption,
   image,
   isExplore,
+  isAuction,
 }: Props) => {
   // const [liked, setLiked] = useState(false);
 
@@ -59,7 +61,11 @@ const AuctionCard = ({
   };
 
   return (
-    <Box boxClass={`${styles.container} ${isExplore ? styles.explore : ''}`}>
+    <Box
+      boxClass={`${styles.container} ${isExplore ? styles.explore : ''} ${
+        isAuction ? styles.auction : ''
+      }`}
+    >
       <div className={styles.header}>
         <div className={styles['header-text']}>
           <p className={styles.title}>{title}</p>

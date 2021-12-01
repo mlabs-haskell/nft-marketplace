@@ -6,3 +6,17 @@
   font-weight: 700;
   margin: 0 0 54px;
 }
+
+.card-wrapper {
+  max-width: 20%;
+
+  @media screen and (max-width: 1024px) {
+    max-width: 35%;
+  }
+
+  @media screen and (max-width: $breakpointPhone) {
+    max-width: 100%;
+  }
+
+}
+

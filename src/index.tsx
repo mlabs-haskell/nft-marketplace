@@ -1,10 +1,9 @@
-/* eslint-disable */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import axios, { AxiosRequestConfig } from 'axios';
+import { NftContextProvider } from 'context/NftContext';
 import reportWebVitals from './reportWebVitals';
-
+import App from './App';
 import './assets/scss/app.scss';
 import './index.scss';
 
@@ -17,14 +16,15 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 
   config.headers.common['Content-Type'] = 'application/json';
   config.headers.common.Accept = 'application/json';
-  console.log(config);
 
   return config;
 });
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <NftContextProvider>
+      <App />
+    </NftContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
