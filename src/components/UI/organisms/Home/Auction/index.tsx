@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Slider from '../../../molecules/Slider';
 import image1 from '../../../../../assets/svg/image1.svg';
 import image2 from '../../../../../assets/svg/image2.svg';
@@ -29,8 +29,6 @@ function Auction() {
 
   const [carrocelNum, setCarrocelNum] = useState(5);
 
-  function handleOnChange(e: FormEvent<HTMLDivElement>) {}
-
   useEffect(() => {
     if (windowDimensions.width > 1024) {
       setCarrocelNum(5);
@@ -47,10 +45,7 @@ function Auction() {
     <div>
       <h2 className={styles.header}>Live auctions</h2>
       <Slider show={carrocelNum}>
-        <div
-          className={styles['card-wrapper']}
-          onChange={(e) => handleOnChange(e)}
-        >
+        <div className={styles['card-wrapper']}>
           <AuctionCard
             isAuction
             bid="Bid 5,000 DAI"
