@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios, { AxiosRequestConfig } from 'axios';
+import { NftContextProvider } from 'context/auth';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import './assets/scss/app.scss';
@@ -22,7 +23,9 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <NftContextProvider>
+      <App />
+    </NftContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

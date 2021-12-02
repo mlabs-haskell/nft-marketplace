@@ -1,8 +1,13 @@
+import { GlobalContent } from '../../../../../context/auth';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
-const Explore = () => (
+interface Props {
+  NFTs: GlobalContent['images'];
+}
+
+const Explore = ({ NFTs }: Props) => (
   <div className={styles.contatiner}>
     <div className={styles.header}>
       <h2>Explore</h2>

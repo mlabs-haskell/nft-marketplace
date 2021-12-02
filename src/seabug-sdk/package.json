@@ -1,0 +1,19 @@
+{
+  "name": "nft-marketplace-sdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "files": [
+    "/dist"
+  ],
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "typescript": "^4.5.2"
+  }
+}

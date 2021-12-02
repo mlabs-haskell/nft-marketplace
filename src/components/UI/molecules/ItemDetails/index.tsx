@@ -1,12 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import girl from 'assets/svg/girl.svg';
 import UserPhoto from '../UserPhoto';
 import styles from './index.module.scss';
 import Button from '../../atoms/Button';
-import Box from '../../atoms/Box';
-import Tab from '../Tab';
 
 interface Props {
   title: string;
@@ -30,7 +26,6 @@ const ItemDetails = ({
   handleParentFunction,
 }: Props) => {
   const [active, setActive] = useState('owners');
-  const tabs = ['owners', 'Bids', 'History'];
 
   return (
     <div className={styles.container}>

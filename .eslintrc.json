@@ -57,6 +57,9 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/require-await":"off",
+    "@typescript-eslint/await-thenable":"off",
+    "import/prefer-default-export":"off",
     //report incorrect errors
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
@@ -97,6 +100,7 @@
       { "groups": [["builtin", "external", "internal"]] }
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-floating-promises": "off"
+    "@typescript-eslint/no-floating-promises": "off",
+    "arrow-body-style":"off"
   }
 }
