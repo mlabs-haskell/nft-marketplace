@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import dots from 'assets/svg/dots.svg';
+import { useEffect, useState } from 'react';
 import Box from '../../atoms/Box';
 
 import styles from './index.module.scss';
@@ -28,6 +29,30 @@ const AuctionCard = ({
   isAuction,
 }: Props) => {
   // const [liked, setLiked] = useState(false);
+
+  const calculateTime = () => {
+    const Timer: string = time!;
+    const endTime = new Date(Timer);
+    const nowDate = new Date();
+    const difference = endTime.getTime() - nowDate.getTime();
+
+    const timeAgo = {
+      s: Math.floor((difference / 1000) % 60),
+      m: Math.floor((difference / 1000 / 60) % 60),
+      h: Math.floor(difference / (1000 * 60 * 60)),
+    };
+    const string = `${timeAgo.h}:${timeAgo.m}:${timeAgo.s}`;
+
+    return string;
+  };
+
+  const [date, setDate] = useState(calculateTime());
+
+  useEffect(() => {
+    setInterval(() => {
+      setDate(calculateTime());
+    }, 100);
+  }, []);
 
   const renderCurrectFooter = () => {
     if (isExplore) {
@@ -85,7 +110,7 @@ const AuctionCard = ({
           <img src={image} alt="nft-item" />
           {time && (
             <div className={styles['time-wrapper']}>
-              <span className={styles.time}>{time}</span>
+              <span className={styles.time}>{date}</span>
             </div>
           )}
           {isExplore && quantity && (

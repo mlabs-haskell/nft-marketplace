@@ -26,7 +26,7 @@ export const NftContextProvider: FC = ({ children }) => {
     // Get NFT and Image Data
     const nftList = await sdk.query.listNfts();
 
-    console.log(nftList);
+    const time = nftList[0].auctionState?.deadline;
 
     const { data } = await getImage();
     useEffect(() => {
