@@ -1,8 +1,92 @@
 import axios from 'axios';
 
-export const getArtist = async () => {
-  const response = await axios.get('artists');
-  return response;
+export const getArtist = () => {
+  const mock = {
+    data: [
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+      {
+        title: 'Meelo',
+        name: 'By Hennkok',
+        imagePath: 'https://picsum.photos/500/500',
+      },
+    ],
+  };
+
+  return mock;
 };
 
 export const getArtistbyId = async (id: string) => {
