@@ -60,6 +60,7 @@
     "@typescript-eslint/require-await":"off",
     "@typescript-eslint/await-thenable":"off",
     "import/prefer-default-export":"off",
+    "array-callback-return":"off",
     //report incorrect errors
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
