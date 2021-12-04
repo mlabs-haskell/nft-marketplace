@@ -31,98 +31,28 @@ const Header = (props: Props) => {
       <Slider show={1}>
         <div className={styles.slide}>
           <div className={styles['big-card-wrapper']}>
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/500/500"
-            />
+            <CaptionCard name="By Hennkok" className={styles.card} />
           </div>
           <div className={styles['small-cards-wrapper']}>
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
+            <CaptionCard name="By Hennkok" className={styles.card} />
+            <CaptionCard name="By Hennkok" className={styles.card} />
+            <CaptionCard name="By Hennkok" className={styles.card} />
+            <CaptionCard name="By Hennkok" className={styles.card} />
+            <CaptionCard name="By Hennkok" className={styles.card} />
+            <CaptionCard name="By Hennkok" className={styles.card} />
           </div>
         </div>
         <div className={styles.slide}>
           <div className={styles['big-card-wrapper']}>
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/500/500"
-            />
+            <CaptionCard name="By Hennkok" className={styles.card} />
           </div>
           <div className={styles['small-cards-wrapper']}>
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
-            <CaptionCard
-              title="Meelo"
-              name="By Hennkok"
-              className={styles.card}
-              imagePath="https://picsum.photos/300/300"
-            />
+            <CaptionCard name="By Hennkok" className={styles.card} />
+            <CaptionCard name="By Hennkok" className={styles.card} />
+            <CaptionCard name="By Hennkok" className={styles.card} />
+            <CaptionCard name="By Hennkok" className={styles.card} />
+            <CaptionCard name="By Hennkok" className={styles.card} />
+            <CaptionCard name="By Hennkok" className={styles.card} />
           </div>
         </div>
       </Slider>

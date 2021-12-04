@@ -1,24 +1,19 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import classNames from 'classnames';
+import { ArtistsType } from 'types/artists';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 
-interface Props {
-  title: string;
-  name: string;
+interface Props extends ArtistsType.Artist {
   className?: string;
-  imagePath?: string | undefined;
 }
 
-const CaptionCard = ({ title, name, imagePath, className }: Props) => (
+const CaptionCard = ({ name, className }: Props) => (
   <Box
     boxClass={classNames(styles.container, className)}
-    style={{ backgroundImage: `url(${imagePath})` }}
+    style={{ backgroundImage: `url(https://picsum.photos/500/500)` }}
   >
-    <h4 className={styles.title}>{title}</h4>
-    <p>
-      <span>{name}</span>
-    </p>
+    <h4 className={styles.title}>{name}</h4>
   </Box>
 );
 
