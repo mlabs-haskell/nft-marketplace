@@ -1,7 +1,9 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { v4 as uuidv4 } from 'uuid';
 import { ArtistsType } from 'types/artists';
 import CaptionCard from '../../../molecules/CaptionCard';
-import Slider from '../../../molecules/Slider';
 import styles from './index.module.scss';
+import { separateArrayByArrays } from '../../../../../utils/separateArrayByArrays';
 
 interface Props {
   artists: ArtistsType.Artist[];
@@ -9,53 +11,41 @@ interface Props {
 
 const Header = (props: Props) => {
   const { artists } = props;
-  console.log('artists', artists);
 
-  // const separateArtists = () => {
-  //   if (!artists?.length) return
+  const renderBigSlide = () => {
+    if (!artists?.length) return null;
+    return (
+      <SwiperSlide>
+        <div className={styles['big-card-wrapper']}>
+          <CaptionCard {...artists[0]} className={styles['card-big']} />
+        </div>
+      </SwiperSlide>
+    );
+  };
 
-  //   const size = 7;
-  //   let result = [];
-  //   for (let i = 0; i < Math.ceil(artists.length / size); i++) {
-  //     console.log(artists.slice((i * size), (i * size) + size))
-  //     result[i] = artists.slice((i * size), (i * size) + size);
-  //   }
+  const renderSmallSlides = () => {
+    if (!artists?.length) return null;
 
-  //   return result
-  // }
+    const withoutFirst = artists.filter((item, counter) => counter !== 0);
+    const separatedArray = separateArrayByArrays(withoutFirst, 2);
 
-  // separateArtists();
+    return separatedArray.map((subArray) => (
+      <SwiperSlide key={uuidv4()}>
+        <div className={styles['small-cards-wrapper']}>
+          {subArray?.map((item) => (
+            <CaptionCard {...item} className={styles.card} key={uuidv4()} />
+          ))}
+        </div>
+      </SwiperSlide>
+    ));
+  };
 
   return (
     <div className={styles.contatiner}>
-      <Slider show={1}>
-        <div className={styles.slide}>
-          <div className={styles['big-card-wrapper']}>
-            <CaptionCard name="By Hennkok" className={styles.card} />
-          </div>
-          <div className={styles['small-cards-wrapper']}>
-            <CaptionCard name="By Hennkok" className={styles.card} />
-            <CaptionCard name="By Hennkok" className={styles.card} />
-            <CaptionCard name="By Hennkok" className={styles.card} />
-            <CaptionCard name="By Hennkok" className={styles.card} />
-            <CaptionCard name="By Hennkok" className={styles.card} />
-            <CaptionCard name="By Hennkok" className={styles.card} />
-          </div>
-        </div>
-        <div className={styles.slide}>
-          <div className={styles['big-card-wrapper']}>
-            <CaptionCard name="By Hennkok" className={styles.card} />
-          </div>
-          <div className={styles['small-cards-wrapper']}>
-            <CaptionCard name="By Hennkok" className={styles.card} />
-            <CaptionCard name="By Hennkok" className={styles.card} />
-            <CaptionCard name="By Hennkok" className={styles.card} />
-            <CaptionCard name="By Hennkok" className={styles.card} />
-            <CaptionCard name="By Hennkok" className={styles.card} />
-            <CaptionCard name="By Hennkok" className={styles.card} />
-          </div>
-        </div>
-      </Slider>
+      <Swiper slidesPerView="auto" spaceBetween={20}>
+        {renderBigSlide()}
+        {renderSmallSlides()}
+      </Swiper>
     </div>
   );
 };
