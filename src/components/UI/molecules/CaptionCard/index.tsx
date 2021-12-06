@@ -8,10 +8,10 @@ interface Props extends ArtistsType.Artist {
   className?: string;
 }
 
-const CaptionCard = ({ name, className }: Props) => (
+const CaptionCard = ({ name, className, imagePath }: Props) => (
   <Box
     boxClass={classNames(styles.container, className)}
-    style={{ backgroundImage: `url(https://picsum.photos/500/500)` }}
+    style={{ backgroundImage: `url(${imagePath})` }}
   >
     <h4 className={styles.title}>{name}</h4>
   </Box>
