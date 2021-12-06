@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import girl from 'assets/svg/girl.svg';
 import UserPhoto from '../UserPhoto';
 import styles from './index.module.scss';
@@ -25,8 +24,6 @@ const ItemDetails = ({
   type,
   handleParentFunction,
 }: Props) => {
-  const [active, setActive] = useState('owners');
-
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{title}</h2>

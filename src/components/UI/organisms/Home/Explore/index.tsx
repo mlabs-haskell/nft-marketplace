@@ -1,33 +1,30 @@
 import { getImage } from 'api/image';
 import { useEffect, useRef, useState } from 'react';
-import { GlobalContent } from '../../../../../context/auth';
+import { NftContextType } from '../../../../../context/NftContext';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
 interface Props {
-  NFTs: GlobalContent['exploreImages'];
+  NFTs: NftContextType['validImages'];
+  fetchImages: NftContextType['fetchImages'];
 }
 
-const Explore = ({ NFTs }: Props) => {
+const Explore = ({ NFTs, fetchImages }: Props) => {
   const [images, setImages] = useState(NFTs);
   const [currentPage, setCurrentPage] = useState(1);
-  const [hasEndingPosts, setHasEndingPosts] = useState(false);
 
   useEffect(() => {
     const handleRequest = async () => {
-      const data = await getImage(17, 17);
-
-      if (!data.length) {
-        setHasEndingPosts(true);
-        return;
-      }
-
-      setImages([...images, ...data]);
+      await fetchImages(17 * currentPage, 17);
     };
 
     handleRequest();
   }, [currentPage]);
+
+  useEffect(() => {
+    setImages(new Map(NFTs));
+  }, [NFTs]);
 
   return (
     <div className={styles.contatiner}>
@@ -39,12 +36,12 @@ const Explore = ({ NFTs }: Props) => {
         </div>
       </div>
       <div className={styles['card-container']}>
-        {images.map((item, index) => (
+        {Array.from(images.values()).map((item) => (
           <AuctionCard
-            key={item.sha256hash}
+            key={item.image.sha256hash}
             amount="0.005 ETH "
-            title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
-            image={item.path}
+            title={item.image.title}
+            image={item.image.path}
             isExplore
           />
         ))}

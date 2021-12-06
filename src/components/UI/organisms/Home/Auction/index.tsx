@@ -42,7 +42,9 @@ function Auction() {
   }, [windowDimensions]);
 
   // Date used just for testing!
-  const end = '12/4/2021 10:11';
+  const end = new Date(
+    new Date().getTime() + Math.floor(Math.random() * 6000000)
+  ).toISOString();
   return (
     <div>
       <h2 className={styles.header}>Live auctions</h2>

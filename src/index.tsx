@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios, { AxiosRequestConfig } from 'axios';
-import { NftContextProvider } from 'context/auth';
+import { NftContextProvider } from 'context/NftContext';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import './assets/scss/app.scss';

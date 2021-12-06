@@ -6,7 +6,7 @@ export const getImage = async (skip = 0, limit = 0) => {
 
   // mock construction
   const mock = [];
-  for (let i = 0; i < 150; i += 1) {
+  for (let i = 0; i < 1000; i += 1) {
     let path = '';
     if (i % 2 === 1) {
       path = 'https://picsum.photos/200/200';
@@ -16,7 +16,18 @@ export const getImage = async (skip = 0, limit = 0) => {
       path = 'https://picsum.photos/200/250';
     }
 
-    mock.push({ sha256hash: `${i + new Date().getTime()}`, path });
+    const baseHash = 'aa00000000';
+
+    mock.push({
+      sha256hash:
+        baseHash.substring(0, baseHash.length - i.toString().length) +
+        i.toString(),
+      path,
+      createdAt: new Date(),
+      id: i + new Date().getTime(),
+      title:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos',
+    });
   }
 
   if (skip || limit) {
@@ -27,9 +38,9 @@ export const getImage = async (skip = 0, limit = 0) => {
       }
       limitMock.push(mock[p]);
     }
-
     return limitMock;
   }
+
   return mock;
 };
 

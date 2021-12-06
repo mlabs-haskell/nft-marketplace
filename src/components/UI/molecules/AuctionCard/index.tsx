@@ -31,27 +31,32 @@ const AuctionCard = ({
   // const [liked, setLiked] = useState(false);
 
   const calculateTime = () => {
-    const Timer: string = time!;
-    const endTime = new Date(Timer);
+    const timer: string = time!;
+    const endTime = new Date(timer);
     const nowDate = new Date();
     const difference = endTime.getTime() - nowDate.getTime();
 
-    const timeAgo = {
-      s: Math.floor((difference / 1000) % 60),
-      m: Math.floor((difference / 1000 / 60) % 60),
-      h: Math.floor(difference / (1000 * 60 * 60)),
-    };
-    const string = `${timeAgo.h}:${timeAgo.m}:${timeAgo.s}`;
+    if (difference > 0) {
+      const timeAgo = {
+        s: Math.floor((difference / 1000) % 60),
+        m: Math.floor((difference / 1000 / 60) % 60),
+        h: Math.floor(difference / (1000 * 60 * 60)),
+      };
 
-    return string;
+      const string = `${timeAgo.h}:${timeAgo.m}:${timeAgo.s}`;
+
+      return string;
+    }
+
+    return `0:00:00`;
   };
 
-  const [date, setDate] = useState(calculateTime());
+  const [timeRemaining, setTimeRemaining] = useState(calculateTime());
 
   useEffect(() => {
     setInterval(() => {
-      setDate(calculateTime());
-    }, 100);
+      setTimeRemaining(calculateTime());
+    }, 1000);
   }, []);
 
   const renderCurrectFooter = () => {
@@ -110,7 +115,7 @@ const AuctionCard = ({
           <img src={image} alt="nft-item" />
           {time && (
             <div className={styles['time-wrapper']}>
-              <span className={styles.time}>{date}</span>
+              <span className={styles.time}>{timeRemaining}</span>
             </div>
           )}
           {isExplore && quantity && (
