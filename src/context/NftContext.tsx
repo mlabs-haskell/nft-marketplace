@@ -1,70 +1,27 @@
 import { createContext, useState, useEffect, FC } from 'react';
 import { getImage } from 'api/image';
-import { v4 as uuid } from 'uuid';
-import makeSdk from 'seabug-sdk/src';
-import { InformationNft } from 'seabug-sdk/src/common';
+import { getArtist } from 'api/artist';
+import { ArtistsType } from 'types/artists';
 
-type NftImage = {
-  path: string;
-  createdAt: Date;
-  id: number;
-  title: string;
-  sha256hash: string;
-};
+export interface NftContextType {
+  // images
+  image: [];
+  fetchImages: () => void;
+  imageLoading: boolean;
 
-type ValidNftImage = {
-  nft: InformationNft;
-  image: NftImage;
-};
-
-export type NftContextType = {
-  images: Map<string, NftImage>;
-  fetchImages: (skip: number, limit: number) => void;
-  nfts: InformationNft[];
-  fetchNfts: () => void;
-  validationNftsImages: () => void;
-  validImages: Map<string, ValidNftImage>;
-};
-
-export const NftContext = createContext<NftContextType>({
-  images: new Map(),
-  fetchImages: () => {},
-  nfts: [],
-  fetchNfts: () => {},
-  validationNftsImages: () => {},
-  validImages: new Map(),
-});
-
-export const NftContextProvider: FC = ({ children }) => {
-  const [images, setImages] = useState<Map<string, NftImage>>(new Map());
-  const [nfts, setNfts] = useState<InformationNft[]>([]);
-  const [validImages, setValidImages] = useState<Map<string, ValidNftImage>>(
-    new Map()
-  );
-
-  async function fetchImages(skip: number, limit: number) {
-    const imageList = await getImage(skip, limit);
-
-    const imageMap = new Map<string, NftImage>();
-
-    imageList.forEach((img) => {
-      imageMap.set(img.sha256hash, img);
-    });
-
-    setImages(imageMap);
-  }
-
-  async function fetchNfts() {
-    // TODO: Replace with actual url and walletId once server and wallet integration ready
-    const url = '';
-    const walletId = '';
+  // artists
+  fetchArtists: () => void;
+  artists: ArtistsType.Artist[];
+}
 
     const sdk = await makeSdk(url, walletId);
 
     const nftList = await sdk.query.listNfts();
 
-    setNfts(nftList);
-  }
+export const NftContextProvider: FC<Props> = ({ children }) => {
+  const [image, setImage] = useState<[]>([]);
+  const [imageLoading, setImageLoading] = useState(true);
+  const [artists, setArtists] = useState<ArtistsType.Artist[]>([]);
 
   async function validationNftsImages() {
     nfts.forEach((nft: InformationNft) => {
@@ -77,15 +34,24 @@ export const NftContextProvider: FC = ({ children }) => {
     });
   }
 
+  const fetchArtists = useCallback(async () => {
+    try {
+      const newArtists = await getArtist();
+      setArtists(newArtists);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   return (
     <NftContext.Provider
       value={{
         images,
         fetchImages,
-        nfts,
-        fetchNfts,
-        validationNftsImages,
-        validImages,
+        image,
+        imageLoading,
+        fetchArtists,
+        artists,
       }}
     >
       {children}

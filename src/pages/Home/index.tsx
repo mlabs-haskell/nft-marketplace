@@ -3,43 +3,21 @@ import { NftContext } from 'context/NftContext';
 import Auction from 'components/UI/organisms/Home/Auction';
 import Explore from 'components/UI/organisms/Home/Explore';
 import Header from 'components/UI/organisms/Home/Header';
+import { useEffect } from 'react';
+import { useNftContext } from 'context/NftContext';
 
 const Home = () => {
-  const {
-    images,
-    validImages,
-    nfts,
-    fetchImages,
-    fetchNfts,
-    validationNftsImages,
-  } = useContext(NftContext);
+  const { fetchArtists, artists } = useNftContext();
 
   useEffect(() => {
-    const GetImages = async () => {
-      try {
-        await fetchImages(0, 15);
-        await fetchNfts();
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    GetImages();
+    fetchArtists();
   }, []);
-
-  useEffect(() => {
-    validationNftsImages();
-  }, [nfts]);
-
-  useEffect(() => {
-    validationNftsImages();
-  }, [images]);
 
   return (
     <div>
-      <Header />
+      <Header artists={artists} />
       <Auction />
-      <Explore NFTs={validImages} fetchImages={fetchImages} />
+      <Explore />
     </div>
   );
 };

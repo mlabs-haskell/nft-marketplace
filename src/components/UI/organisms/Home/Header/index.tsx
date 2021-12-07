@@ -1,108 +1,103 @@
+import { useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation } from 'swiper';
+import { v4 as uuidv4 } from 'uuid';
+import { ArtistsType } from 'types/artists';
 import CaptionCard from '../../../molecules/CaptionCard';
-import Slider from '../../../molecules/Slider';
 import styles from './index.module.scss';
+import { separateArrayByArrays } from '../../../../../utils/separateArrayByArrays';
+import right from '../../../../../assets/svg/arrow-right.svg';
 
-const Header = () => (
-  <div className={styles.contatiner}>
-    <Slider show={1}>
-      <div className={styles.slide}>
+SwiperCore.use([Navigation]);
+
+interface Props {
+  artists: ArtistsType.Artist[];
+}
+
+interface ISwiperInstance extends Swiper {
+  ref: HTMLDivElement | null;
+}
+
+const SwiperInstance: React.FC<ISwiperInstance> = Swiper;
+
+const Header = (props: Props) => {
+  const { artists } = props;
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+  const swiperRef: any = useRef(null);
+
+  const renderBigSlide = () => {
+    if (!artists?.length) return null;
+    return (
+      <SwiperSlide>
         <div className={styles['big-card-wrapper']}>
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/500/500"
-          />
+          <CaptionCard {...artists[0]} className={styles['card-big']} />
         </div>
+      </SwiperSlide>
+    );
+  };
+
+  const renderSmallSlides = () => {
+    if (!artists?.length) return null;
+
+    const withoutFirst = artists.filter((item, counter) => counter !== 0);
+    const separatedArray = separateArrayByArrays(withoutFirst, 2);
+
+    return separatedArray.map((subArray) => (
+      <SwiperSlide key={uuidv4()}>
         <div className={styles['small-cards-wrapper']}>
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
+          {subArray?.map((item) => (
+            <CaptionCard {...item} className={styles.card} key={uuidv4()} />
+          ))}
         </div>
+      </SwiperSlide>
+    ));
+  };
+
+  const nextSlide = () => {
+    const current: any = swiperRef.current;
+    current && current?.swiper?.slideNext();
+  };
+  const prevSlide = () => {
+    const current: any = swiperRef.current;
+    current && current?.swiper?.slidePrev();
+  };
+
+  return (
+    <div className={styles.contatiner}>
+      <SwiperInstance
+        ref={swiperRef}
+        className={styles['swiper-container-1']}
+        onInit={(swiper: any) => {
+          swiper.params.navigation.prevEl = prevRef.current;
+          swiper.params.navigation.nextEl = nextRef.current;
+          swiper.navigation.init();
+          swiper.navigation.update();
+        }}
+        slidesPerView="auto"
+        spaceBetween={20}
+      >
+        {renderBigSlide()}
+        {renderSmallSlides()}
+      </SwiperInstance>
+      <div className={styles['arrow-buttons-wrapper']}>
+        <button
+          className={styles['left-arrow']}
+          type="button"
+          onClick={prevSlide}
+        >
+          <img src={right} alt="arrow-left" />
+        </button>
+        <button
+          className={styles['right-arrow']}
+          type="button"
+          onClick={nextSlide}
+        >
+          <img src={right} alt="arrow-right" />
+        </button>
       </div>
-      <div className={styles.slide}>
-        <div className={styles['big-card-wrapper']}>
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/500/500"
-          />
-        </div>
-        <div className={styles['small-cards-wrapper']}>
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-          <CaptionCard
-            title="Meelo"
-            name="By Hennkok"
-            className={styles.card}
-            imagePath="https://picsum.photos/300/300"
-          />
-        </div>
-      </div>
-    </Slider>
-  </div>
-);
+    </div>
+  );
+};
 
 export default Header;
