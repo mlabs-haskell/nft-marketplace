@@ -6,13 +6,13 @@ import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 
 interface Props {
-  title: string;
+  title?: string;
   amount: string;
   quantity?: string;
   bid?: string;
   time?: string;
   caption?: string;
-  image: string;
+  image?: string;
   isExplore?: boolean;
   isAuction?: boolean;
 }

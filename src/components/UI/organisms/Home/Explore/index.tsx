@@ -1,30 +1,36 @@
-import { getImage } from 'api/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { InformationNft } from 'seabug-sdk/src/common';
 import { NftContextType } from '../../../../../context/NftContext';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
 interface Props {
-  NFTs: NftContextType['validImages'];
-  fetchImages: NftContextType['fetchImages'];
+  images: NftContextType['images'];
+  NFTs: NftContextType['nfts'];
 }
 
-const Explore = ({ NFTs, fetchImages }: Props) => {
-  const [images, setImages] = useState(NFTs);
+const Explore = ({ images, NFTs }: Props) => {
+  function limitNfts(limit: number) {
+    const listNfts: InformationNft[] = [];
+    NFTs.forEach((nft: InformationNft, i: number) => {
+      if (i < limit) {
+        listNfts.push(nft);
+      }
+    });
+    return listNfts;
+  }
+
+  const [limitedNfts, setLimitedNfts] = useState(limitNfts(15));
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const handleRequest = async () => {
-      await fetchImages(17 * currentPage, 17);
-    };
-
-    handleRequest();
-  }, [currentPage]);
+    setLimitedNfts(limitNfts(16));
+  }, [NFTs]);
 
   useEffect(() => {
-    setImages(new Map(NFTs));
-  }, [NFTs]);
+    setLimitedNfts(limitNfts(16 * currentPage));
+  }, [currentPage]);
 
   return (
     <div className={styles.contatiner}>
@@ -36,15 +42,18 @@ const Explore = ({ NFTs, fetchImages }: Props) => {
         </div>
       </div>
       <div className={styles['card-container']}>
-        {Array.from(images.values()).map((item) => (
-          <AuctionCard
-            key={item.image.sha256hash}
-            amount="0.005 ETH "
-            title={item.image.title}
-            image={item.image.path}
-            isExplore
-          />
-        ))}
+        {limitedNfts.map(
+          (nft) =>
+            images.get(nft.id.contentHash) && (
+              <AuctionCard
+                key={images.get(nft.id.contentHash)?.sha256hash}
+                amount="0.005 ETH "
+                title={images.get(nft.id.contentHash)?.title}
+                image={images.get(nft.id.contentHash)?.path}
+                isExplore
+              />
+            )
+        )}
       </div>
       <div className={styles.btn}>
         <Button
