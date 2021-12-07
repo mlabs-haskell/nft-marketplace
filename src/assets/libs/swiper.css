@@ -853,9 +853,9 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-slide:first-child {
-  width: 35%;
+  width: 40%;
 }
 
 .swiper-slide {
-  width: 20%;
+  width: calc(20% - 20px);
 }

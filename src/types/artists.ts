@@ -4,6 +4,6 @@ export namespace ArtistsType {
     createdAt: string;
     pubKeyHash: string;
     id: string;
-    imagePath: string
+    imagePath: string;
   }
 }

@@ -42,6 +42,8 @@
     ],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
     "indent": "off",
+    "prefer-destructuring": "off",
+    "no-unused-expressions": "off",
     "semi": ["error", "always"],
     "no-shadow": "error",
     "no-trailing-spaces": "error",

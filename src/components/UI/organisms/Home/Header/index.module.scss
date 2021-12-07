@@ -45,3 +45,38 @@
   background-size: cover;
   background-position: center;
 }
+
+.left-arrow,
+.right-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: transparent;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.left-arrow {
+  left: -50px;
+
+  img {
+    transform: rotate(180deg);
+  }
+  @media only screen and (max-width: $breakpointPhone) {
+    left: -20px;
+  }
+}
+
+.right-arrow {
+  right: -50px;
+  @media only screen and (max-width: $breakpointPhone) {
+    right: 0px;
+  }
+}
+
+.arrow-buttons-wrapper {
+  position: relative;
+  bottom: 260px;
+}
