@@ -42,6 +42,8 @@
     ],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
     "indent": "off",
+    "prefer-destructuring": "off",
+    "no-unused-expressions": "off",
     "semi": ["error", "always"],
     "no-shadow": "error",
     "no-trailing-spaces": "error",
@@ -58,6 +60,7 @@
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
     //report incorrect errors
+    "import/prefer-default-export": "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "@typescript-eslint/no-inferrable-types": "off",

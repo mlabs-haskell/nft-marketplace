@@ -8,51 +8,75 @@
   padding-bottom: 54px;
 }
 
-.slide {
-  display: flex;
-  justify-content: space-between;
-  
-  @media only screen and (max-width: 1024px) {
-    flex-direction: column;
-  }
-  .card {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+.card {
+  height: 205px;
+  margin-bottom: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
 .small-cards-wrapper {
-  columns: 3;
-  width: 60%;
-
-  @media only screen and (max-width: 1024px) {
-    columns: 2;
-    width: 100%;
-    margin-top: 24px;
-  }
-
-  .card {
-    height: 195px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
+  width: 100%;
+  height: 100%;
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
 }
 
 .big-card-wrapper {
-  width: calc(40% - 20px);
-    
-  @media only screen and (max-width: 1024px) {
-    width: 100%;
-  }
+  width: calc(100% - 50px);
+  height: 100%;
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
 
-  .card {
-    height: 440px;
-    @media only screen and (max-width: 1024px) {
-      height: 340px;
-    }
-    @media only screen and (max-width: $breakpointPhone) {
-      height: 240px;
-    }
+.card-big {
+  height: 480px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.left-arrow,
+.right-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: transparent;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.left-arrow {
+  left: -50px;
+
+  img {
+    transform: rotate(180deg);
   }
+  @media only screen and (max-width: $breakpointPhone) {
+    left: -20px;
+  }
+}
+
+.right-arrow {
+  right: -50px;
+  @media only screen and (max-width: $breakpointPhone) {
+    right: 0px;
+  }
+}
+
+.arrow-buttons-wrapper {
+  position: relative;
+  bottom: 260px;
 }

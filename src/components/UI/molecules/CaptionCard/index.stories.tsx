@@ -14,5 +14,4 @@ const Template: ComponentStory<typeof CaptionCard> = (args) => (
 export const Default = Template.bind({});
 Default.args = {
   name: 'John English',
-  title: 'hello',
 };

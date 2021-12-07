@@ -2,6 +2,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Footer from './components/Layout/Footer';
 import NavBar from './components/Layout/Nav';
 import Routes from './routes/routes';
+import './assets/libs/swiper.css';
 
 function App() {
   return (
