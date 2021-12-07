@@ -1,7 +1,7 @@
 export namespace ArtistsType {
   export interface Artist {
     name: string;
-    createdAt: string;
+    createdAt: Date;
     pubKeyHash: string;
     id: string;
     imagePath: string;

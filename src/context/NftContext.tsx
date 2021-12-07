@@ -36,12 +36,12 @@ export const NftContextProvider: FC<Props> = ({ children }) => {
     }
   }, []);
 
-  const fetchArtists = useCallback(() => {
+  const fetchArtists = useCallback(async () => {
     try {
-      const { data } = getArtist();
-      setArtists(data);
+      const newArtists = await getArtist();
+      setArtists(newArtists);
     } catch (err) {
-      const error = err as AxiosError;
+      console.error(err);
     }
   }, []);
 
