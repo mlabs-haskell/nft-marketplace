@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 export const getArtist = () => {
   const mock = {
@@ -6,154 +7,154 @@ export const getArtist = () => {
       {
         name: 'By Hennkok 1',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 2',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 3',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 4',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 5',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 6',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 7',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 8',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 9',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
       {
         name: 'By Hennkok 10',
         createdAt: '2021-11-25T13:16:49.023987Z',
-        pubKeyHash: 'abc',
+        pubKeyHash: `aaaaaaaa${uuidv4()}`,
         id: '1',
         imagePath: 'https://picsum.photos/500/500',
       },
@@ -161,9 +162,4 @@ export const getArtist = () => {
   };
 
   return mock;
-};
-
-export const getArtistbyId = async (id: string) => {
-  const response = await axios.get(`artists/${id}`);
-  return response;
 };

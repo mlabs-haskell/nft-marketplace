@@ -1,7 +1,7 @@
 import { createContext, useContext, FC, useCallback, useState } from 'react';
 import { AxiosError } from 'axios';
 import { getImage } from 'api/image';
-import { getArtist, getArtistbyId } from 'api/artist';
+import { getArtist } from 'api/artist';
 import { ArtistsType } from 'types/artists';
 
 export interface NftContextType {
@@ -13,8 +13,6 @@ export interface NftContextType {
   // artists
   fetchArtists: () => void;
   artists: ArtistsType.Artist[];
-  fetchArtistbyId: (id: string) => void;
-  artistById: null;
 }
 
 export const NftContext = createContext<NftContextType>({} as NftContextType);
@@ -27,7 +25,6 @@ export const NftContextProvider: FC<Props> = ({ children }) => {
   const [image, setImage] = useState<[]>([]);
   const [imageLoading, setImageLoading] = useState(true);
   const [artists, setArtists] = useState<ArtistsType.Artist[]>([]);
-  const [artistById, setArtistById] = useState<null>(null);
 
   const fetchImages = useCallback(async () => {
     try {
@@ -48,15 +45,6 @@ export const NftContextProvider: FC<Props> = ({ children }) => {
     }
   }, []);
 
-  const fetchArtistbyId = useCallback(async (id: string) => {
-    try {
-      const { data } = await getArtistbyId(id);
-      setArtistById(data);
-    } catch (err) {
-      const error = err as AxiosError;
-    }
-  }, []);
-
   return (
     <NftContext.Provider
       value={{
@@ -65,8 +53,6 @@ export const NftContextProvider: FC<Props> = ({ children }) => {
         imageLoading,
         fetchArtists,
         artists,
-        fetchArtistbyId,
-        artistById,
       }}
     >
       {children}
