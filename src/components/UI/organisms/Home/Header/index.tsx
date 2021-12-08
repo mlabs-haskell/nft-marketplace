@@ -29,7 +29,7 @@ const Header = (props: Props) => {
   const renderBigSlide = () => {
     if (!artists?.length) return null;
     return (
-      <SwiperSlide>
+      <SwiperSlide className={styles['swiper-slide']}>
         <div className={styles['big-card-wrapper']}>
           <CaptionCard {...artists[0]} className={styles['card-big']} />
         </div>
@@ -44,7 +44,7 @@ const Header = (props: Props) => {
     const separatedArray = separateArrayByArrays(withoutFirst, 2);
 
     return separatedArray.map((subArray) => (
-      <SwiperSlide key={uuidv4()}>
+      <SwiperSlide key={uuidv4()} className={styles['swiper-slide']}>
         <div className={styles['small-cards-wrapper']}>
           {subArray?.map((item) => (
             <CaptionCard {...item} className={styles.card} key={uuidv4()} />

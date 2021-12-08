@@ -1,17 +1,18 @@
 import { Link } from 'react-router-dom';
 import dots from 'assets/svg/dots.svg';
+import { useEffect, useState } from 'react';
 import Box from '../../atoms/Box';
 
 import styles from './index.module.scss';
 
 interface Props {
-  title: string;
+  title?: string;
   amount: string;
   quantity?: string;
   bid?: string;
   time?: string;
   caption?: string;
-  image: string;
+  image?: string;
   isExplore?: boolean;
   isAuction?: boolean;
 }
@@ -28,6 +29,35 @@ const AuctionCard = ({
   isAuction,
 }: Props) => {
   // const [liked, setLiked] = useState(false);
+
+  const calculateTime = () => {
+    const timer: string = time!;
+    const endTime = new Date(timer);
+    const nowDate = new Date();
+    const difference = endTime.getTime() - nowDate.getTime();
+
+    if (difference > 0) {
+      const timeAgo = {
+        s: Math.floor((difference / 1000) % 60),
+        m: Math.floor((difference / 1000 / 60) % 60),
+        h: Math.floor(difference / (1000 * 60 * 60)),
+      };
+
+      const string = `${timeAgo.h}:${timeAgo.m}:${timeAgo.s}`;
+
+      return string;
+    }
+
+    return `0:00:00`;
+  };
+
+  const [timeRemaining, setTimeRemaining] = useState(calculateTime());
+
+  useEffect(() => {
+    setInterval(() => {
+      setTimeRemaining(calculateTime());
+    }, 1000);
+  }, []);
 
   const renderCurrectFooter = () => {
     if (isExplore) {
@@ -85,7 +115,7 @@ const AuctionCard = ({
           <img src={image} alt="nft-item" />
           {time && (
             <div className={styles['time-wrapper']}>
-              <span className={styles.time}>{time}</span>
+              <span className={styles.time}>{timeRemaining}</span>
             </div>
           )}
           {isExplore && quantity && (

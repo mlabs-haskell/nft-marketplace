@@ -41,6 +41,10 @@ function Auction() {
     }
   }, [windowDimensions]);
 
+  // Date used just for testing!
+  const end = new Date(
+    new Date().getTime() + Math.floor(Math.random() * 6000000)
+  ).toISOString();
   return (
     <div>
       <h2 className={styles.header}>Live auctions</h2>
@@ -52,7 +56,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image1}
           />
         </div>
@@ -63,7 +67,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image2}
           />
         </div>
@@ -74,7 +78,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image1}
           />
         </div>
@@ -85,7 +89,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image2}
           />
         </div>
@@ -96,7 +100,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image1}
           />
         </div>
@@ -107,7 +111,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image2}
           />
         </div>
@@ -119,7 +123,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image1}
           />
         </div>
@@ -130,7 +134,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image2}
           />
         </div>
@@ -141,7 +145,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image1}
           />
         </div>
@@ -152,7 +156,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image2}
           />
         </div>
@@ -163,7 +167,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image1}
           />
         </div>
@@ -174,7 +178,7 @@ function Auction() {
             amount="18 ETH"
             title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
             quantity="1/1"
-            time="22:14:15"
+            time={end}
             image={image2}
           />
         </div>
