@@ -4,6 +4,7 @@ import { NftContextType } from '../../../../../context/NftContext';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
+import { priceToADA } from '../../../../../utils/priceToADA';
 
 interface Props {
   images: NftContextType['images'];
@@ -47,7 +48,7 @@ const Explore = ({ images, NFTs }: Props) => {
             images.get(nft.id.contentHash) && (
               <AuctionCard
                 key={images.get(nft.id.contentHash)?.sha256hash}
-                amount="0.005 ETH "
+                amount={priceToADA(nft.price as any)}
                 title={images.get(nft.id.contentHash)?.title}
                 image={images.get(nft.id.contentHash)?.path}
                 isExplore

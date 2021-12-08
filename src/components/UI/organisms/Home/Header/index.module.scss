@@ -19,13 +19,13 @@
     margin-bottom: 0;
   }
 }
-.swiper-container-1{
-  .swiper-slide:first-child{
+.swiper-container-1 {
+  .swiper-slide:first-child {
     @media only screen and (max-width: $breakpointPhone) {
       width: 100%;
     }
   }
-  .swiper-slide{
+  .swiper-slide {
     @media only screen and (max-width: $breakpointPhone) {
       width: 100%;
     }
