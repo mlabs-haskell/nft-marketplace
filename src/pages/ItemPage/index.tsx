@@ -4,13 +4,8 @@ import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 
 const ItemPage = () => {
-  const [fristTime, setFristTime] = useState(true);
-
   useEffect(() => {
-    if (fristTime) {
-      window.scrollTo(0, 20);
-      setFristTime(false);
-    }
+    window.scrollTo(0, 20);
   }, []);
 
   return (
