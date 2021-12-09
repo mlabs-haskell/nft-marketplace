@@ -8,8 +8,11 @@
 }
 
 .card-wrapper {
-  max-width: 20%;
+  max-width: 12.5%;
 
+  @media screen and (max-width: $breakpointUltrawide) {
+    max-width: 20%;
+  }
   @media screen and (max-width: 1024px) {
     max-width: 35%;
   }

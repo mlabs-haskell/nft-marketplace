@@ -30,17 +30,20 @@
     }
   }
   .card-container {
-    columns: 5;
+    columns: 8;
     overflow: hidden;
     column-gap: 20px;
-
     // display: grid;
     // align-items: flex-start;
     // grid-template-columns: repeat(5, 1fr);
     // grid-auto-rows: minmax(235px, auto);
 
+    @media screen and (max-width: $breakpointUltrawide) {
+      columns: 5;
+      // grid-template-columns: repeat(4, 1fr);
+    }
     @media screen and (max-width: 1024px) {
-      columns: 4;
+      columns: 3;
       // grid-template-columns: repeat(4, 1fr);
     }
     @media only screen and (max-width: $breakpointPhone) {

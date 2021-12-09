@@ -30,13 +30,13 @@ function Auction() {
   const [carrocelNum, setCarrocelNum] = useState(5);
 
   useEffect(() => {
-    if (windowDimensions.width > 1024) {
+    if (windowDimensions.width > 2560) {
+      setCarrocelNum(8);
+    } else if (windowDimensions.width > 1024) {
       setCarrocelNum(5);
-    }
-    if (windowDimensions.width > 767 && windowDimensions.width <= 1024) {
+    } else if (windowDimensions.width > 767 && windowDimensions.width <= 1024) {
       setCarrocelNum(3);
-    }
-    if (windowDimensions.width <= 767) {
+    } else if (windowDimensions.width <= 767) {
       setCarrocelNum(1);
     }
   }, [windowDimensions]);
