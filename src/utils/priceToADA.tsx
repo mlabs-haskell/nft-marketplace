@@ -1,4 +1,5 @@
-export const priceToADA = (value: string) => {
-  const result = parseInt(value, 10) / 1000000;
+export const priceToADA = (value?: bigint): string => {
+  if (!value) return '';
+  const result = Number(value) / 1000000;
   return `${result.toFixed(3)} ADA`;
 };

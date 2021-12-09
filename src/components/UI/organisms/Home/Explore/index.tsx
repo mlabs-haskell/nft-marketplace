@@ -48,7 +48,7 @@ const Explore = ({ images, NFTs }: Props) => {
             images.get(nft.id.contentHash) && (
               <AuctionCard
                 key={images.get(nft.id.contentHash)?.sha256hash}
-                amount={priceToADA(nft.price as any)}
+                amount={priceToADA(nft.price)}
                 title={images.get(nft.id.contentHash)?.title}
                 image={images.get(nft.id.contentHash)?.path}
                 isExplore
