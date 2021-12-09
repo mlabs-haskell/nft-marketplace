@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 import ButtonInput from '../../UI/molecules/ButtonInput';
 import styles from './index.module.scss';
 import instagram from '../../../assets/svg/instagram.svg';
 import twitter from '../../../assets/svg/twitter.svg';
-import messenger from '../../../assets/svg/messanger.svg';
-import meta from '../../../assets/svg/meta.svg';
+import medium from '../../../assets/svg/messanger.svg';
+// import discord from '../../../assets/svg/meta.svg';
 import youtube from '../../../assets/svg/youtube.svg';
 import Dropdown from '../../UI/molecules/Dropdown';
 
@@ -17,19 +18,29 @@ const Footer = () => {
           <ButtonInput placeholder="Your Email.:" btnClass={styles.button} />
           <ul className={styles['social-links']}>
             <li>
-              <img src={instagram} alt="instagram" />
+              <Link to="https://www.instagram.com/seabugnft">
+                <img src={instagram} alt="instagram" />
+              </Link>
+            </li>
+            {/* <li>
+              <Link to="https://discord.com/invite/984WhhxgFG">
+                <img src={discord} alt="discord" />
+              </Link>
+            </li> */}
+            <li>
+              <Link to="seabug.medium.com">
+                <img src={medium} alt="medium" />
+              </Link>
             </li>
             <li>
-              <img src={meta} alt="meta" />
+              <Link to="https://twitter.com/seabugnft">
+                <img src={twitter} alt="twitter" />
+              </Link>
             </li>
             <li>
-              <img src={messenger} alt="messenger" />
-            </li>
-            <li>
-              <img src={twitter} alt="twitter" />
-            </li>
-            <li>
-              <img src={youtube} alt="youtube" />
+              <Link to="https://www.youtube.com/channel/UC4u_QtUHAv2QpOitcnpt7ZA">
+                <img src={youtube} alt="youtube" />
+              </Link>
             </li>
           </ul>
         </div>
@@ -55,8 +66,8 @@ const Footer = () => {
         </div>
         <div className={`${styles['footer-text']} col-lg-3`}>
           <p>
-            Terms
-            <span>Privacy policy</span>
+            <Link to="/terms">Terms</Link>
+            <Link to="/policy">Privacy policy</Link>
           </p>
           <p>© Seabug, Inc. All rights reserved.</p>
         </div>
