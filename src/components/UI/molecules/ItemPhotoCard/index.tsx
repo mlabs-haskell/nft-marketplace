@@ -4,9 +4,10 @@ import image1 from '../../../../assets/svg/image1.svg';
 
 interface Props {
   likeCount: string;
+  image?: string;
 }
 
-function ItemPhotoCard({ likeCount }: Props) {
+function ItemPhotoCard({ likeCount, image }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.photobox}>

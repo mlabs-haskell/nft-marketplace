@@ -4,12 +4,13 @@ import styles from './index.module.scss';
 import Button from '../../atoms/Button';
 
 interface Props {
-  title: string;
-  saleValue: string;
-  topBidValue: string;
-  description: string;
-  creatorValue: string;
-  creatorName: string;
+  title?: string;
+  saleValue?: string;
+  topBidValue?: string;
+  description?: string;
+  creatorValue?: string;
+  creatorName?: string;
+  imgUrl?: string;
   type: string;
   handleParentFunction?: () => void;
 }
@@ -22,6 +23,7 @@ const ItemDetails = ({
   creatorValue,
   creatorName,
   type,
+  imgUrl,
   handleParentFunction,
 }: Props) => {
   return (
@@ -52,7 +54,7 @@ const ItemDetails = ({
         Creator: <span>{creatorValue}</span>
       </p>
       <div className={styles.creator_img}>
-        <UserPhoto imgUrl={girl} />
+        <UserPhoto imgUrl={imgUrl || girl} />
         <p>{creatorName}</p>
       </div>
       <div className={styles.buttons}>

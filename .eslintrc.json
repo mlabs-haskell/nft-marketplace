@@ -61,8 +61,8 @@
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/require-await": "off",
     "@typescript-eslint/await-thenable": "off",
-    "import/prefer-default-export": "off",
     "array-callback-return": "off",
+    "@typescript-eslint/no-namespace": "off",
     //report incorrect errors
     "import/prefer-default-export": "off",
     "no-use-before-define": "off",

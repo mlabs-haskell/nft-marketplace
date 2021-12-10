@@ -5,11 +5,18 @@ import Explore from 'components/UI/organisms/Home/Explore';
 import Header from 'components/UI/organisms/Home/Header';
 
 const Home = () => {
-  const { images, nfts, artists, fetchImages, fetchNfts, fetchArtists } =
-    useContext(NftContext);
+  const {
+    images,
+    nfts,
+    artists,
+    fetchImages,
+    fetchNfts,
+    fetchArtists,
+    fetchNft,
+  } = useContext(NftContext);
 
   useEffect(() => {
-    const getImages = async () => {
+    const fetchItems = async () => {
       try {
         await fetchImages();
         await fetchNfts();
@@ -19,14 +26,14 @@ const Home = () => {
       }
     };
 
-    getImages();
+    fetchItems();
   }, []);
 
   return (
     <div>
       <Header artists={artists} />
       <Auction />
-      <Explore images={images} NFTs={nfts} />
+      <Explore images={images} NFTs={nfts} fetchNft={fetchNft} />
     </div>
   );
 };

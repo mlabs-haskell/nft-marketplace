@@ -3,7 +3,7 @@ import { getImage } from 'api/image';
 import { getArtist } from 'api/artist';
 import { ArtistsType } from 'types/artists';
 import makeSdk from 'seabug-sdk/src';
-import { InformationNft } from 'seabug-sdk/src/common';
+import { AuctionState, InformationNft } from 'seabug-sdk/src/common';
 
 type NftImage = {
   path: string;
@@ -11,6 +11,18 @@ type NftImage = {
   id: number;
   title: string;
   sha256hash: string;
+  description: string;
+};
+
+type NftItemDetail = {
+  title: string;
+  image: string;
+  description: string;
+  creatorName: string;
+  creatorAvatarImage: string;
+  saleValue: number;
+  topBidValue?: number;
+  creatorValue: InformationNft['share'];
 };
 
 export type NftContextType = {
@@ -23,6 +35,8 @@ export type NftContextType = {
   // artists
   fetchArtists: () => void;
   artists: ArtistsType.Artist[];
+  fetchNft: () => void;
+  itemDetailNft?: NftItemDetail;
 };
 
 export const NftContext = createContext<NftContextType>({
@@ -34,11 +48,13 @@ export const NftContext = createContext<NftContextType>({
   // artists
   fetchArtists: () => {},
   artists: [],
+  fetchNft: () => {},
 });
 
 export const NftContextProvider: FC = ({ children }) => {
   const [images, setImages] = useState<Map<string, NftImage>>(new Map());
   const [nfts, setNfts] = useState<InformationNft[]>([]);
+  const [itemDetailNft, setItemDetailNft] = useState<NftItemDetail>();
   const [imageLoading, setImageLoading] = useState(true);
   const [artists, setArtists] = useState<ArtistsType.Artist[]>([]);
 
@@ -75,16 +91,33 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   }, []);
 
+  async function fetchNft() {
+    setItemDetailNft({
+      title:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos',
+      image: 'https://picsum.photos/300/500',
+      description:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos',
+      creatorName: 'Defacer#od',
+      creatorAvatarImage: 'https://picsum.photos/200/300',
+      saleValue: 10,
+      topBidValue: 250,
+      creatorValue: [1, 10],
+    });
+  }
+  console.log(itemDetailNft);
   return (
     <NftContext.Provider
       value={{
         images,
         fetchImages,
         nfts,
+        itemDetailNft,
         imageLoading,
         fetchNfts,
         fetchArtists,
         artists,
+        fetchNft,
       }}
     >
       {children}

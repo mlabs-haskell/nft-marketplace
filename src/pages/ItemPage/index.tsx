@@ -1,22 +1,41 @@
+import { useContext, useEffect, useState } from 'react';
 import ItemDetails from 'components/UI/molecules/ItemDetails';
 import ItemPhotoCard from 'components/UI/molecules/ItemPhotoCard';
-import { useEffect } from 'react';
+import { NftContext } from 'context/NftContext';
 import styles from './index.module.scss';
 
 const ItemPage = () => {
+  const { itemDetailNft, fetchNft } = useContext(NftContext);
+  const [infoNft, setInfoNft] = useState(itemDetailNft);
   useEffect(() => {
-    window.scrollTo(0, 20);
+    const fetchItems = async () => {
+      try {
+        await fetchNft();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchItems();
   }, []);
+
+  useEffect(() => {
+    setInfoNft(itemDetailNft);
+  }, [itemDetailNft]);
 
   return (
     <div className={styles.container}>
-      <ItemPhotoCard likeCount="167" />
+      <ItemPhotoCard image={infoNft?.image} likeCount="167" />
       <ItemDetails
-        title="SPIRIT SEED - SYNTHETIC"
-        saleValue="250ETH"
-        topBidValue="1.123WETH"
-        description="Syntertic Seeds cannot be bought on the primary marktet and can only be earned or gifted. Synthetic Seeds do not belong to any Tessellation Class, cannot be incubated and are not eligible to be ..."
-        creatorValue="10% royalties"
+        title={infoNft?.title}
+        saleValue={`${infoNft?.saleValue}ETH`}
+        topBidValue={`${infoNft?.topBidValue}ETH`}
+        description={infoNft?.description}
+        creatorValue={
+          infoNft !== undefined
+            ? `${(infoNft.creatorValue[0] * 100) / infoNft.creatorValue[1]}%`
+            : 'NULL'
+        }
+        imgUrl={infoNft?.creatorAvatarImage}
         creatorName="Defacer#od"
         type="SELL"
       />
