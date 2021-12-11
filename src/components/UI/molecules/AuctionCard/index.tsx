@@ -15,6 +15,7 @@ interface Props {
   image?: string;
   isExplore?: boolean;
   isAuction?: boolean;
+  imageId?: string;
 }
 
 const AuctionCard = ({
@@ -27,6 +28,7 @@ const AuctionCard = ({
   image,
   isExplore,
   isAuction,
+  imageId,
 }: Props) => {
   // const [liked, setLiked] = useState(false);
 
@@ -110,7 +112,7 @@ const AuctionCard = ({
           </div>
         </div>
       </div>
-      <Link to="/itempage">
+      <Link to={`/itempage/${imageId}`}>
         <div className={styles.image}>
           <img src={image} alt="nft-item" />
           {time && (

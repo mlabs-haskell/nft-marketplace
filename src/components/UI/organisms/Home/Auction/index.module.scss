@@ -8,7 +8,11 @@
 }
 
 .card-wrapper {
-  max-width: 20%;
+  max-width: 12.5%;
+
+  @media screen and (max-width: 2500px) {
+    max-width: 20%;
+  }
 
   @media screen and (max-width: 1024px) {
     max-width: 35%;
@@ -18,3 +22,4 @@
     max-width: 100%;
   }
 }
+

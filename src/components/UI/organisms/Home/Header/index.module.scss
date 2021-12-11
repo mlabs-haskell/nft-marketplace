@@ -21,12 +21,20 @@
 }
 .swiper-container-1{
   .swiper-slide:first-child{
-    @media only screen and (max-width: $breakpointPhone) {
+    width: 30%;
+    @media screen and (max-width: 2500px) {
+      width: 40%;
+    }
+    @media screen and (max-width: $breakpointPhone) {
       width: 100%;
     }
   }
   .swiper-slide{
-    @media only screen and (max-width: $breakpointPhone) {
+    width: calc(14% - 20px);
+    @media screen and (max-width: 2500px) {
+      width: calc(20% - 20px);
+    }
+    @media screen and (max-width: $breakpointPhone) {
       width: 100%;
     }
   }

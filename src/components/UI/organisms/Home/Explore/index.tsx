@@ -16,8 +16,8 @@ const Explore = ({ images, NFTs }: Props) => {
   const cardsPerPage = 25;
 
   const limitedNfts = useMemo(
-    () => NFTs.slice(0, currentPage * cardsPerPage),
-    [NFTs, currentPage]
+    () => Array.from(NFTs).slice(0, currentPage * cardsPerPage),
+    [Array.from(NFTs), currentPage]
   );
 
   return (
@@ -50,10 +50,11 @@ const Explore = ({ images, NFTs }: Props) => {
         <div className={styles['card-container']}>
           {limitedNfts.map((nft) => (
             <AuctionCard
-              key={images.get(nft.id.contentHash)?.sha256hash}
+              key={images.get(nft[1].id.contentHash)?.sha256hash}
               amount="0.005 ETH "
-              title={images.get(nft.id.contentHash)?.title}
-              image={images.get(nft.id.contentHash)?.path}
+              title={images.get(nft[1].id.contentHash)?.title}
+              image={images.get(nft[1].id.contentHash)?.path}
+              imageId={nft[0]}
               isExplore
             />
           ))}

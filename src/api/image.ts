@@ -15,6 +15,8 @@ export const getImage = async () => {
     createdAt: new Date(),
     id: i + new Date().getTime(),
     title: `NFT ${i}: Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos`,
+    description:
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos',
   }));
 };
 
