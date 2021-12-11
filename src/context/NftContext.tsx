@@ -3,7 +3,7 @@ import { getImage } from 'api/image';
 import { getArtist } from 'api/artist';
 import { ArtistsType } from 'types/artists';
 import makeSdk from 'seabug-sdk/src';
-import { InformationNft } from 'seabug-sdk/src/common';
+import { InformationNft, Maybe, NftId } from 'seabug-sdk/src/common';
 
 type NftImage = {
   path: string;
@@ -14,9 +14,10 @@ type NftImage = {
 };
 
 export type NftContextType = {
-  images: Map<string, NftImage>;
+  imagesByNftId: Map<string, NftImage>;
   fetchImages: () => void;
   nfts: InformationNft[];
+  nftsById: Map<string, InformationNft>;
   fetchNfts: () => void;
   imageLoading: boolean;
 
@@ -26,9 +27,12 @@ export type NftContextType = {
 };
 
 export const NftContext = createContext<NftContextType>({
-  images: new Map(),
+  // images
+  imagesByNftId: new Map(),
   fetchImages: () => {},
+  // nfts
   nfts: [],
+  nftsById: new Map(),
   fetchNfts: () => {},
   imageLoading: false,
   // artists
@@ -37,8 +41,13 @@ export const NftContext = createContext<NftContextType>({
 });
 
 export const NftContextProvider: FC = ({ children }) => {
-  const [images, setImages] = useState<Map<string, NftImage>>(new Map());
+  const [imagesByNftId, setImagesByNftId] = useState<Map<string, NftImage>>(
+    new Map()
+  );
   const [nfts, setNfts] = useState<InformationNft[]>([]);
+  const [nftsById, setNftsById] = useState<Map<string, InformationNft>>(
+    new Map()
+  );
   const [imageLoading, setImageLoading] = useState(true);
   const [artists, setArtists] = useState<ArtistsType.Artist[]>([]);
 
@@ -51,7 +60,7 @@ export const NftContextProvider: FC = ({ children }) => {
       imageMap.set(img.sha256hash, img);
     });
 
-    setImages(imageMap);
+    setImagesByNftId(imageMap);
   }
 
   async function fetchNfts() {
@@ -60,10 +69,14 @@ export const NftContextProvider: FC = ({ children }) => {
     const walletId = '';
 
     const sdk = await makeSdk(url, walletId);
+    const newNfts = await sdk.query.listNfts();
 
-    const nftList = await sdk.query.listNfts();
+    const newNftsById = new Map(
+      newNfts.map((nft) => [nft.id.contentHash, nft])
+    );
 
-    setNfts(nftList);
+    setNfts(newNfts);
+    setNftsById(newNftsById);
   }
 
   const fetchArtists = useCallback(async () => {
@@ -78,11 +91,12 @@ export const NftContextProvider: FC = ({ children }) => {
   return (
     <NftContext.Provider
       value={{
-        images,
+        imagesByNftId,
         fetchImages,
         nfts,
-        imageLoading,
+        nftsById,
         fetchNfts,
+        imageLoading,
         fetchArtists,
         artists,
       }}

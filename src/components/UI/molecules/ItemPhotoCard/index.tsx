@@ -3,14 +3,15 @@ import heart from '../../../../assets/svg/like-heart.svg';
 import image1 from '../../../../assets/svg/image1.svg';
 
 interface Props {
+  imageUrl: string;
   likeCount: string;
 }
 
-function ItemPhotoCard({ likeCount }: Props) {
+function ItemPhotoCard({ imageUrl, likeCount }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.photobox}>
-        <img src={image1} alt="nft" />
+        <img src={imageUrl} alt="nft" />
         <div className={styles.heartAbsolute}>
           <div className={styles.heartContainer}>
             <img src={heart} alt="heart" className={styles.heart} />

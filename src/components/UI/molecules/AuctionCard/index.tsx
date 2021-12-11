@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import dots from 'assets/svg/dots.svg';
 import { useEffect, useState } from 'react';
+import { InformationNft } from 'seabug-sdk/src/common';
 import Box from '../../atoms/Box';
-
 import styles from './index.module.scss';
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
   image?: string;
   isExplore?: boolean;
   isAuction?: boolean;
+  nft?: InformationNft;
 }
 
 const AuctionCard = ({
@@ -27,6 +28,7 @@ const AuctionCard = ({
   image,
   isExplore,
   isAuction,
+  nft,
 }: Props) => {
   // const [liked, setLiked] = useState(false);
 
@@ -110,7 +112,7 @@ const AuctionCard = ({
           </div>
         </div>
       </div>
-      <Link to="/itempage">
+      <Link to={`/itempage/${nft?.id.contentHash ?? ''}`}>
         <div className={styles.image}>
           <img src={image} alt="nft-item" />
           {time && (

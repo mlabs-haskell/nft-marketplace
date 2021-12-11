@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { NftContextType } from '../../../../../context/NftContext';
 import Button from '../../../atoms/Button';
@@ -6,7 +6,7 @@ import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
 interface Props {
-  images: NftContextType['images'];
+  images: NftContextType['imagesByNftId'];
   NFTs: NftContextType['nfts'];
 }
 
@@ -14,11 +14,7 @@ const Explore = ({ images, NFTs }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const cardsPerPage = 25;
-
-  const limitedNfts = useMemo(
-    () => NFTs.slice(0, currentPage * cardsPerPage),
-    [NFTs, currentPage]
-  );
+  const limitedNfts = [...NFTs.values()].slice(0, currentPage * cardsPerPage);
 
   return (
     <div className={styles.contatiner}>
@@ -54,6 +50,7 @@ const Explore = ({ images, NFTs }: Props) => {
               amount="0.005 ETH "
               title={images.get(nft.id.contentHash)?.title}
               image={images.get(nft.id.contentHash)?.path}
+              nft={nft}
               isExplore
             />
           ))}

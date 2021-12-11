@@ -5,7 +5,7 @@ import Explore from 'components/UI/organisms/Home/Explore';
 import Header from 'components/UI/organisms/Home/Header';
 
 const Home = () => {
-  const { images, nfts, artists, fetchImages, fetchNfts, fetchArtists } =
+  const { imagesByNftId, nfts, artists, fetchImages, fetchNfts, fetchArtists } =
     useContext(NftContext);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Home = () => {
     <div>
       <Header artists={artists} />
       <Auction />
-      <Explore images={images} NFTs={nfts} />
+      <Explore images={imagesByNftId} NFTs={nfts} />
     </div>
   );
 };
