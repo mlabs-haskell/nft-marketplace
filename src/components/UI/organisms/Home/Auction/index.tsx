@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 import AuctionCard from '../../../molecules/AuctionCard';
 
 function Auction() {
-  const { nfts } = useContext(NftContext);
+  const { nfts, images } = useContext(NftContext);
   const [carrocelNum, setCarrocelNum] = useState(1);
 
   function getWindowDimensions() {
@@ -49,20 +49,11 @@ function Auction() {
   ).toISOString();
 
   const renderAuctionCards = () =>
-    [...nfts.values()]
+    nfts.list
       .filter((nft) => nft.auctionState?.highestBid)
       .map((nft) => (
         <div key={nft.id.contentHash} className={styles['card-wrapper']}>
-          <AuctionCard
-            isAuction
-            bid="Bid 5,000 DAI"
-            amount="18 ETH"
-            title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos!"
-            quantity="1/1"
-            time={end}
-            image={image1}
-            nft={nft}
-          />
+          <AuctionCard image={images.getByNftId(nft.id)} nft={nft} />
         </div>
       ));
 

@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { ImageType } from 'types/image';
+import { priceToADA } from 'utils/priceToADA';
 import dots from 'assets/svg/dots.svg';
 import { useEffect, useState } from 'react';
 import { InformationNft } from 'seabug-sdk/src/common';
@@ -6,102 +8,64 @@ import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 
 interface Props {
-  title?: string;
-  amount: string;
-  quantity?: string;
-  bid?: string;
-  time?: string;
-  caption?: string;
-  image?: string;
-  isExplore?: boolean;
-  isAuction?: boolean;
   nft?: InformationNft;
+  image?: ImageType.NftImage;
 }
 
-const AuctionCard = ({
-  title,
-  amount,
-  quantity,
-  bid,
-  time,
-  caption,
-  image,
-  isExplore,
-  isAuction,
-  nft,
-}: Props) => {
+const formatTimeSegment = (time: number) =>
+  String(Math.floor(time)).padStart(2, '0');
+
+const formatTime = (ms: number) => {
+  const seconds = ms / 1000;
+
+  if (ms <= 0) return '00:00:00';
+
+  const s = formatTimeSegment(seconds % 60);
+  const m = formatTimeSegment((seconds / 60) % 60);
+  const h = formatTimeSegment((seconds / (60 * 60)) % 24);
+  const d = formatTimeSegment(seconds / (60 * 60 * 24));
+
+  return `${d === '00' ? '' : `${d}:`}${h}:${m}:${s}`;
+};
+
+const AuctionCard = ({ nft, image }: Props) => {
   // const [liked, setLiked] = useState(false);
 
-  const calculateTime = () => {
-    const timer: string = time!;
-    const endTime = new Date(timer);
+  const calcRemainingTime = (): number | undefined => {
+    if (!nft?.auctionState?.deadline) return undefined;
+
+    const endTime = nft.auctionState.deadline;
     const nowDate = new Date();
-    const difference = endTime.getTime() - nowDate.getTime();
 
-    if (difference > 0) {
-      const timeAgo = {
-        s: Math.floor((difference / 1000) % 60),
-        m: Math.floor((difference / 1000 / 60) % 60),
-        h: Math.floor(difference / (1000 * 60 * 60)),
-      };
-
-      const string = `${timeAgo.h}:${timeAgo.m}:${timeAgo.s}`;
-
-      return string;
-    }
-
-    return `0:00:00`;
+    return endTime.getTime() - nowDate.getTime();
   };
 
-  const [timeRemaining, setTimeRemaining] = useState(calculateTime());
+  const [timeRemaining, setTimeRemaining] = useState(calcRemainingTime());
 
   useEffect(() => {
     setInterval(() => {
-      setTimeRemaining(calculateTime());
+      setTimeRemaining(calcRemainingTime());
     }, 1000);
   }, []);
 
-  const renderCurrectFooter = () => {
-    if (isExplore) {
-      return (
-        <>
-          <div className={styles.bid}>
-            <h3>{amount}</h3>
-            {/* <div className={styles['likes-wrapper']}>
-              <p className={styles['bid-value']}>{likes}</p>
-              <img src={liked ? filled : heart} alt="heart" onClick={() => setLiked(!liked)}></img>
-            </div> */}
-          </div>
-        </>
-      );
+  const price = nft ? priceToADA(nft.price) : '';
+  let bid = '';
+
+  if (nft?.auctionState) {
+    if (nft.auctionState.highestBid) {
+      bid = `Top bid: ${priceToADA(nft.auctionState.highestBid.bid)}`;
+    } else if (nft.auctionState.minBid) {
+      bid = `Min bid: ${priceToADA(nft.auctionState.minBid)}`;
+    } else {
+      bid = 'Place bid';
     }
-    return (
-      <>
-        <div className={styles.amount}>
-          <h3>{amount}</h3>
-          {/* {quantity && <p>{quantity}</p>} */}
-        </div>
-        <div className={styles.bid}>
-          <p>{bid}</p>
-          {/* <div className={styles['likes-wrapper']}>
-            <p className={styles['bid-value']}>{likes}</p>
-            <img src={liked ? filled : heart} alt="heart" onClick={() => setLiked(!liked)}></img>
-          </div> */}
-        </div>
-      </>
-    );
-  };
+  }
 
   return (
-    <Box
-      boxClass={`${styles.container} ${isExplore ? styles.explore : ''} ${
-        isAuction ? styles.auction : ''
-      }`}
-    >
+    <Box boxClass={styles.container}>
       <div className={styles.header}>
         <div className={styles['header-text']}>
-          <p className={styles.title}>{title}</p>
-          <p>{caption}</p>
+          <p className={styles.title}>{image?.title ?? ''}</p>
           <div className={styles['span-container']}>
             {/* <span className={styles.span}>
               <img src="https://picsum.photos/id/33/32/32" alt="avatar" className={styles.avatar} />
@@ -114,18 +78,27 @@ const AuctionCard = ({
       </div>
       <Link to={`/itempage/${nft?.id.contentHash ?? ''}`}>
         <div className={styles.image}>
-          <img src={image} alt="nft-item" />
-          {time && (
+          <img src={image?.path} alt="nft-item" />
+          {timeRemaining && (
             <div className={styles['time-wrapper']}>
-              <span className={styles.time}>{timeRemaining}</span>
+              <span className={styles.time}>{formatTime(timeRemaining)}</span>
             </div>
-          )}
-          {isExplore && quantity && (
-            <p className={styles.quantity}>{quantity}</p>
           )}
         </div>
       </Link>
-      <div className={styles.footer}>{renderCurrectFooter()}</div>
+      <div className={styles.footer}>
+        <div className={styles.amount}>
+          <h3>{price}</h3>
+          {/* {quantity && <p>{quantity}</p>} */}
+        </div>
+        <div className={styles.bid}>
+          <p>{bid}</p>
+          {/* <div className={styles['likes-wrapper']}>
+            <p className={styles['bid-value']}>{likes}</p>
+            <img src={liked ? filled : heart} alt="heart" onClick={() => setLiked(!liked)}></img>
+          </div> */}
+        </div>
+      </div>
     </Box>
   );
 };

@@ -3,20 +3,26 @@ import heart from '../../../../assets/svg/like-heart.svg';
 import image1 from '../../../../assets/svg/image1.svg';
 
 interface Props {
-  imageUrl: string;
+  imageUrl?: string;
   likeCount: string;
 }
+
+// TODO: Uncomment heart code once feature is ready
 
 function ItemPhotoCard({ imageUrl, likeCount }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.photobox}>
-        <img src={imageUrl} alt="nft" />
+        {imageUrl ? (
+          <img className={styles.nftImage} src={imageUrl} alt="nft" />
+        ) : (
+          <></>
+        )}
         <div className={styles.heartAbsolute}>
-          <div className={styles.heartContainer}>
+          {/* <div className={styles.heartContainer}>
             <img src={heart} alt="heart" className={styles.heart} />
             <p className={styles['like-count']}>{likeCount}</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

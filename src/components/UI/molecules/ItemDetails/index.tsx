@@ -10,6 +10,7 @@ interface Props {
   description: string;
   creatorValue: string;
   creatorName: string;
+  creatorImagePath?: string;
   type: string;
   handleParentFunction?: () => void;
 }
@@ -21,6 +22,7 @@ const ItemDetails = ({
   description,
   creatorValue,
   creatorName,
+  creatorImagePath,
   type,
   handleParentFunction,
 }: Props) => {
@@ -40,10 +42,8 @@ const ItemDetails = ({
         </ul>
       </div>
       <p className={styles.description}>
-        {description}{' '}
-        <span id="hidden" className={styles.hidden}>
-          this is hidden content{' '}
-        </span>
+        {description.substring(0, 256) +
+          (description.length > 256 ? '...' : '')}{' '}
         <span role="button" tabIndex={0} className={styles.button}>
           Read more
         </span>
@@ -52,7 +52,7 @@ const ItemDetails = ({
         Creator: <span>{creatorValue}</span>
       </p>
       <div className={styles.creator_img}>
-        <UserPhoto imgUrl={girl} />
+        <UserPhoto imgUrl={creatorImagePath} />
         <p>{creatorName}</p>
       </div>
       <div className={styles.buttons}>
@@ -86,7 +86,7 @@ const ItemDetails = ({
           </>
         )}
       </div>
-      <p style={{ fontSize: '12px', lineHeight: '18px', marginBottom: '36px' }}>
+      <p style={{ fontSize: '12px', lineHeight: '18px' }}>
         There&apos;s no bids yet. Be the first!
       </p>
     </div>
