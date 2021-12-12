@@ -50,11 +50,11 @@ const Explore = ({ images, NFTs }: Props) => {
         <div className={styles['card-container']}>
           {limitedNfts.map((nft) => (
             <AuctionCard
-              key={images.get(nft[1].id.contentHash)?.sha256hash}
+              key={nft[0]}
               amount="0.005 ETH "
               title={images.get(nft[1].id.contentHash)?.title}
               image={images.get(nft[1].id.contentHash)?.path}
-              imageId={nft[0]}
+              nftId={nft[0]}
               isExplore
             />
           ))}

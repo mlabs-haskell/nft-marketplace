@@ -12,6 +12,7 @@ interface Props {
   creatorName?: string;
   imgUrl?: string;
   type: string;
+  id?: string;
   handleParentFunction?: () => void;
 }
 
@@ -24,6 +25,7 @@ const ItemDetails = ({
   creatorName,
   type,
   imgUrl,
+  id,
   handleParentFunction,
 }: Props) => {
   return (
@@ -56,6 +58,7 @@ const ItemDetails = ({
       <div className={styles.creator_img}>
         <UserPhoto imgUrl={imgUrl || girl} />
         <p>{creatorName}</p>
+        <p className={styles.creatorId}>{id}</p>
       </div>
       <div className={styles.buttons}>
         {type === 'BUY' ? (

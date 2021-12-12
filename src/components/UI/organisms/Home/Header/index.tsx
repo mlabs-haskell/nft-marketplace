@@ -11,7 +11,7 @@ import right from '../../../../../assets/svg/arrow-right.svg';
 SwiperCore.use([Navigation]);
 
 interface Props {
-  artists: ArtistsType.Artist[];
+  artists: Map<string, ArtistsType.Artist>;
 }
 
 interface ISwiperInstance extends Swiper {
@@ -27,27 +27,32 @@ const Header = (props: Props) => {
   const swiperRef: any = useRef(null);
 
   const renderBigSlide = () => {
-    if (!artists?.length) return null;
+    if (!artists?.size) return null;
     return (
       <SwiperSlide className={styles['swiper-slide']}>
         <div className={styles['big-card-wrapper']}>
-          <CaptionCard {...artists[0]} className={styles['card-big']} />
+          <CaptionCard
+            {...Array.from(artists)[0][1]}
+            className={styles['card-big']}
+          />
         </div>
       </SwiperSlide>
     );
   };
 
   const renderSmallSlides = () => {
-    if (!artists?.length) return null;
+    if (!artists?.size) return null;
 
-    const withoutFirst = artists.filter((item, counter) => counter !== 0);
+    const withoutFirst = Array.from(artists).filter(
+      (item, counter) => counter !== 0
+    );
+
     const separatedArray = separateArrayByArrays(withoutFirst, 2);
-
     return separatedArray.map((subArray) => (
       <SwiperSlide key={uuidv4()} className={styles['swiper-slide']}>
         <div className={styles['small-cards-wrapper']}>
           {subArray?.map((item) => (
-            <CaptionCard {...item} className={styles.card} key={uuidv4()} />
+            <CaptionCard {...item[1]} className={styles.card} key={uuidv4()} />
           ))}
         </div>
       </SwiperSlide>

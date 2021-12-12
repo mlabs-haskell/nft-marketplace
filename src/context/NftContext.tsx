@@ -3,26 +3,16 @@ import { getImage } from 'api/image';
 import { getArtist } from 'api/artist';
 import { ArtistsType } from 'types/artists';
 import makeSdk from 'seabug-sdk/src';
-import { AuctionState, InformationNft } from 'seabug-sdk/src/common';
+import { InformationNft } from 'seabug-sdk/src/common';
 
 type NftImage = {
   path: string;
+  avatarPath: string;
   createdAt: Date;
   id: number;
   title: string;
   sha256hash: string;
   description: string;
-};
-
-type NftItemDetail = {
-  title: string;
-  image: string;
-  description: string;
-  creatorName: string;
-  creatorAvatarImage: string;
-  saleValue: InformationNft['price'];
-  topBidValue?: AuctionState['highestBid'];
-  creatorValue: InformationNft['share'];
 };
 
 export type NftContextType = {
@@ -34,10 +24,7 @@ export type NftContextType = {
 
   // artists
   fetchArtists: () => void;
-  artists: ArtistsType.Artist[];
-  fetchNft: (nftId: string) => void;
-  itemDetailNft?: NftItemDetail;
-  getNftById?: (id: string) => InformationNft | undefined;
+  artists: Map<string, ArtistsType.Artist>;
 };
 
 export const NftContext = createContext<NftContextType>({
@@ -48,16 +35,16 @@ export const NftContext = createContext<NftContextType>({
   imageLoading: false,
   // artists
   fetchArtists: () => {},
-  artists: [],
-  fetchNft: () => {},
+  artists: new Map(),
 });
 
 export const NftContextProvider: FC = ({ children }) => {
   const [images, setImages] = useState<Map<string, NftImage>>(new Map());
   const [nfts, setNfts] = useState<Map<string, InformationNft>>(new Map());
-  const [itemDetailNft, setItemDetailNft] = useState<NftItemDetail>();
   const [imageLoading, setImageLoading] = useState(true);
-  const [artists, setArtists] = useState<ArtistsType.Artist[]>([]);
+  const [artists, setArtists] = useState<Map<string, ArtistsType.Artist>>(
+    new Map()
+  );
 
   async function fetchImages() {
     try {
@@ -100,39 +87,16 @@ export const NftContextProvider: FC = ({ children }) => {
   const fetchArtists = useCallback(async () => {
     try {
       const newArtists = await getArtist();
-      setArtists(newArtists);
+      const artistsMap = new Map<string, ArtistsType.Artist>();
+
+      newArtists.forEach((artist) => {
+        artistsMap.set(artist.pubKeyHash, artist);
+      });
+      setArtists(artistsMap);
     } catch (err) {
       console.error(err);
     }
   }, []);
-
-  function getNftById(id: string) {
-    const nft = nfts.get(id);
-    if (nft) return nft;
-    return undefined;
-  }
-
-  async function fetchNft(nftId: string) {
-    // search in nfts
-    const nft = getNftById(nftId);
-    // search images
-    const image = images.get(nftId);
-    // search author
-    artists.forEach((artist) => {
-      if (image && nft && artist.pubKeyHash === nft.author.pubKeyHash) {
-        setItemDetailNft({
-          title: image.title,
-          image: image.path,
-          description: image.description,
-          creatorName: artist.name,
-          creatorAvatarImage: artist.imagePath,
-          saleValue: nft.price,
-          topBidValue: nft.auctionState?.highestBid,
-          creatorValue: nft.share,
-        });
-      }
-    });
-  }
 
   return (
     <NftContext.Provider
@@ -140,13 +104,10 @@ export const NftContextProvider: FC = ({ children }) => {
         images,
         fetchImages,
         nfts,
-        itemDetailNft,
         imageLoading,
         fetchNfts,
         fetchArtists,
         artists,
-        fetchNft,
-        getNftById,
       }}
     >
       {children}

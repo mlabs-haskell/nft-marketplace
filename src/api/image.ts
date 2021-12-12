@@ -12,6 +12,7 @@ export const getImage = async () => {
   return [...Array(1000).keys()].map((i) => ({
     sha256hash: makeMockHash('aa00000000', i),
     path: `https://picsum.photos/id/${i}/500/${getRandomHeight()}`,
+    avatarPath: 'https://picsum.photos/300/300',
     createdAt: new Date(),
     id: i + new Date().getTime(),
     title: `NFT ${i}: Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos`,

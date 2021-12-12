@@ -106,13 +106,31 @@
       line-height: 21px;
       letter-spacing: -0.02em;
       margin-left: 18px;
+      cursor: pointer;
     }
     div {
       position: relative;
       width: 47px;
       height: 47px;
     }
+    .creatorId{
+      display: none;
+      position: absolute;
+      margin-left: 150px;
+      margin-top: 45px;
+      border-radius: 6px;
+      transition: 0.8s;
+      color: white;
+      background-color: #000;
+      font-size: 12px;
+      width: fit-content;
+      padding: 3.5px;
+    }
   }
+  .creator_img p:hover + .creatorId{
+    display: block;
+  }
+
   .box-container {
     display: block;
     margin: 20px 0;
