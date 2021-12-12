@@ -24,7 +24,7 @@ export interface NftContextType {
   fetchArtists: () => void;
   artists: ArtistsType.Artist[];
   filteredArtist: ArtistsType.Artist[];
-  fetchFilteredArtists: (val: ArtistsType.Artist[]) => void;
+  setFilteredArtists: (artistList: ArtistsType.Artist[]) => void;
 }
 
 export const NftContext = createContext<NftContextType>({} as NftContextType);
@@ -72,8 +72,8 @@ export const NftContextProvider: FC<Props> = ({ children }) => {
     }
   }, []);
 
-  const fetchFilteredArtists = (val: ArtistsType.Artist[]) => {
-    setFilteredArtist(val);
+  const setFilteredArtists = (artistList: ArtistsType.Artist[]) => {
+    setFilteredArtist(artistList);
   };
 
   return (
@@ -87,7 +87,7 @@ export const NftContextProvider: FC<Props> = ({ children }) => {
         fetchArtists,
         artists,
         filteredArtist,
-        fetchFilteredArtists,
+        setFilteredArtists,
       }}
     >
       {children}

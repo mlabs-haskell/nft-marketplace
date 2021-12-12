@@ -12,39 +12,38 @@ interface Props {
 }
 
 const SearchInput = ({ placeholder }: Props) => {
-  const [empty, setEmpty] = useState(true);
   const [value, setValue] = useState('');
   const [display, setDisplay] = useState(false);
   const [searchArtist, setSearchArtist] = useState<ArtistsType.Artist[]>([]);
-  const { artists, fetchFilteredArtists } = useNftContext();
+  const { artists, setFilteredArtists } = useNftContext();
 
-  const handleFilter = (searchWord: string, val: ArtistsType.Artist[]) =>
-    val.filter((item) => {
+  const filterArtists = (
+    searchWord: string,
+    artistsList: ArtistsType.Artist[]
+  ) =>
+    artistsList.filter((item) => {
       const regex = new RegExp(searchWord, 'gi');
       return item.name.match(regex);
     });
 
   const handleClose = () => {
     setValue('');
-    setEmpty(true);
     setDisplay(false);
-    fetchFilteredArtists(artists);
+    setFilteredArtists(artists);
   };
   const handleChange = (e: any) => {
     e.preventDefault();
     setValue(e.target.value);
-    if (e.target.value === '') {
-      setEmpty(true);
-      setDisplay(false);
-    } else {
-      setEmpty(false);
-      const matchSearch = handleFilter(e.target.value, artists);
+    if (e.target.value) {
+      const matchSearch = filterArtists(e.target.value, artists);
       setSearchArtist(matchSearch);
-      fetchFilteredArtists(matchSearch);
+      setFilteredArtists(matchSearch);
       setDisplay(true);
+    } else {
+      setDisplay(false);
     }
   };
-  const displayArtists = (e: any) => {
+  const handleArtistSelection = (e: any) => {
     setValue(e.target.innerText);
     setDisplay(false);
   };
@@ -60,24 +59,24 @@ const SearchInput = ({ placeholder }: Props) => {
             value={value}
           />
         </div>
-        {empty ? (
-          <img src={arrow} alt="arrow-down" />
-        ) : (
+        {value ? (
           <span onClick={handleClose} role="presentation">
             x
           </span>
+        ) : (
+          <img src={arrow} alt="arrow-down" />
         )}
       </div>
       {display ? (
         <Box boxClass={styles.option}>
-          <ul>
+          <ul onClick={(e) => handleArtistSelection(e)} role="presentation">
             {searchArtist.length === 0 ? (
               <li>No matches</li>
             ) : (
               searchArtist?.map((item) => (
-                <li role="presentation" key={item.id} onClick={displayArtists}>
-                  <Link to={`/artist/${item.id}`}>{item.name}</Link>
-                </li>
+                <Link to={`/artist/${item.id}`} key={item.id}>
+                  <li>{item.name}</li>
+                </Link>
               ))
             )}
           </ul>

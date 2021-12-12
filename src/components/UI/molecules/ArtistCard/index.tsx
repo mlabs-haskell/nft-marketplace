@@ -9,7 +9,7 @@ interface Props extends ArtistsType.Artist {
   className?: string;
 }
 
-const CaptionCard = ({ name, className, imagePath, id }: Props) => (
+const ArtistCard = ({ name, className, imagePath, id }: Props) => (
   <Link to={`artist/${id}`}>
     <Box
       boxClass={classNames(styles.container, className)}
@@ -20,4 +20,4 @@ const CaptionCard = ({ name, className, imagePath, id }: Props) => (
   </Link>
 );
 
-export default CaptionCard;
+export default ArtistCard;

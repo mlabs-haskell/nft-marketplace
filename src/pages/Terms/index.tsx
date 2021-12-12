@@ -153,6 +153,22 @@ const Terms = () => {
           </p>
         </li>
         <li>
+          <p> No Responsibility for User-Transmitted Material</p>
+          <p>
+            Due to the nature of online Communications, you acknowledge that
+            interactions to and from this Site and any Services are not
+            confidential, and your Communications may be read or intercepted by
+            others. This extends to wallet interactions with the Cardano
+            blockchain. By submitting Communications to seabug or the Site or
+            Services, users acknowledge that no confidential, fiduciary,
+            contractually implied or other relationship is created between the
+            user and seabug. Moreover, this condition extends to all seabug
+            affiliates and subsidiaries. seabug cannot be held liable for the
+            payment of any money to any party in connection with seabug’s use of
+            Communications submitted by you to the Site.
+          </p>
+        </li>
+        <li>
           <p>Copyright Policy</p>
           <p>
             Claims of Infringement:

@@ -1,7 +1,7 @@
 export namespace ImagesType {
   export interface Image {
     path: string;
-    createdAt?: string;
+    createdAt?: Date;
     title: string;
     sha256hash: string;
     id: number;

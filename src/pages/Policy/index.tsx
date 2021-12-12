@@ -103,7 +103,7 @@ const Policy = () => {
         <br />
         Internet cookies are pieces of information built specifically for web
         browsers that a web server may place on your computer in order to track,
-        personalize, and save details related to a user&quot;s session when a
+        personalize, and save details related to a user&apos;s session when a
         user visits a website. Cookies can be used to identify a user’s
         computer, however, they do not contain information that identifies a
         user by name. seabug and its affiliates use cookies and like

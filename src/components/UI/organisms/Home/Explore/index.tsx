@@ -8,10 +8,9 @@ import styles from './index.module.scss';
 interface Props {
   images: NftContextType['images'];
   NFTs: NftContextType['nfts'];
-  title: string | undefined;
 }
 
-const Explore = ({ images, NFTs, title }: Props) => {
+const Explore = ({ images, NFTs }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const cardsPerPage = 25;
@@ -23,17 +22,6 @@ const Explore = ({ images, NFTs, title }: Props) => {
 
   return (
     <div className={styles.contatiner}>
-      <div className={styles.header}>
-        <h2>{title}</h2>
-        {title === 'Explore' ? (
-          <div className={styles.button}>
-            <Button label="My Sales" color="secondary" />
-            <Button label="My Collection" color="primary" />
-          </div>
-        ) : (
-          ''
-        )}
-      </div>
       <InfiniteScroll
         dataLength={limitedNfts.length} // This is important field to render the next data
         next={() => {

@@ -3,6 +3,7 @@ import { NftContext } from 'context/NftContext';
 import Auction from 'components/UI/organisms/Home/Auction';
 import Explore from 'components/UI/organisms/Home/Explore';
 import Header from 'components/UI/organisms/Home/Header';
+import ExploreHeader from 'components/UI/molecules/ExploreHeader';
 
 const Home = () => {
   const {
@@ -35,7 +36,10 @@ const Home = () => {
         artists={filteredArtist.length === 0 ? artists : filteredArtist}
       />
       <Auction />
-      <Explore images={images} NFTs={nfts} title="Explore" />
+      <div>
+        <ExploreHeader />
+        <Explore images={images} NFTs={nfts} />
+      </div>
     </div>
   );
 };
