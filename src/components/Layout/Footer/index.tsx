@@ -18,7 +18,7 @@ const Footer = () => {
             placeholder="Your Email.:"
             btnClass={styles.buthrefn}
           />
-          <ul className={styles['social-as']}>
+          <ul className={styles['social-links']}>
             <li>
               <a href="https://www.instagram.com/seabugnft">
                 <img src={instagram} alt="instagram" />
