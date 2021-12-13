@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios, { AxiosRequestConfig } from 'axios';
+import { WalletContextProvider } from 'context/WalletContext';
 import { NftContextProvider } from 'context/NftContext';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
@@ -23,9 +24,11 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <NftContextProvider>
-      <App />
-    </NftContextProvider>
+    <WalletContextProvider>
+      <NftContextProvider>
+        <App />
+      </NftContextProvider>
+    </WalletContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
