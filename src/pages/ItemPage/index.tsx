@@ -15,11 +15,11 @@ const ItemPage = ({ type }: Props) => {
   const { nftId } = useParams<{ nftId: string }>();
   const { artists, images, nfts, common } = useContext(NftContext);
 
-  const nft = nfts.getById({ contentHash: nftId });
+  const nft = nfts.getById({ contentHash: nftId ?? '' });
   const artist = nft
     ? artists.getByPubKeyHash(nft.author.pubKeyHash)
     : undefined;
-  const image = images.getByNftId({ contentHash: nftId });
+  const image = images.getByNftId({ contentHash: nftId ?? '' });
 
   useEffect(() => {
     // If the user navigates directly to item page, the nfts or images may not
