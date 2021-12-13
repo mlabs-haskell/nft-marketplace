@@ -29,13 +29,13 @@ const SearchInput = ({ placeholder }: Props) => {
   const handleClose = () => {
     setValue('');
     setDisplay(false);
-    setFilteredArtists(artists);
+    setFilteredArtists(artists.list);
   };
   const handleChange = (e: any) => {
     e.preventDefault();
     setValue(e.target.value);
     if (e.target.value) {
-      const matchSearch = filterArtists(e.target.value, artists);
+      const matchSearch = filterArtists(e.target.value, artists.list);
       setSearchArtist(matchSearch);
       setFilteredArtists(matchSearch);
       setDisplay(true);

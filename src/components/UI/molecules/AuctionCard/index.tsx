@@ -36,8 +36,9 @@ const AuctionCard = ({ nft, image }: Props) => {
 
     const endTime = nft.auctionState.deadline;
     const nowDate = new Date();
+    const remaining = endTime.getTime() - nowDate.getTime();
 
-    return endTime.getTime() - nowDate.getTime();
+    return remaining > 0 ? remaining : undefined;
   };
 
   const [timeRemaining, setTimeRemaining] = useState(calcRemainingTime());

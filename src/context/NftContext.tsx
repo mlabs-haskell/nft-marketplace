@@ -74,8 +74,9 @@ export const NftContextProvider: FC = ({ children }) => {
     new Map()
   );
   const [messages, setMessages] = useState<AppMessage[]>([]);
-  const [filteredArtist, setFilteredArtist] =
-    useState<ArtistsType.Artist[]>([]);
+  const [filteredArtist, setFilteredArtist] = useState<ArtistsType.Artist[]>(
+    []
+  );
 
   // App Messages
 

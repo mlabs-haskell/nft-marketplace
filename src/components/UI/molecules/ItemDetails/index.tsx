@@ -89,8 +89,8 @@ const ItemDetails = ({
       <p style={{ fontSize: '12px', lineHeight: '18px' }}>
         There&apos;s no bids yet. Be the first!
       </p>
-  </div>
+    </div>
   );
-}
+};
 
 export default ItemDetails;
