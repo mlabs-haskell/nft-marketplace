@@ -29,37 +29,43 @@ export type NftContextType = {
     getById: (nftId: NftId) => Maybe<InformationNft>;
     fetch: () => void;
   };
+  search: {
+    text: string;
+    setText: (searchText: string) => void;
+    getMatchingArtists: () => ArtistsType.Artist[];
+  };
   common: {
     messages: AppMessage[];
     fetchAll: () => void;
   };
-  filteredArtist: ArtistsType.Artist[];
-  setFilteredArtists: (artistList: ArtistsType.Artist[]) => void;
 };
 
 export const NftContext = createContext<NftContextType>({
   artists: {
     list: [],
-    getByPubKeyHash: (pkh: string) => undefined,
+    getByPubKeyHash: () => undefined,
     fetch: () => {},
   },
   images: {
     list: [],
-    getByNftId: (nftId: NftId) => undefined,
+    getByNftId: () => undefined,
     fetch: () => {},
   },
   nfts: {
     list: [],
     onAuctionCount: 0,
-    getById: (nftId: NftId) => undefined,
+    getById: () => undefined,
     fetch: () => {},
+  },
+  search: {
+    text: '',
+    setText: () => {},
+    getMatchingArtists: () => [],
   },
   common: {
     messages: [],
     fetchAll: () => undefined,
   },
-  filteredArtist: [],
-  setFilteredArtists: () => undefined,
 });
 
 export const NftContextProvider: FC = ({ children }) => {
@@ -73,10 +79,8 @@ export const NftContextProvider: FC = ({ children }) => {
   const [nftsById, setNftsById] = useState<Map<string, InformationNft>>(
     new Map()
   );
+  const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
-  const [filteredArtist, setFilteredArtist] = useState<ArtistsType.Artist[]>(
-    []
-  );
 
   // App Messages
 
@@ -181,14 +185,26 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   }
 
+  // Search
+
+  // TODO: optimize search performance (e.g., n-grams search index)
+  const getMatchingArtists = () => {
+    return useMemo(
+      () =>
+        artistsList.filter((item) => {
+          const regex = new RegExp(searchText, 'gi');
+          return item.name.match(regex);
+        }),
+      [artistsList, searchText]
+    );
+  };
+
+  // Common
+
   const fetchAll = async () => {
     fetchArtists();
     fetchImages();
     fetchNfts();
-  };
-
-  const setFilteredArtists = (artistList: ArtistsType.Artist[]) => {
-    setFilteredArtist(artistList);
   };
 
   return (
@@ -210,12 +226,15 @@ export const NftContextProvider: FC = ({ children }) => {
           getById: getNftById,
           fetch: fetchNfts,
         },
+        search: {
+          text: searchText,
+          setText: setSearchText,
+          getMatchingArtists,
+        },
         common: {
           messages,
           fetchAll,
         },
-        filteredArtist,
-        setFilteredArtists,
       }}
     >
       {children}
