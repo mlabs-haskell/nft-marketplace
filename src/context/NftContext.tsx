@@ -1,4 +1,4 @@
-import { createContext, useState, FC, useCallback, useMemo } from 'react';
+import { createContext, useState, FC, useMemo, useContext } from 'react';
 import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
 import { ArtistsType } from 'types/artists';
@@ -33,6 +33,8 @@ export type NftContextType = {
     messages: AppMessage[];
     fetchAll: () => void;
   };
+  filteredArtist: ArtistsType.Artist[];
+  setFilteredArtists: (artistList: ArtistsType.Artist[]) => void;
 };
 
 export const NftContext = createContext<NftContextType>({
@@ -56,6 +58,8 @@ export const NftContext = createContext<NftContextType>({
     messages: [],
     fetchAll: () => undefined,
   },
+  filteredArtist: [],
+  setFilteredArtists: () => undefined,
 });
 
 export const NftContextProvider: FC = ({ children }) => {
@@ -70,6 +74,8 @@ export const NftContextProvider: FC = ({ children }) => {
     new Map()
   );
   const [messages, setMessages] = useState<AppMessage[]>([]);
+  const [filteredArtist, setFilteredArtist] =
+    useState<ArtistsType.Artist[]>([]);
 
   // App Messages
 
@@ -180,6 +186,10 @@ export const NftContextProvider: FC = ({ children }) => {
     fetchNfts();
   };
 
+  const setFilteredArtists = (artistList: ArtistsType.Artist[]) => {
+    setFilteredArtist(artistList);
+  };
+
   return (
     <NftContext.Provider
       value={{
@@ -203,9 +213,13 @@ export const NftContextProvider: FC = ({ children }) => {
           messages,
           fetchAll,
         },
+        filteredArtist,
+        setFilteredArtists,
       }}
     >
       {children}
     </NftContext.Provider>
   );
 };
+
+export const useNftContext = () => useContext<NftContextType>(NftContext);

@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import { v4 as uuidv4 } from 'uuid';
 import { ArtistsType } from 'types/artists';
-import CaptionCard from '../../../molecules/CaptionCard';
+import ArtistCard from '../../../molecules/ArtistCard';
 import styles from './index.module.scss';
 import { separateArrayByArrays } from '../../../../../utils/separateArrayByArrays';
 import right from '../../../../../assets/svg/arrow-right.svg';
@@ -31,7 +31,7 @@ const Header = (props: Props) => {
     return (
       <SwiperSlide className={styles['swiper-slide']}>
         <div className={styles['big-card-wrapper']}>
-          <CaptionCard {...artists[0]} className={styles['card-big']} />
+          <ArtistCard {...artists[0]} className={styles['card-big']} />
         </div>
       </SwiperSlide>
     );
@@ -47,7 +47,7 @@ const Header = (props: Props) => {
       <SwiperSlide key={uuidv4()} className={styles['swiper-slide']}>
         <div className={styles['small-cards-wrapper']}>
           {subArray?.map((item) => (
-            <CaptionCard {...item} className={styles.card} key={uuidv4()} />
+            <ArtistCard {...item} className={styles.card} key={uuidv4()} />
           ))}
         </div>
       </SwiperSlide>

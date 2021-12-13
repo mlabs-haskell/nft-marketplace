@@ -3,9 +3,10 @@ import { NftContext } from 'context/NftContext';
 import Auction from 'components/UI/organisms/Home/Auction';
 import Explore from 'components/UI/organisms/Home/Explore';
 import Header from 'components/UI/organisms/Home/Header';
+import ExploreHeader from 'components/UI/molecules/ExploreHeader';
 
 const Home = () => {
-  const { artists, images, nfts, common } = useContext(NftContext);
+  const { artists, images, nfts, common, filteredArtist } = useContext(NftContext);
 
   useEffect(() => {
     if (nfts.list.length === 0) common.fetchAll();
@@ -13,7 +14,7 @@ const Home = () => {
 
   return (
     <div>
-      <Header artists={artists.list} />
+      <Header artists={filteredArtist.length === 0 ? artists.list : filteredArtist} />
       {nfts.onAuctionCount > 0 && <Auction />}
       <Explore
         images={images.list}

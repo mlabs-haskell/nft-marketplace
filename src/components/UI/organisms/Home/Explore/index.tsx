@@ -19,13 +19,6 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
 
   return (
     <div className={styles.contatiner}>
-      <div className={styles.header}>
-        <h2>Explore</h2>
-        <div className={styles.button}>
-          <Button label="My Sales" color="secondary" />
-          <Button label="My Collection" color="primary" />
-        </div>
-      </div>
       <InfiniteScroll
         dataLength={limitedNfts.length} // This is important field to render the next data
         next={() => {

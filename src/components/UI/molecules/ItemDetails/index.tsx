@@ -11,7 +11,7 @@ interface Props {
   creatorValue: string;
   creatorName: string;
   creatorImagePath?: string;
-  type: string;
+  type: 'BUY' | 'SELL';
   handleParentFunction?: () => void;
 }
 
@@ -89,8 +89,8 @@ const ItemDetails = ({
       <p style={{ fontSize: '12px', lineHeight: '18px' }}>
         There&apos;s no bids yet. Be the first!
       </p>
-    </div>
+  </div>
   );
-};
+}
 
 export default ItemDetails;

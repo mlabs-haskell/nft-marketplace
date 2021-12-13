@@ -1,7 +1,7 @@
 import ItemDetails from 'components/UI/molecules/ItemDetails';
 import ItemPhotoCard from 'components/UI/molecules/ItemPhotoCard';
 import { NftContext } from 'context/NftContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Rational } from 'seabug-sdk/src/common';
 import { priceToADA } from 'utils/priceToADA';
