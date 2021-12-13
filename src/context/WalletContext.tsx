@@ -1,6 +1,12 @@
 import { createContext, useState, FC, useContext } from 'react';
 
-export type Wallet = { name: 'Test'; address: string } | { name: 'None' };
+export type WalletAddress = {
+  pubKeyHash: string;
+};
+
+export type Wallet =
+  | { name: 'Test'; address: WalletAddress }
+  | { name: 'None' };
 
 export type WalletContextType = {
   connected: Wallet;
@@ -17,7 +23,7 @@ export const WalletContextProvider: FC = ({ children }) => {
   const [connected, setConnected] = useState<Wallet>({ name: 'None' });
 
   const connectTestWallet = (password: string) =>
-    setConnected({ name: 'Test', address: 'abcd1234' });
+    setConnected({ name: 'Test', address: { pubKeyHash: 'ff00000000' } });
 
   return (
     <WalletContext.Provider
