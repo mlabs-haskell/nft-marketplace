@@ -43,19 +43,24 @@ function Auction() {
     }
   }, [windowDimensions]);
 
-  // Date used just for testing!
-  const end = new Date(
-    new Date().getTime() + Math.floor(Math.random() * 6000000)
-  ).toISOString();
+  const renderAuctionCards = () => {
+    const now = new Date();
 
-  const renderAuctionCards = () =>
-    nfts.list
-      .filter((nft) => nft.auctionState?.highestBid)
+    return nfts.list
+      .filter(
+        (nft) => nft.auctionState?.highestBid && nft.auctionState.deadline > now
+      )
+      .sort(
+        (a, b) =>
+          (a.auctionState?.deadline?.getTime() ?? Infinity) -
+          (b.auctionState?.deadline?.getTime() ?? Infinity)
+      )
       .map((nft) => (
         <div key={nft.id.contentHash} className={styles['card-wrapper']}>
           <AuctionCard image={images.getByNftId(nft.id)} nft={nft} />
         </div>
       ));
+  };
 
   return (
     <div>
