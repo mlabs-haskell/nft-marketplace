@@ -187,17 +187,12 @@ export const NftContextProvider: FC = ({ children }) => {
 
   // Search
 
-  // TODO: optimize search performance (e.g., n-grams search index)
-  const getMatchingArtists = () => {
-    return useMemo(
-      () =>
-        artistsList.filter((item) => {
-          const regex = new RegExp(searchText, 'gi');
-          return item.name.match(regex);
-        }),
-      [artistsList, searchText]
-    );
-  };
+  // TODO: optimize search performance (e.g., n-grams search index, memoize results, etc.)
+  const getMatchingArtists = () =>
+    artistsList.filter((item) => {
+      const regex = new RegExp(searchText, 'gi');
+      return item.name.match(regex);
+    });
 
   // Common
 
