@@ -6,17 +6,17 @@ import { ArtistsType } from 'types/artists';
 import { InformationNft } from 'seabug-sdk/src/common';
 
 interface ArtistParam {
-  artist_id: string;
+  artistId: string;
 }
 
 const ArtistPage = () => {
-  const { artist_id } = useParams<ArtistParam>();
+  const { artistId } = useParams<ArtistParam>();
   const [artist, setArtist] = useState<ArtistsType.Artist>();
   const [artistNfts, setNfts] = useState<InformationNft[]>([]);
   const { images, nfts, artists } = useNftContext();
 
   const getArtist = () => {
-    const newArtist = artists.find((item) => item.id === artist_id);
+    const newArtist = artists.find((item) => item.id === artistId);
     setArtist(newArtist);
   };
 

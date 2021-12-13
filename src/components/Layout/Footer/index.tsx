@@ -30,7 +30,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="seabug.medium.com">
+              <a href="https://seabug.medium.com">
                 <img src={medium} alt="medium" />
               </a>
             </li>
@@ -64,7 +64,7 @@ const Footer = () => {
       </div>
       <div className={`${styles['footer-base']} row`}>
         <div className="col-lg-9">
-          <p>Brought href you by MLabs</p>
+          <p>Brought to you by MLabs</p>
         </div>
         <div className={`${styles['footer-text']} col-lg-3`}>
           <p>

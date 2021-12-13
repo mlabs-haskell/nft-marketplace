@@ -16,7 +16,7 @@ const Routes = () => (
       <Route exact path="/help" component={FAQ} />
       <Route exact path="/terms" component={Terms} />
       <Route exact path="/policy" component={Policy} />
-      <Route exact path="/artist/:artist_id" component={ArtistPage} />
+      <Route exact path="/artist/:artistId" component={ArtistPage} />
     </Switch>
   </div>
 );
