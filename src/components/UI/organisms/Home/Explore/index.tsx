@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { NftContextType } from '../../../../../context/NftContext';
 import Button from '../../../atoms/Button';
@@ -6,19 +6,16 @@ import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
 interface Props {
-  images: NftContextType['images'];
-  NFTs: NftContextType['nfts'];
+  images: NftContextType['images']['list'];
+  getImageByNftId: NftContextType['images']['getByNftId'];
+  nfts: NftContextType['nfts']['list'];
 }
 
-const Explore = ({ images, NFTs }: Props) => {
+const Explore = ({ images, getImageByNftId, nfts }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const cardsPerPage = 25;
-
-  const limitedNfts = useMemo(
-    () => NFTs.slice(0, currentPage * cardsPerPage),
-    [NFTs, currentPage]
-  );
+  const limitedNfts = nfts.slice(0, currentPage * cardsPerPage);
 
   return (
     <div className={styles.contatiner}>
@@ -29,7 +26,7 @@ const Explore = ({ images, NFTs }: Props) => {
         }}
         hasMore
         loader={Array(25).map((value, i) => (
-          <AuctionCard key={i.toString()} amount="" isExplore />
+          <AuctionCard key={i.toString()} />
         ))}
         scrollableTarget={styles['card-container']}
         endMessage={
@@ -41,15 +38,12 @@ const Explore = ({ images, NFTs }: Props) => {
         // below props only if you need pull down functionality
       >
         <div className={styles['card-container']}>
-          {limitedNfts.map((nft) => (
-            <AuctionCard
-              key={images.get(nft.id.contentHash)?.sha256hash}
-              amount="0.005 ETH "
-              title={images.get(nft.id.contentHash)?.title}
-              image={images.get(nft.id.contentHash)?.path}
-              isExplore
-            />
-          ))}
+          {limitedNfts.map((nft) => {
+            const image = getImageByNftId(nft.id);
+            return (
+              <AuctionCard key={nft.id.contentHash} nft={nft} image={image} />
+            );
+          })}
         </div>
       </InfiniteScroll>
       <div className={styles.btn}>

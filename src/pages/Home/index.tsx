@@ -6,40 +6,22 @@ import Header from 'components/UI/organisms/Home/Header';
 import ExploreHeader from 'components/UI/molecules/ExploreHeader';
 
 const Home = () => {
-  const {
-    images,
-    nfts,
-    fetchImages,
-    fetchNfts,
-    artists,
-    fetchArtists,
-    filteredArtist,
-  } = useContext(NftContext);
+  const { artists, images, nfts, common } = useContext(NftContext);
 
   useEffect(() => {
-    const getImages = async () => {
-      try {
-        await fetchImages();
-        await fetchNfts();
-        await fetchArtists();
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getImages();
+    if (nfts.list.length === 0) common.fetchAll();
   }, []);
 
   return (
     <div>
-      <Header
-        artists={filteredArtist.length === 0 ? artists : filteredArtist}
+      <Header artists={artists.list} />
+      {nfts.onAuctionCount > 0 && <Auction />}
+      <ExploreHeader />
+      <Explore
+        images={images.list}
+        getImageByNftId={images.getByNftId}
+        nfts={nfts.list}
       />
-      <Auction />
-      <div>
-        <ExploreHeader />
-        <Explore images={images} NFTs={nfts} />
-      </div>
     </div>
   );
 };

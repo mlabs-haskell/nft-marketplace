@@ -12,16 +12,21 @@ interface ArtistParam {
 const ArtistPage = () => {
   const { artistId } = useParams<ArtistParam>();
   const [artist, setArtist] = useState<ArtistsType.Artist>();
+
+  // TODO: Move into NftContext
   const [artistNfts, setNfts] = useState<InformationNft[]>([]);
+
   const { images, nfts, artists } = useNftContext();
 
   const getArtist = () => {
-    const newArtist = artists.find((item) => item.id === artistId);
+    // TODO: get artist by pubKeyHash
+    const newArtist = artists.list.find((item) => item.id === artistId);
     setArtist(newArtist);
   };
 
   const getArtistNfts = () => {
-    const newNfts = nfts.filter(
+    // TODO: Move into NftContext (and memoize?)
+    const newNfts = nfts.list.filter(
       (items) => items.owner.pubKeyHash === artist?.pubKeyHash
     );
     setNfts(newNfts);
@@ -35,7 +40,11 @@ const ArtistPage = () => {
   return (
     <div>
       <h2>{artist?.name}</h2>
-      <Explore images={images} NFTs={artistNfts} />
+      <Explore
+        images={images.list}
+        getImageByNftId={images.getByNftId}
+        nfts={artistNfts}
+      />
     </div>
   );
 };

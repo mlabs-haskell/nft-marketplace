@@ -10,6 +10,7 @@ interface Props {
   description: string;
   creatorValue: string;
   creatorName: string;
+  creatorImagePath?: string;
   type: 'BUY' | 'SELL';
   handleParentFunction?: () => void;
 }
@@ -21,70 +22,75 @@ const ItemDetails = ({
   description,
   creatorValue,
   creatorName,
+  creatorImagePath,
   type,
   handleParentFunction,
-}: Props) => (
-  <div className={styles.container}>
-    <h2 className={styles.title}>{title}</h2>
-    <div className={styles['top-text']}>
-      <ul>
-        <li>
-          On Sales for: <span>{saleValue}</span>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          Highest Bid: <span>{topBidValue}</span>
-        </li>
-      </ul>
+}: Props) => {
+  return (
+    <div className={styles.container}>
+      <h2 className={styles.title}>{title}</h2>
+      <div className={styles['top-text']}>
+        <ul>
+          <li>
+            On Sales for: <span>{saleValue}</span>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            Highest Bid: <span>{topBidValue}</span>
+          </li>
+        </ul>
+      </div>
+      <p className={styles.description}>
+        {description.substring(0, 256) +
+          (description.length > 256 ? '...' : '')}{' '}
+        <span role="button" tabIndex={0} className={styles.button}>
+          Read more
+        </span>
+      </p>
+      <p className={styles.creator}>
+        Creator: <span>{creatorValue}</span>
+      </p>
+      <div className={styles.creator_img}>
+        <UserPhoto imgUrl={creatorImagePath} />
+        <p>{creatorName}</p>
+      </div>
+      <div className={styles.buttons}>
+        {type === 'BUY' ? (
+          <>
+            <Button
+              label="Place a bid"
+              color="secondary"
+              btnClass={styles.btn}
+            />
+            <Button
+              label={type}
+              color="primary"
+              btnClass={styles.btn}
+              onClick={handleParentFunction}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              label="Start Auction"
+              color="secondary"
+              btnClass={styles.btn}
+            />
+            <Button
+              label={type}
+              color="primary"
+              btnClass={styles.btn}
+              onClick={handleParentFunction}
+            />
+          </>
+        )}
+      </div>
+      <p style={{ fontSize: '12px', lineHeight: '18px' }}>
+        There&apos;s no bids yet. Be the first!
+      </p>
     </div>
-    <p className={styles.description}>
-      {description}{' '}
-      <span id="hidden" className={styles.hidden}>
-        this is hidden content{' '}
-      </span>
-      <span role="button" tabIndex={0} className={styles.button}>
-        Read more
-      </span>
-    </p>
-    <p className={styles.creator}>
-      Creator: <span>{creatorValue}</span>
-    </p>
-    <div className={styles.creator_img}>
-      <UserPhoto imgUrl={girl} />
-      <p>{creatorName}</p>
-    </div>
-    <div className={styles.buttons}>
-      {type === 'BUY' ? (
-        <>
-          <Button label="Place a bid" color="secondary" btnClass={styles.btn} />
-          <Button
-            label={type}
-            color="primary"
-            btnClass={styles.btn}
-            onClick={handleParentFunction}
-          />
-        </>
-      ) : (
-        <>
-          <Button
-            label="Start Auction"
-            color="secondary"
-            btnClass={styles.btn}
-          />
-          <Button
-            label={type}
-            color="primary"
-            btnClass={styles.btn}
-            onClick={handleParentFunction}
-          />
-        </>
-      )}
-    </div>
-    <p style={{ fontSize: '12px', lineHeight: '18px', marginBottom: '36px' }}>
-      There&apos;s no bids yet. Be the first!
-    </p>
-  </div>
-);
+  );
+};
 
 export default ItemDetails;

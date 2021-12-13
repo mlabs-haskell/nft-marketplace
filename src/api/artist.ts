@@ -14,5 +14,5 @@ const makeMockArtists = (count: number): ArtistsType.Artist[] =>
     };
   });
 
-export const getArtist = (): Promise<ArtistsType.Artist[]> =>
+export const getArtists = (): Promise<ArtistsType.Artist[]> =>
   Promise.resolve(makeMockArtists(22));
