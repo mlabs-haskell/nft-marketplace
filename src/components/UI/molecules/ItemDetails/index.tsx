@@ -11,6 +11,8 @@ interface Props {
   creatorValue: string;
   creatorName: string;
   creatorImagePath?: string;
+  ownerPKH: string;
+  ownerImagePath?: string;
   type: 'BUY' | 'SELL';
   handleParentFunction?: () => void;
 }
@@ -24,6 +26,8 @@ const ItemDetails = ({
   creatorName,
   creatorImagePath,
   type,
+  ownerPKH,
+  ownerImagePath,
   handleParentFunction,
 }: Props) => {
   return (
@@ -48,13 +52,30 @@ const ItemDetails = ({
           Read more
         </span>
       </p>
-      <p className={styles.creator}>
-        Creator: <span>{creatorValue}</span>
-      </p>
-      <div className={styles.creator_img}>
-        <UserPhoto imgUrl={creatorImagePath} />
-        <p>{creatorName}</p>
+      <div className={styles.details}>
+        <div>
+          <p className={styles.details_text}>
+            Creator: <span>{creatorValue}</span>
+          </p>
+          <div className={styles.details_img}>
+            <UserPhoto imgUrl={creatorImagePath} />
+            <p>{creatorName}</p>
+          </div>
+        </div>
+        <div>
+          <p className={styles.details_text}>Owner</p>
+          <div className={styles.details_img}>
+            <UserPhoto imgUrl={ownerImagePath} />
+            <p>
+              {ownerPKH.substring(0, 11) +
+                (ownerPKH.length > 11
+                  ? `...${ownerPKH.substring(38, ownerPKH.length)}`
+                  : '')}{' '}
+            </p>
+          </div>
+        </div>
       </div>
+
       <div className={styles.buttons}>
         {type === 'BUY' ? (
           <>

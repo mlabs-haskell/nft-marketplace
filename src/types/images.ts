@@ -11,4 +11,3 @@ export namespace ImagesType {
     sha256hash: string;
   }
 }
-  

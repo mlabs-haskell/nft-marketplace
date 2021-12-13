@@ -19,6 +19,7 @@ const ItemPage = ({ type }: Props) => {
   const artist = nft
     ? artists.getByPubKeyHash(nft.author.pubKeyHash)
     : undefined;
+  const owner = nft ? artists.getByPubKeyHash(nft.owner.pubKeyHash) : undefined;
   const image = images.getByNftId({ contentHash: nftId ?? '' });
 
   useEffect(() => {
@@ -47,6 +48,8 @@ const ItemPage = ({ type }: Props) => {
         }% royalties`}
         creatorName={artist?.name ?? ''}
         creatorImagePath={artist?.imagePath}
+        ownerPKH={owner?.pubKeyHash ?? ''}
+        ownerImagePath={owner?.imagePath}
         type={type}
       />
     </div>

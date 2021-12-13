@@ -10,17 +10,17 @@ function Routes() {
   return (
     <div>
       <Switch>
-        <Route path="/" element={<Home />} />
-        <Route path="/itempage/:nftId">
+        <Route exact path="/" component={Home} />
+        <Route exact path="/itempage/:nftId">
           <ItemPage type="BUY" />
         </Route>
-        <Route path="/itempagesell">
+        <Route exact path="/itempagesell">
           <ItemPage type="SELL" />
         </Route>
-        <Route path="/help" element={<FAQ />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/policy" element={<Policy />} />
-        <Route path="/artist/:artistId" element={<ArtistPage />} />
+        <Route exact path="/help" component={FAQ} />
+        <Route exact path="/terms" component={Terms} />
+        <Route exact path="/policy" component={Policy} />
+        <Route exact path="/artist/:artistId" component={ArtistPage} />
       </Switch>
     </div>
   );

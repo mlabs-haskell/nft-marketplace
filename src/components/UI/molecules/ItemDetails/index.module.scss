@@ -80,7 +80,15 @@
       }
     }
   }
-  .creator {
+  .details{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    @media only screen and (max-width: $breakpointPhone) {
+      flex-direction: column;
+    }
+  }
+  .details_text {
     margin-top: 30px;
     color: black;
     font-size: 14px;
@@ -97,7 +105,7 @@
     right: -2px;
     bottom: 5px;
   }
-  .creator_img {
+  .details_img {
     display: flex;
     flex-direction: row;
     align-items: center;
