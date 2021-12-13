@@ -1,10 +1,6 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Terms = () => {
-  useEffect(() => {
-    window.scrollTo(0, 20);
-  }, []);
   return (
     <div style={{ marginBottom: '50px' }}>
       <h2>Terms and Condition</h2>

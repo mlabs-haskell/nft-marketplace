@@ -22,8 +22,6 @@ const ItemPage = ({ type }: Props) => {
   const image = images.getByNftId({ contentHash: nftId });
 
   useEffect(() => {
-    window.scrollTo(0, 20);
-
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
     if (!nft || !image) common.fetchAll();

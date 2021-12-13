@@ -1,10 +1,6 @@
-import { useEffect } from 'react';
 import styles from './index.module.scss';
 
 const Policy = () => {
-  useEffect(() => {
-    window.scrollTo(0, 20);
-  }, []);
   return (
     <div className={styles['policy-container']}>
       <h2>Privacy Policy</h2>
