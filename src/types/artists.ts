@@ -6,4 +6,8 @@ export namespace ArtistsType {
     id: string;
     imagePath: string;
   }
+
+  export interface ArtistResponse {
+    name: string;
+  }
 }

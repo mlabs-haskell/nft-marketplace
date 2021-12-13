@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { makeMockHash } from 'seabug-sdk/src/mocks';
+import { ImagesType } from 'types/images';
 
 export const getImage = async () => {
   // const response = await axios.get('images');
@@ -17,8 +18,10 @@ export const getImage = async () => {
     title: `NFT ${i}: Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos`,
   }));
 };
-
 export const addImage = async (payload: { image: string; title: string }) => {
-  const response = await axios.post('images', payload);
+  const response = await axios.post<ImagesType.AddImageResponse>(
+    'images',
+    payload
+  );
   return response;
 };

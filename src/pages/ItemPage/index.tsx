@@ -1,6 +1,6 @@
 import ItemDetails from 'components/UI/molecules/ItemDetails';
 import ItemPhotoCard from 'components/UI/molecules/ItemPhotoCard';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styles from './index.module.scss';
 
 const ItemPage = () => {

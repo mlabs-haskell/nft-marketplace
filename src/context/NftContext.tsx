@@ -1,4 +1,4 @@
-import { createContext, useState, FC, useCallback } from 'react';
+import { createContext, useState, FC, useCallback, useContext } from 'react';
 import { getImage } from 'api/image';
 import { getArtist } from 'api/artist';
 import { ArtistsType } from 'types/artists';
@@ -13,7 +13,7 @@ type NftImage = {
   sha256hash: string;
 };
 
-export type NftContextType = {
+export interface NftContextType {
   images: Map<string, NftImage>;
   fetchImages: () => void;
   nfts: InformationNft[];
@@ -23,24 +23,21 @@ export type NftContextType = {
   // artists
   fetchArtists: () => void;
   artists: ArtistsType.Artist[];
-};
+  filteredArtist: ArtistsType.Artist[];
+  setFilteredArtists: (artistList: ArtistsType.Artist[]) => void;
+}
 
-export const NftContext = createContext<NftContextType>({
-  images: new Map(),
-  fetchImages: () => {},
-  nfts: [],
-  fetchNfts: () => {},
-  imageLoading: false,
-  // artists
-  fetchArtists: () => {},
-  artists: [],
-});
-
-export const NftContextProvider: FC = ({ children }) => {
+export const NftContext = createContext<NftContextType>({} as NftContextType);
+interface Props {
+  children: React.ReactNode;
+}
+export const NftContextProvider: FC<Props> = ({ children }) => {
   const [images, setImages] = useState<Map<string, NftImage>>(new Map());
   const [nfts, setNfts] = useState<InformationNft[]>([]);
-  const [imageLoading, setImageLoading] = useState(true);
+  const [imageLoading] = useState(true);
   const [artists, setArtists] = useState<ArtistsType.Artist[]>([]);
+  const [filteredArtist, setFilteredArtist] =
+    useState<ArtistsType.Artist[]>(artists);
 
   async function fetchImages() {
     const imageList = await getImage();
@@ -75,6 +72,10 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   }, []);
 
+  const setFilteredArtists = (artistList: ArtistsType.Artist[]) => {
+    setFilteredArtist(artistList);
+  };
+
   return (
     <NftContext.Provider
       value={{
@@ -85,9 +86,13 @@ export const NftContextProvider: FC = ({ children }) => {
         fetchNfts,
         fetchArtists,
         artists,
+        filteredArtist,
+        setFilteredArtists,
       }}
     >
       {children}
     </NftContext.Provider>
   );
 };
+
+export const useNftContext = () => useContext<NftContextType>(NftContext);
