@@ -11,6 +11,8 @@ interface Props {
   creatorValue: string;
   creatorName: string;
   creatorImagePath?: string;
+  ownerPKH: string;
+  ownerImagePath?: string;
   type: 'BUY' | 'SELL';
   handleParentFunction?: () => void;
 }
@@ -24,8 +26,13 @@ const ItemDetails = ({
   creatorName,
   creatorImagePath,
   type,
+  ownerPKH,
+  ownerImagePath,
   handleParentFunction,
 }: Props) => {
+  const truncatePubKeyHash = (pkh: string) =>
+    pkh.length <= 15 ? pkh : `${pkh.slice(0, 10)}...${pkh.slice(-4)}`;
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{title}</h2>
@@ -48,13 +55,25 @@ const ItemDetails = ({
           Read more
         </span>
       </p>
-      <p className={styles.creator}>
-        Creator: <span>{creatorValue}</span>
-      </p>
-      <div className={styles.creator_img}>
-        <UserPhoto imgUrl={creatorImagePath} />
-        <p>{creatorName}</p>
+      <div className={styles.details}>
+        <div className={styles.details_div}>
+          <p className={styles.details_text}>
+            Creator: <span>{creatorValue}</span>
+          </p>
+          <div className={styles.details_img}>
+            <UserPhoto imgUrl={creatorImagePath} />
+            <p>{creatorName}</p>
+          </div>
+        </div>
+        <div className={styles.details_div}>
+          <p className={styles.details_text}>Owner</p>
+          <div className={styles.details_img}>
+            <UserPhoto imgUrl={ownerImagePath} />
+            <p>{truncatePubKeyHash(ownerPKH)}</p>
+          </div>
+        </div>
       </div>
+
       <div className={styles.buttons}>
         {type === 'BUY' ? (
           <>
