@@ -1,0 +1,47 @@
+@import '../../../../../assets/scss/abstracts/variables';
+
+.modal-content-wrapper {
+  width: 320px;
+}
+
+.button {
+  width: 100%;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.table-wrapper {
+  margin-bottom: 40px;
+}
+
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.item-name {
+  font-weight: 400;
+  color: $lightText;
+  width: calc(100% - 110px);
+}
+
+.item-value {
+  font-weight: 700;
+  width: 110px;
+  text-align: right;
+}
+
+.from {
+  color: $lightText;
+}
+
+.author {
+  color: $primary;
+}
