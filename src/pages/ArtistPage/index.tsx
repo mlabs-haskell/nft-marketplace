@@ -6,7 +6,6 @@ import { ArtistsType } from 'types/artists';
 import { InformationNft } from 'seabug-sdk/src/common';
 
 interface ArtistParam {
-  [key: string]: string;
   artistId: string;
 }
 
