@@ -8,13 +8,17 @@
 }
 
 .card-wrapper {
-  max-width: 20%;
+  max-width: calc(12.5% - 20px);
+
+  @media screen and (max-width: 2500px) {
+    max-width: calc(20% - 20px);
+  }
 
   @media screen and (max-width: 1024px) {
-    max-width: 35%;
+    max-width: calc(33.3% - 20px);
   }
 
   @media screen and (max-width: $breakpointPhone) {
-    max-width: 100%;
+    max-width: calc(100% - 20px);;
   }
 }
