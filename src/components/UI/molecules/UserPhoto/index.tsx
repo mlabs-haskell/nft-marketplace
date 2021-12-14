@@ -2,14 +2,13 @@ import styles from './index.module.scss';
 import check from '../../../../assets/svg/check-fill.svg';
 
 interface Props {
-  imgUrl: string;
+  imgUrl?: string;
 }
 
-const UserPhoto = (props: Props) => {
-  const { imgUrl } = props;
+const UserPhoto = ({ imgUrl }: Props) => {
   return (
     <div className={styles.container}>
-      <img src={imgUrl} alt="userPhoto" />
+      {imgUrl && <img src={imgUrl} alt="userPhoto" />}
       <img src={check} alt="check" className={styles.check} />
     </div>
   );

@@ -1,5 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import AuctionCard from '.';
+import { InformationNft } from 'seabug-sdk/src/common';
+import { ImageType } from 'types/image';
 
 export default {
   title: 'Atoms/AuctionCard',
@@ -11,11 +13,31 @@ const Template: ComponentStory<typeof AuctionCard> = (args) => (
   <AuctionCard {...args} />
 );
 
+const nft: InformationNft = {
+  id: { contentHash: 'aa00000000' },
+  share: [1, 10],
+  author: { pubKeyHash: 'ff00000000' },
+  owner: { pubKeyHash: 'ff00000000' },
+  price: 25000000n,
+  auctionState: {
+    highestBid: undefined,
+    deadline: new Date(Date.now() + 1000 * 60 * 10),
+    minBid: 10000000n,
+  },
+};
+
+const image: ImageType.NftImage = {
+  sha256hash: 'aa00000000',
+  path: `https://picsum.photos/id/${50}/500/500}`,
+  createdAt: new Date(),
+  id: 1234,
+  title: `An awesome NFT`,
+  description:
+    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, quos',
+};
+
 export const Default = Template.bind({});
 Default.args = {
-  title: 'title',
-  amount: '300 ETH',
-  quantity: '1/1',
-  bid: '20',
-  time: '22:14',
+  nft,
+  image,
 };

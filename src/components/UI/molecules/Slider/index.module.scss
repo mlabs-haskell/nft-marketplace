@@ -41,6 +41,7 @@
 
   .slider-content {
     display: flex;
+    gap: 20px;
     transition: all 0.8s linear;
     -ms-overflow-style: none; /* hide scrollbar in IE and Edge */
     scrollbar-width: none; /* hide scrollbar in Firefox */
