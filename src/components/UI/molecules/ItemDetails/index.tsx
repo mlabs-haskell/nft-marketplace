@@ -30,6 +30,9 @@ const ItemDetails = ({
   ownerImagePath,
   handleParentFunction,
 }: Props) => {
+  const truncatePubKeyHash = (pkh: string) =>
+    pkh.length <= 15 ? pkh : `${pkh.slice(0, 10)}...${pkh.slice(-4)}`;
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{title}</h2>
@@ -53,7 +56,7 @@ const ItemDetails = ({
         </span>
       </p>
       <div className={styles.details}>
-        <div>
+        <div className={styles.details_div}>
           <p className={styles.details_text}>
             Creator: <span>{creatorValue}</span>
           </p>
@@ -62,16 +65,11 @@ const ItemDetails = ({
             <p>{creatorName}</p>
           </div>
         </div>
-        <div>
+        <div className={styles.details_div}>
           <p className={styles.details_text}>Owner</p>
           <div className={styles.details_img}>
             <UserPhoto imgUrl={ownerImagePath} />
-            <p>
-              {ownerPKH.substring(0, 11) +
-                (ownerPKH.length > 11
-                  ? `...${ownerPKH.substring(38, ownerPKH.length)}`
-                  : '')}{' '}
-            </p>
+            <p>{truncatePubKeyHash(ownerPKH)}</p>
           </div>
         </div>
       </div>
