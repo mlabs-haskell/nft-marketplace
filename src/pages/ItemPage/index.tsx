@@ -1,10 +1,12 @@
+/* eslint-disable */
 import ItemDetails from 'components/UI/molecules/ItemDetails';
 import ItemPhotoCard from 'components/UI/molecules/ItemPhotoCard';
 import { NftContext } from 'context/NftContext';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Rational } from 'seabug-sdk/src/common';
 import { priceToADA } from 'utils/priceToADA';
+import BuyModal from '../../components/UI/organisms/ItemPage/BuyModal'
 import styles from './index.module.scss';
 
 interface Props {
@@ -14,6 +16,7 @@ interface Props {
 const ItemPage = ({ type }: Props) => {
   const { nftId } = useParams<{ nftId: string }>();
   const { artists, images, nfts, common } = useContext(NftContext);
+  const [isModalOpen, openModal] = useState<boolean>(false)
 
   const nft = nfts.getById({ contentHash: nftId });
   const artist = nft
@@ -34,6 +37,11 @@ const ItemPage = ({ type }: Props) => {
     return Math.round(sharePercent * multiplier) / multiplier;
   };
 
+
+  const onBuy = () => {
+    openModal(true)
+  }
+
   return (
     <div className={styles.container}>
       <ItemPhotoCard imageUrl={image?.path} likeCount="167" />
@@ -42,13 +50,14 @@ const ItemPage = ({ type }: Props) => {
         saleValue={priceToADA(nft?.price)}
         topBidValue={priceToADA(nft?.auctionState?.highestBid?.bid)}
         description={image?.description ?? ''}
-        creatorValue={`${
-          nft?.share ? rationalToFloat(nft?.share, 2) : 0
-        }% royalties`}
+        creatorValue={`${nft?.share ? rationalToFloat(nft?.share, 2) : 0
+          }% royalties`}
         creatorName={artist?.name ?? ''}
         creatorImagePath={artist?.imagePath}
         type={type}
+        handleParentFunction={onBuy}
       />
+      <BuyModal display={isModalOpen} handleParentFunction={() => { }} />
     </div>
   );
 };
