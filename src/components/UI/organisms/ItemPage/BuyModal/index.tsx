@@ -1,3 +1,6 @@
+import { NftContext } from 'context/NftContext';
+import { useContext, useEffect } from 'react';
+import { BuyParams } from 'seabug-sdk/src/buy';
 import { priceToADA } from 'utils/priceToADA';
 import Button from '../../../atoms/Button';
 import Modal from '../../../molecules/Modal';
@@ -25,6 +28,7 @@ const BuyModal = ({
   percentTax,
   nftPrice,
 }: Props) => {
+  const { nfts } = useContext(NftContext);
   const calculatePercentFee = () => {
     const currentFeeSumm = nftPrice
       ? (Number(nftPrice) * percentTax).toFixed(0)
@@ -38,16 +42,23 @@ const BuyModal = ({
   };
 
   const onCheckout = async () => {
-    const data = {
-      nftId,
+    const data: BuyParams = {
+      nftId: {
+        contentHash: nftId,
+      },
       price: nftPrice,
       newPrice: undefined,
     };
 
-    // sdk.makeTransaction.buy(data)
-    console.log(data);
-    closeModal();
+    nfts.buy(data);
   };
+
+  useEffect(() => {
+    if (nfts.isNftBought) {
+      closeModal();
+      nfts.setNftBought(false);
+    }
+  }, [nfts.isNftBought]);
 
   return (
     <Modal showModal={isOpen} title="Checkout" onClose={closeModal}>

@@ -5,6 +5,7 @@ import { ArtistsType } from 'types/artists';
 import { ImageType } from 'types/image';
 import makeSdk from 'seabug-sdk/src';
 import { InformationNft, Maybe, NftId } from 'seabug-sdk/src/common';
+import { BuyParams } from 'seabug-sdk/src/buy';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -26,6 +27,9 @@ export type NftContextType = {
   nfts: {
     list: InformationNft[];
     onAuctionCount: number;
+    isNftBought: boolean;
+    setNftBought: (value: boolean) => void;
+    buy: (buyParams: BuyParams) => void;
     getById: (nftId: NftId) => Maybe<InformationNft>;
     fetch: () => void;
   };
@@ -54,8 +58,11 @@ export const NftContext = createContext<NftContextType>({
   nfts: {
     list: [],
     onAuctionCount: 0,
+    isNftBought: false,
     getById: () => undefined,
     fetch: () => {},
+    buy: () => undefined,
+    setNftBought: () => undefined,
   },
   search: {
     text: '',
@@ -81,6 +88,7 @@ export const NftContextProvider: FC = ({ children }) => {
   );
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
+  const [isNftBought, setNftBought] = useState<boolean>(false);
 
   // App Messages
 
@@ -185,6 +193,26 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   }
 
+  async function buyNft(buyParams: BuyParams) {
+    try {
+      const url = '';
+      const walletId = '';
+
+      const sdk = await makeSdk(url, walletId);
+      const response = await sdk.makeTransaction.buy(buyParams);
+
+      if (response) {
+        setNftBought(true);
+      }
+    } catch (err) {
+      addMessage({
+        type: 'Error',
+        userMsg: 'Unable to buy NFT',
+        debugMsg: err,
+      });
+    }
+  }
+
   // Search
 
   // TODO: optimize search performance (e.g., n-grams search index, memoize results, etc.)
@@ -219,7 +247,10 @@ export const NftContextProvider: FC = ({ children }) => {
           list: nftsList,
           onAuctionCount: nftsOnAuctionCount,
           getById: getNftById,
+          buy: buyNft,
           fetch: fetchNfts,
+          isNftBought,
+          setNftBought,
         },
         search: {
           text: searchText,
