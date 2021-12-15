@@ -36,6 +36,12 @@ const ItemPage = ({ type }: Props) => {
     return Math.round(sharePercent * multiplier) / multiplier;
   };
 
+  const onOpenBuyModal = () => {
+    if (type === 'BUY') {
+      openModal(true);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <ItemPhotoCard imageUrl={image?.path} likeCount="167" />
@@ -50,7 +56,7 @@ const ItemPage = ({ type }: Props) => {
         creatorName={artist?.name ?? ''}
         creatorImagePath={artist?.imagePath}
         type={type}
-        handleParentFunction={() => openModal(true)}
+        handleParentFunction={onOpenBuyModal}
       />
       <BuyModal
         isOpen={isModalOpen}
