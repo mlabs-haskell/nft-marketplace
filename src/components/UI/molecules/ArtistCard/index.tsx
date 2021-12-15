@@ -9,15 +9,26 @@ interface Props extends ArtistsType.Artist {
   className?: string;
 }
 
-const ArtistCard = ({ name, className, imagePath, id }: Props) => (
-  <Link to={`artist/${id}`}>
-    <Box
-      boxClass={classNames(styles.container, className)}
-      style={{ backgroundImage: `url(${imagePath})` }}
-    >
-      <h4 className={styles.title}>{name}</h4>
-    </Box>
-  </Link>
-);
+const ArtistCard = ({ name, className, imagePath, id }: Props) => {
+  const isLight = true;
+
+  return (
+    <Link to={`artist/${id}`}>
+      <Box
+        boxClass={classNames(styles.container, className)}
+        style={{
+          backgroundImage: `url(${imagePath})`,
+        }}
+      >
+        <h4
+          className={styles.title}
+          style={{ color: isLight ? `white` : 'black' }}
+        >
+          {name}
+        </h4>
+      </Box>
+    </Link>
+  );
+};
 
 export default ArtistCard;

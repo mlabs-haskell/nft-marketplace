@@ -17,11 +17,12 @@ const ItemPage = ({ type }: Props) => {
   const { artists, images, nfts, common } = useContext(NftContext);
   const [isModalOpen, openModal] = useState<boolean>(false);
 
-  const nft = nfts.getById({ contentHash: nftId });
+  const nft = nfts.getById({ contentHash: nftId ?? '' });
   const artist = nft
     ? artists.getByPubKeyHash(nft.author.pubKeyHash)
     : undefined;
-  const image = images.getByNftId({ contentHash: nftId });
+  const owner = nft ? artists.getByPubKeyHash(nft.owner.pubKeyHash) : undefined;
+  const image = images.getByNftId({ contentHash: nftId ?? '' });
 
   useEffect(() => {
     // If the user navigates directly to item page, the nfts or images may not
@@ -55,6 +56,8 @@ const ItemPage = ({ type }: Props) => {
         }% royalties`}
         creatorName={artist?.name ?? ''}
         creatorImagePath={artist?.imagePath}
+        ownerPKH={owner?.pubKeyHash ?? ''}
+        ownerImagePath={owner?.imagePath}
         type={type}
         handleParentFunction={onOpenBuyModal}
       />
