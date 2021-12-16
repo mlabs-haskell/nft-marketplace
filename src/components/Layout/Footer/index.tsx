@@ -1,3 +1,4 @@
+import { HashLink as Link } from 'react-router-hash-link';
 import ButhrefnInput from '../../UI/molecules/ButtonInput';
 import styles from './index.module.scss';
 import instagram from '../../../assets/svg/instagram.svg';
@@ -49,12 +50,24 @@ const Footer = () => {
         <div className="col-lg-3">
           <p>Seabug</p>
           <ul>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
+            <li>
+              <Link to="help#about">FAQ - About</Link>
+            </li>
+            <li>
+              <Link to="help#setup">FAQ - Setup</Link>
+            </li>
+            <li>
+              <Link to="help#sales">FAQ - Sales</Link>
+            </li>
+            <li>
+              <Link to="help#search">FAQ - Search</Link>
+            </li>
+            <li>
+              <Link to="help#confirmation">FAQ - Confirmation</Link>
+            </li>
+            <li>
+              <Link to="help#off-site">FAQ - Off-site</Link>
+            </li>
           </ul>
         </div>
         <div className="col-lg-3">

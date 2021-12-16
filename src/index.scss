@@ -28,6 +28,10 @@ p,
 ul {
   font-weight: 300;
   font-size: pxToRem(14);
+
+  li {
+    cursor: pointer;
+  }
 }
 a {
   text-decoration: none;
