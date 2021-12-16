@@ -6,6 +6,7 @@ import { ImageType } from 'types/image';
 import makeSdk from 'seabug-sdk/src';
 import { InformationNft, Maybe, NftId } from 'seabug-sdk/src/common';
 import { BuyParams } from 'seabug-sdk/src/buy';
+import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -30,6 +31,7 @@ export type NftContextType = {
     getLiveAuctionList: () => InformationNft[];
     fetch: () => void;
     buy: (buyParams: BuyParams) => void;
+    setPrice: (setPriceParams: SetPriceParams) => void;
   };
   search: {
     text: string;
@@ -59,6 +61,7 @@ export const NftContext = createContext<NftContextType>({
     getLiveAuctionList: () => [],
     fetch: () => {},
     buy: () => undefined,
+    setPrice: () => {},
   },
   search: {
     text: '',
@@ -84,7 +87,6 @@ export const NftContextProvider: FC = ({ children }) => {
   );
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
-
   // App Messages
 
   const addMessage = (msg: AppMessage) => {
@@ -219,6 +221,26 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   }
 
+  async function ChangePrice(setPriceParams: SetPriceParams) {
+    try {
+      const url = '';
+      const walletId = '';
+
+      const sdk = await makeSdk(url, walletId);
+
+      const response = await sdk.makeTransaction.setPrice(setPriceParams);
+      console.log(response);
+      // TODO: Get transaction from response, sign and submit it
+      // (once wallet integration is ready)
+    } catch (err) {
+      addMessage({
+        type: 'Error',
+        userMsg: 'Unable to change price of NFT',
+        debugMsg: err,
+      });
+    }
+  }
+
   // Search
 
   // TODO: optimize search performance (e.g., n-grams search index, memoize results, etc.)
@@ -255,6 +277,7 @@ export const NftContextProvider: FC = ({ children }) => {
           getLiveAuctionList: getLiveAuctionNftsList,
           fetch: fetchNfts,
           buy: buyNft,
+          setPrice: ChangePrice,
         },
         search: {
           text: searchText,

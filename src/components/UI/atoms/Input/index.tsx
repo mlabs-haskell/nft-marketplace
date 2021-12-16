@@ -6,9 +6,16 @@ interface InputProps {
   textClass?: string;
   type?: 'text' | 'number';
   textarea?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ placeholder, textClass, type, textarea }: InputProps) => (
+const Input = ({
+  placeholder,
+  textClass,
+  type,
+  textarea,
+  onChange,
+}: InputProps) => (
   <>
     {textarea ? (
       <textarea
@@ -20,6 +27,7 @@ const Input = ({ placeholder, textClass, type, textarea }: InputProps) => (
         placeholder={placeholder}
         className={classNames([styles.input, textClass])}
         type={type}
+        onChange={(e) => (onChange ? onChange(e) : {})}
       />
     )}
   </>

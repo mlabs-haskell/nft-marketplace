@@ -2,11 +2,13 @@ import Button from 'components/UI/atoms/Button';
 import ItemDetails from 'components/UI/molecules/ItemDetails';
 import ItemPhotoCard from 'components/UI/molecules/ItemPhotoCard';
 import { NftContext } from 'context/NftContext';
+import { WalletContext } from 'context/WalletContext';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Rational } from 'seabug-sdk/src/common';
 import { priceToADA } from 'utils/priceToADA';
 import BuyModal from '../../components/UI/organisms/ItemPage/BuyModal';
+import ModalDialog from '../../components/UI/organisms/ItemPage/ModalDialog';
 import styles from './index.module.scss';
 
 interface Props {
@@ -16,7 +18,10 @@ interface Props {
 const ItemPage = ({ type }: Props) => {
   const { nftId } = useParams<{ nftId: string }>();
   const { artists, images, nfts, common } = useContext(NftContext);
-  const [displayModal, setDisplayModal] = useState<'NONE' | 'BUY'>('NONE');
+  const { connect, getPubKeyHashes } = useContext(WalletContext);
+  const [displayModal, setDisplayModal] = useState<'NONE' | 'BUY' | 'DIALOG'>(
+    'NONE'
+  );
 
   const nft = nfts.getById({ contentHash: nftId ?? '' });
   const artist = nft
@@ -24,11 +29,20 @@ const ItemPage = ({ type }: Props) => {
     : undefined;
   const owner = nft ? artists.getByPubKeyHash(nft.owner.pubKeyHash) : undefined;
   const image = images.getByNftId({ contentHash: nftId ?? '' });
-
+  const [walletKey, setWalletKey] = useState<string>(owner?.pubKeyHash || '');
   useEffect(() => {
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
     if (!nft || !image) common.fetchAll();
+  }, []);
+
+  useEffect(() => {
+    const Wallet = async () => {
+      connect('TEST');
+      const Key = await getPubKeyHashes();
+      setWalletKey(Key[0]);
+    };
+    Wallet();
   }, []);
 
   const rationalToFloat = (share: Rational, decimals: number) => {
@@ -72,7 +86,6 @@ const ItemPage = ({ type }: Props) => {
       </div>
     );
   };
-
   return (
     <>
       <div className={styles.container}>
@@ -91,9 +104,27 @@ const ItemPage = ({ type }: Props) => {
             ownerPKH={owner?.pubKeyHash ?? ''}
             ownerImagePath={owner?.imagePath}
           />
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            {walletKey === owner?.pubKeyHash && (
+              <Button
+                label="Change Price"
+                color="secondary"
+                btnClass={styles.btn}
+                onClick={() => setDisplayModal('DIALOG')}
+              />
+            )}
+          </div>
           {type === 'BUY' ? renderBuyButtons() : renderSellerButtons()}
         </div>
       </div>
+      <ModalDialog
+        isOpen={displayModal === 'DIALOG'}
+        closeModal={closeModal}
+        title={image?.title || ''}
+        from={artist?.name || ''}
+        nftPrice={nft?.price || BigInt(0)}
+        nftId={nftId}
+      />
       <BuyModal
         isOpen={displayModal === 'BUY'}
         closeModal={closeModal}
