@@ -12,4 +12,26 @@
   @media only screen and (max-width: $breakpointPhone) {
     flex-direction: column;
   }
+
+  .item-details-container {
+    max-width: 490px;
+    margin-left: 105px;
+
+    @media only screen and (max-width: $breakpointPhone) {
+      width: 100%;
+      margin: 0 auto;
+      margin-top: 30px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    width: 100%;
+
+    .btn {
+      width: calc(50% - 10px);
+    }
+  }
 }

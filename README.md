@@ -3,13 +3,14 @@
 ## Getting Started
 
 After cloning the repo, run the following commands to install dependencies:
+
 ```
 git submodule init
 git submodule update
 npm install
 ```
 
-When a submodule has been bumped to a new version, run `git submodule update` again to pull the 
+When a submodule has been bumped to a new version, run `git submodule update` again to pull the
 latest submodule changes.
 
 ## Development Policy

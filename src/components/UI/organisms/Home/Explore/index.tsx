@@ -4,6 +4,7 @@ import { NftContextType } from '../../../../../context/NftContext';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
+import { priceToADA } from '../../../../../utils/priceToADA';
 
 interface Props {
   images: NftContextType['images']['list'];
