@@ -83,10 +83,7 @@
     }
   }
   .user-details{
-    width: 100%;
-  }
-  .user-details-spacer {
-    width: 40px;
+    width: calc(50% - 10px);
   }
   .user-details-text {
     margin-top: 30px;

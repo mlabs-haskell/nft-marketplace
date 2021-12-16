@@ -62,7 +62,6 @@ const ItemDetails = ({
             <p>{creatorName}</p>
           </div>
         </div>
-        <div className={styles['user-details-spacer']} />
         <div className={styles['user-details']}>
           <p className={styles['user-details-text']}>Owner</p>
           <div className={styles['user-photo-container']}>

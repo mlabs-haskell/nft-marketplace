@@ -26,15 +26,12 @@
 
   .buttons {
     display: flex;
+    justify-content: space-between;
     margin-top: 25px;
     width: 100%;
 
     .btn {
-      width: 100%;
-    }
-
-    .spacer {
-      width: 40px;
+      width: calc(50% - 10px);
     }
   }
 }

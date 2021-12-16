@@ -45,7 +45,6 @@ const ItemPage = ({ type }: Props) => {
       <>
         <div className={styles.buttons}>
           <Button label="Place a bid" color="secondary" btnClass={styles.btn} />
-          <div className={styles.spacer} />
           <Button
             label={type}
             color="primary"
