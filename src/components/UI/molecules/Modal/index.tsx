@@ -27,7 +27,6 @@ const Modal = ({ children, title, onClose, showModal, modalClass }: Props) => {
 
   return (
     <>
-      (
       {showModal && (
         <div
           className={classNames([styles.container, modalClass])}
@@ -45,7 +44,6 @@ const Modal = ({ children, title, onClose, showModal, modalClass }: Props) => {
           </Box>
         </div>
       )}
-      )
     </>
   );
 };

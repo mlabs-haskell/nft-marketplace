@@ -5,6 +5,7 @@ import { ArtistsType } from 'types/artists';
 import { ImageType } from 'types/image';
 import makeSdk from 'seabug-sdk/src';
 import { InformationNft, Maybe, NftId } from 'seabug-sdk/src/common';
+import { BuyParams } from 'seabug-sdk/src/buy';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -25,9 +26,10 @@ export type NftContextType = {
   };
   nfts: {
     list: InformationNft[];
-    onAuctionCount: number;
     getById: (nftId: NftId) => Maybe<InformationNft>;
+    getLiveAuctionList: () => InformationNft[];
     fetch: () => void;
+    buy: (buyParams: BuyParams) => void;
   };
   search: {
     text: string;
@@ -53,9 +55,10 @@ export const NftContext = createContext<NftContextType>({
   },
   nfts: {
     list: [],
-    onAuctionCount: 0,
     getById: () => undefined,
+    getLiveAuctionList: () => [],
     fetch: () => {},
+    buy: () => undefined,
   },
   search: {
     text: '',
@@ -153,14 +156,26 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const nftsList = useMemo(() => [...nftsById.values()], [nftsById]);
 
-  const nftsOnAuctionCount = useMemo(
-    () =>
-      nftsList.filter((nft) => (nft?.auctionState?.deadline ?? 0) > Date.now())
-        .length,
-    [nftsById]
-  );
+  const nftsOnAuctionList = useMemo(() => {
+    console.log(
+      `listOnAuction() called. Length: ${
+        nftsList.filter(
+          (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
+        ).length
+      }`
+    );
+
+    return nftsList.filter(
+      (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
+    );
+  }, [nftsList]);
 
   const getNftById = (nftId: NftId) => nftsById.get(nftId.contentHash);
+
+  const getLiveAuctionNftsList = () =>
+    nftsOnAuctionList.filter(
+      (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
+    );
 
   async function fetchNfts() {
     try {
@@ -180,6 +195,25 @@ export const NftContextProvider: FC = ({ children }) => {
       addMessage({
         type: 'Error',
         userMsg: 'Unable to fetch NFTs. Please try again.',
+        debugMsg: err,
+      });
+    }
+  }
+
+  async function buyNft(buyParams: BuyParams) {
+    try {
+      const url = '';
+      const walletId = '';
+
+      const sdk = await makeSdk(url, walletId);
+      const response = await sdk.makeTransaction.buy(buyParams);
+
+      // TODO: Get transaction from response, sign and submit it
+      // (once wallet integration is ready)
+    } catch (err) {
+      addMessage({
+        type: 'Error',
+        userMsg: 'Unable to buy NFT',
         debugMsg: err,
       });
     }
@@ -217,9 +251,10 @@ export const NftContextProvider: FC = ({ children }) => {
         },
         nfts: {
           list: nftsList,
-          onAuctionCount: nftsOnAuctionCount,
           getById: getNftById,
+          getLiveAuctionList: getLiveAuctionNftsList,
           fetch: fetchNfts,
+          buy: buyNft,
         },
         search: {
           text: searchText,

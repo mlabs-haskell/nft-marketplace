@@ -6,5 +6,5 @@ export namespace ImageType {
     title: string;
     sha256hash: string;
     description: string;
-  };
+  }
 }
