@@ -50,15 +50,11 @@ const BuyModal = ({
       newPrice: undefined,
     };
 
+    // TODO: Leave modal open and show transaction status once wallet
+    // integration is ready.
     nfts.buy(data);
+    closeModal();
   };
-
-  useEffect(() => {
-    if (nfts.isNftBought) {
-      closeModal();
-      nfts.setNftBought(false);
-    }
-  }, [nfts.isNftBought]);
 
   return (
     <Modal showModal={isOpen} title="Checkout" onClose={closeModal}>
@@ -66,7 +62,7 @@ const BuyModal = ({
         <h4 className={styles.title}>
           {title}
           <br />
-          <span className={styles.from}>from: </span>
+          <span className={styles.from}>from </span>
           <span className={styles.author}>{from}</span>
         </h4>
         <div className={styles['table-wrapper']}>
@@ -76,7 +72,7 @@ const BuyModal = ({
           </div>
           <div className={styles['table-row']}>
             <span className={styles['item-name']}>
-              Service free {percentTax}%
+              Service fee {percentTax}%
             </span>
             <span className={styles['item-value']}>
               {priceToADA(calculatePercentFee()) || '0 ADA'}

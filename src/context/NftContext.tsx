@@ -26,12 +26,10 @@ export type NftContextType = {
   };
   nfts: {
     list: InformationNft[];
-    onAuctionCount: number;
-    isNftBought: boolean;
-    setNftBought: (value: boolean) => void;
-    buy: (buyParams: BuyParams) => void;
     getById: (nftId: NftId) => Maybe<InformationNft>;
+    getLiveAuctionList: () => InformationNft[];
     fetch: () => void;
+    buy: (buyParams: BuyParams) => void;
   };
   search: {
     text: string;
@@ -57,12 +55,10 @@ export const NftContext = createContext<NftContextType>({
   },
   nfts: {
     list: [],
-    onAuctionCount: 0,
-    isNftBought: false,
     getById: () => undefined,
+    getLiveAuctionList: () => [],
     fetch: () => {},
     buy: () => undefined,
-    setNftBought: () => undefined,
   },
   search: {
     text: '',
@@ -88,7 +84,6 @@ export const NftContextProvider: FC = ({ children }) => {
   );
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
-  const [isNftBought, setNftBought] = useState<boolean>(false);
 
   // App Messages
 
@@ -161,14 +156,26 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const nftsList = useMemo(() => [...nftsById.values()], [nftsById]);
 
-  const nftsOnAuctionCount = useMemo(
-    () =>
-      nftsList.filter((nft) => (nft?.auctionState?.deadline ?? 0) > Date.now())
-        .length,
-    [nftsById]
-  );
+  const nftsOnAuctionList = useMemo(() => {
+    console.log(
+      `listOnAuction() called. Length: ${
+        nftsList.filter(
+          (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
+        ).length
+      }`
+    );
+
+    return nftsList.filter(
+      (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
+    );
+  }, [nftsList]);
 
   const getNftById = (nftId: NftId) => nftsById.get(nftId.contentHash);
+
+  const getLiveAuctionNftsList = () =>
+    nftsOnAuctionList.filter(
+      (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
+    );
 
   async function fetchNfts() {
     try {
@@ -201,9 +208,8 @@ export const NftContextProvider: FC = ({ children }) => {
       const sdk = await makeSdk(url, walletId);
       const response = await sdk.makeTransaction.buy(buyParams);
 
-      if (response) {
-        setNftBought(true);
-      }
+      // TODO: Get transaction from response, sign and submit it
+      // (once wallet integration is ready)
     } catch (err) {
       addMessage({
         type: 'Error',
@@ -245,12 +251,10 @@ export const NftContextProvider: FC = ({ children }) => {
         },
         nfts: {
           list: nftsList,
-          onAuctionCount: nftsOnAuctionCount,
           getById: getNftById,
-          buy: buyNft,
+          getLiveAuctionList: getLiveAuctionNftsList,
           fetch: fetchNfts,
-          isNftBought,
-          setNftBought,
+          buy: buyNft,
         },
         search: {
           text: searchText,

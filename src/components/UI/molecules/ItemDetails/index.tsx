@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import girl from 'assets/svg/girl.svg';
 import UserPhoto from '../UserPhoto';
 import styles from './index.module.scss';
@@ -13,8 +14,6 @@ interface Props {
   creatorImagePath?: string;
   ownerPKH: string;
   ownerImagePath?: string;
-  type: 'BUY' | 'SELL';
-  handleParentFunction?: () => void;
 }
 
 const ItemDetails = ({
@@ -25,10 +24,8 @@ const ItemDetails = ({
   creatorValue,
   creatorName,
   creatorImagePath,
-  type,
   ownerPKH,
   ownerImagePath,
-  handleParentFunction,
 }: Props) => {
   const truncatePubKeyHash = (pkh: string) =>
     pkh.length <= 15 ? pkh : `${pkh.slice(0, 10)}...${pkh.slice(-4)}`;
@@ -55,59 +52,25 @@ const ItemDetails = ({
           Read more
         </span>
       </p>
-      <div className={styles.details}>
-        <div className={styles.details_div}>
-          <p className={styles.details_text}>
+      <div className={styles['user-details-container']}>
+        <div className={styles['user-details']}>
+          <p className={styles['user-details-text']}>
             Creator: <span>{creatorValue}</span>
           </p>
-          <div className={styles.details_img}>
+          <div className={styles['user-photo-container']}>
             <UserPhoto imgUrl={creatorImagePath} />
             <p>{creatorName}</p>
           </div>
         </div>
-        <div className={styles.details_div}>
-          <p className={styles.details_text}>Owner</p>
-          <div className={styles.details_img}>
+        <div className={styles['user-details-spacer']} />
+        <div className={styles['user-details']}>
+          <p className={styles['user-details-text']}>Owner</p>
+          <div className={styles['user-photo-container']}>
             <UserPhoto imgUrl={ownerImagePath} />
             <p>{truncatePubKeyHash(ownerPKH)}</p>
           </div>
         </div>
       </div>
-
-      <div className={styles.buttons}>
-        {type === 'BUY' ? (
-          <>
-            <Button
-              label="Place a bid"
-              color="secondary"
-              btnClass={styles.btn}
-            />
-            <Button
-              label={type}
-              color="primary"
-              btnClass={styles.btn}
-              onClick={handleParentFunction}
-            />
-          </>
-        ) : (
-          <>
-            <Button
-              label="Start Auction"
-              color="secondary"
-              btnClass={styles.btn}
-            />
-            <Button
-              label={type}
-              color="primary"
-              btnClass={styles.btn}
-              onClick={handleParentFunction}
-            />
-          </>
-        )}
-      </div>
-      <p style={{ fontSize: '12px', lineHeight: '18px' }}>
-        There&apos;s no bids yet. Be the first!
-      </p>
     </div>
   );
 };

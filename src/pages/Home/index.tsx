@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <div>
       <Header artists={artists.list} />
-      {nfts.onAuctionCount > 0 && <Auction />}
+      {nfts.getLiveAuctionList().length > 0 && <Auction />}
       <ExploreHeader />
       <Explore
         images={images.list}

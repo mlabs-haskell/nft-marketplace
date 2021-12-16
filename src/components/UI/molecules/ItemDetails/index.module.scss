@@ -2,14 +2,7 @@
 @import '../../../../assets/scss/abstracts/variables';
 
 .container {
-  max-width: 490px;
-  margin-left: 105px;
-
-  @media only screen and (max-width: $breakpointPhone) {
-    width: 100%;
-    margin: 0 auto;
-    margin-top: 30px;
-  }
+  width: 100%;
 
   h2 {
     margin-top: 0;
@@ -47,7 +40,7 @@
       li {
         font-size: pxToRem(14);
         font-style: normal;
-        color: $light4;
+        color: $light2;
         margin-right: 6px;
         margin-bottom: 20px;
 
@@ -80,7 +73,7 @@
       }
     }
   }
-  .details{
+  .user-details-container{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -89,10 +82,13 @@
       flex-direction: column;
     }
   }
-  .details_div{
-    width: 47%;
+  .user-details{
+    width: 100%;
   }
-  .details_text {
+  .user-details-spacer {
+    width: 40px;
+  }
+  .user-details-text {
     margin-top: 30px;
     color: black;
     font-size: 14px;
@@ -109,7 +105,7 @@
     right: -2px;
     bottom: 5px;
   }
-  .details_img {
+  .user-photo-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -170,16 +166,6 @@
           }
         }
       }
-    }
-  }
-  .buttons {
-    display: flex;
-    margin-top: 25px;
-    width: 100%;
-    justify-content: space-between;
-
-    .btn {
-      width: 47%;
     }
   }
 }
