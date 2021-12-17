@@ -1,12 +1,12 @@
 import Input from 'components/UI/atoms/Input';
 import { NftContext } from 'context/NftContext';
-import { useContext, useEffect, useState } from 'react';
-import { BuyParams } from 'seabug-sdk/src/buy';
-import { InformationNft } from 'seabug-sdk/src/common';
+import { useContext, useState } from 'react';
 import { priceToADA } from 'utils/priceToADA';
+import ToLovelace from 'components/Util/ToLovelace';
 import Button from '../../../atoms/Button';
 import Modal from '../../../molecules/Modal';
 import styles from './index.module.scss';
+import Dropdown from '../../../molecules/Dropdown';
 
 type Props = {
   isOpen: boolean;
@@ -18,7 +18,7 @@ type Props = {
   closeModal: () => void;
 };
 
-const ModalDialog = ({
+const SetPriceModal = ({
   isOpen,
   nftId,
   closeModal,
@@ -31,7 +31,7 @@ const ModalDialog = ({
   const onChangePrice = async () => {
     nfts.setPrice({
       nftId: { contentHash: nftId },
-      price: BigInt(Math.ceil(newPrice)),
+      price: ToLovelace(Math.ceil(newPrice)),
     });
     closeModal();
   };
@@ -55,12 +55,16 @@ const ModalDialog = ({
             <span className={styles['item-value']}>{priceToADA(nftPrice)}</span>
           </div>
           <div className={styles['input-box']}>
-            <span>New Price</span>
             <Input
               placeholder="New price"
               textClass={styles.input}
               type="number"
               onChange={handleOnChangeInput}
+            />
+            <Dropdown
+              options={['ADA']}
+              dropdownClass={styles.dropdown}
+              infoText="ada"
             />
           </div>
         </div>
@@ -75,4 +79,4 @@ const ModalDialog = ({
   );
 };
 
-export default ModalDialog;
+export default SetPriceModal;

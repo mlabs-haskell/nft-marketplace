@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import girl from 'assets/svg/girl.svg';
 import UserPhoto from '../UserPhoto';
 import styles from './index.module.scss';
@@ -29,6 +29,13 @@ const ItemDetails = ({
 }: Props) => {
   const truncatePubKeyHash = (pkh: string) =>
     pkh.length <= 15 ? pkh : `${pkh.slice(0, 10)}...${pkh.slice(-4)}`;
+  const [descript, setdescript] = useState<string>(
+    description.substring(0, 256)
+  );
+  const handleDesciption = () =>
+    descript.length > 256
+      ? setdescript(description.substring(0, 256))
+      : setdescript(description);
 
   return (
     <div className={styles.container}>
@@ -46,10 +53,15 @@ const ItemDetails = ({
         </ul>
       </div>
       <p className={styles.description}>
-        {description.substring(0, 256) +
-          (description.length > 256 ? '...' : '')}{' '}
-        <span role="button" tabIndex={0} className={styles.button}>
-          Read more
+        {(descript || description.substring(0, 256)) +
+          (descript.length > 256 ? '' : '...')}{' '}
+        <span
+          role="button"
+          tabIndex={0}
+          className={styles.button}
+          onClick={() => handleDesciption()}
+        >
+          {descript.length > 256 ? 'Read less' : 'Read more'}
         </span>
       </p>
       <div className={styles['user-details-container']}>

@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { Rational } from 'seabug-sdk/src/common';
 import { priceToADA } from 'utils/priceToADA';
 import BuyModal from '../../components/UI/organisms/ItemPage/BuyModal';
-import ModalDialog from '../../components/UI/organisms/ItemPage/ModalDialog';
+import SetPriceModal from '../../components/UI/organisms/ItemPage/SetPriceModal';
 import styles from './index.module.scss';
 
 interface Props {
@@ -18,10 +18,10 @@ interface Props {
 const ItemPage = ({ type }: Props) => {
   const { nftId } = useParams<{ nftId: string }>();
   const { artists, images, nfts, common } = useContext(NftContext);
-  const { connect, getPubKeyHashes } = useContext(WalletContext);
-  const [displayModal, setDisplayModal] = useState<'NONE' | 'BUY' | 'DIALOG'>(
-    'NONE'
-  );
+  const { connected, connect, getPubKeyHashes } = useContext(WalletContext);
+  const [displayModal, setDisplayModal] = useState<
+    'NONE' | 'BUY' | 'SET_PRICE'
+  >('NONE');
 
   const nft = nfts.getById({ contentHash: nftId ?? '' });
   const artist = nft
@@ -29,22 +29,24 @@ const ItemPage = ({ type }: Props) => {
     : undefined;
   const owner = nft ? artists.getByPubKeyHash(nft.owner.pubKeyHash) : undefined;
   const image = images.getByNftId({ contentHash: nftId ?? '' });
-  const [walletKey, setWalletKey] = useState<string>(owner?.pubKeyHash || '');
+
+  const [walletKey, setWalletKey] = useState<string[]>([]);
+
   useEffect(() => {
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
     if (!nft || !image) common.fetchAll();
+    connect('TEST');
   }, []);
 
   useEffect(() => {
+    // TODO
     const Wallet = async () => {
-      connect('TEST');
       const Key = await getPubKeyHashes();
-      setWalletKey(Key[0]);
+      setWalletKey(Key);
     };
     Wallet();
-  }, []);
-
+  }, [connected]);
   const rationalToFloat = (share: Rational, decimals: number) => {
     const sharePercent = (share[0] * 100) / share[1];
     const multiplier = 10 ** decimals;
@@ -73,12 +75,24 @@ const ItemPage = ({ type }: Props) => {
     );
   };
 
+  const isOwner = (id = '') => {
+    let isTrue = false;
+    walletKey.forEach((item) => {
+      if (item === id) isTrue = true;
+    });
+    return isTrue;
+  };
   const renderSellerButtons = () => {
     return (
       <div className={styles.buttons}>
-        <Button label="Start Auction" color="secondary" btnClass={styles.btn} />
         <Button
-          label={type}
+          label="Change Price"
+          color="secondary"
+          btnClass={styles.btn}
+          onClick={() => setDisplayModal('SET_PRICE')}
+        />
+        <Button
+          label="SELL"
           color="primary"
           btnClass={styles.btn}
           onClick={() => {}}
@@ -86,6 +100,7 @@ const ItemPage = ({ type }: Props) => {
       </div>
     );
   };
+
   return (
     <>
       <div className={styles.container}>
@@ -104,21 +119,13 @@ const ItemPage = ({ type }: Props) => {
             ownerPKH={owner?.pubKeyHash ?? ''}
             ownerImagePath={owner?.imagePath}
           />
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            {walletKey === owner?.pubKeyHash && (
-              <Button
-                label="Change Price"
-                color="secondary"
-                btnClass={styles.btn}
-                onClick={() => setDisplayModal('DIALOG')}
-              />
-            )}
-          </div>
-          {type === 'BUY' ? renderBuyButtons() : renderSellerButtons()}
+          {isOwner(owner?.pubKeyHash)
+            ? renderSellerButtons()
+            : renderBuyButtons()}
         </div>
       </div>
-      <ModalDialog
-        isOpen={displayModal === 'DIALOG'}
+      <SetPriceModal
+        isOpen={displayModal === 'SET_PRICE'}
         closeModal={closeModal}
         title={image?.title || ''}
         from={artist?.name || ''}

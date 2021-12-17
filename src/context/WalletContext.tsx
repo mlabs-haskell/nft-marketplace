@@ -29,19 +29,18 @@ export const WalletContext = createContext<WalletContextType>({
 // TODO: Implement actual wallet connection logic
 export const WalletContextProvider: FC = ({ children }) => {
   const [wallets, setWallets] = useState<WalletName[]>([]);
-  const [connected, setConnected] = useState<WalletName>('TEST');
+  const [connected, setConnected] = useState<WalletName>('NONE');
 
   const connect = (wallet: WalletName): void => {
-    if (!wallets.includes(wallet)) {
+    /* if (!wallets.includes(wallet)) {
       console.error(
         `Attempted to connect to wallet (${wallet}) that is not available`
       );
       return;
-    }
+    } */
 
     setConnected(wallet);
   };
-
   const getPubKeyHashes = () => {
     switch (connected) {
       case 'TEST':
