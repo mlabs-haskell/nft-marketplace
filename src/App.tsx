@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import ScrollToTop from 'components/Util/ScrollToTop';
 import Footer from './components/Layout/Footer';
 import NavBar from './components/Layout/Nav';
