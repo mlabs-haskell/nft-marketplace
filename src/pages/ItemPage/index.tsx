@@ -55,7 +55,13 @@ const ItemPage = ({ type }: Props) => {
   };
 
   const closeModal = () => setDisplayModal('NONE');
-
+  // Home Page explore loading
+  const HomeExploreLoading = () => {
+    const string = localStorage.getItem('ticker');
+    console.log(string);
+    localStorage.setItem('ticker', `LOAD${string?.replaceAll('LOAD', '')}`);
+  };
+  HomeExploreLoading();
   const renderBuyButtons = () => {
     return (
       <>
