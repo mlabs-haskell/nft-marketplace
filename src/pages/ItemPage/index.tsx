@@ -30,7 +30,9 @@ const ItemPage = ({ type }: Props) => {
   const owner = nft ? artists.getByPubKeyHash(nft.owner.pubKeyHash) : undefined;
   const image = images.getByNftId({ contentHash: nftId ?? '' });
 
-  const [walletKey, setWalletKey] = useState<string[]>([]);
+  const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<Set<string>>(
+    new Set()
+  );
 
   useEffect(() => {
     // If the user navigates directly to item page, the nfts or images may not
@@ -41,11 +43,13 @@ const ItemPage = ({ type }: Props) => {
 
   useEffect(() => {
     // TODO
-    const Wallet = async () => {
-      const Key = await getPubKeyHashes();
-      setWalletKey(Key);
+    const refreshPubKey = async () => {
+      const pubKeyHashes = await getPubKeyHashes();
+      setWalletsPubKeyHashes(
+        new Set([...walletsPubKeyHashes, ...pubKeyHashes])
+      );
     };
-    Wallet();
+    refreshPubKey();
   }, [connected]);
   const rationalToFloat = (share: Rational, decimals: number) => {
     const sharePercent = (share[0] * 100) / share[1];
@@ -58,10 +62,10 @@ const ItemPage = ({ type }: Props) => {
   // Home Page explore loading
   const HomeExploreLoading = () => {
     const string = localStorage.getItem('ticker');
-    console.log(string);
     localStorage.setItem('ticker', `LOAD${string?.replaceAll('LOAD', '')}`);
   };
   HomeExploreLoading();
+
   const renderBuyButtons = () => {
     return (
       <>
@@ -82,12 +86,9 @@ const ItemPage = ({ type }: Props) => {
   };
 
   const isOwner = (id = '') => {
-    let isTrue = false;
-    walletKey.forEach((item) => {
-      if (item === id) isTrue = true;
-    });
-    return isTrue;
+    return walletsPubKeyHashes.has(id);
   };
+
   const renderSellerButtons = () => {
     return (
       <div className={styles.buttons}>
@@ -114,6 +115,7 @@ const ItemPage = ({ type }: Props) => {
         <div className={styles['item-details-container']}>
           <ItemDetails
             title={image?.title ?? ''}
+            deadline={nft?.auctionState?.deadline}
             saleValue={priceToADA(nft?.price)}
             topBidValue={priceToADA(nft?.auctionState?.highestBid?.bid)}
             description={image?.description ?? ''}

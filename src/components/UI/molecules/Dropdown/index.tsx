@@ -46,7 +46,7 @@ const Dropdown = ({ options, dropdownClass, infoText }: Props) => {
                 }}
                 role="presentation"
               >
-                {option}
+                {item}
               </li>
             ))}
           </ul>

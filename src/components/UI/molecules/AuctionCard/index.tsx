@@ -4,6 +4,7 @@ import { priceToADA } from 'utils/priceToADA';
 import dots from 'assets/svg/dots.svg';
 import { useEffect, useState } from 'react';
 import { InformationNft } from 'seabug-sdk/src/common';
+import formatTime from 'components/Util/formatTime';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 
@@ -11,22 +12,6 @@ interface Props {
   nft?: InformationNft;
   image?: ImageType.NftImage;
 }
-
-const formatTimeSegment = (time: number) =>
-  String(Math.floor(time)).padStart(2, '0');
-
-const formatTime = (ms: number) => {
-  const seconds = ms / 1000;
-
-  if (ms <= 0) return '00:00:00';
-
-  const s = formatTimeSegment(seconds % 60);
-  const m = formatTimeSegment((seconds / 60) % 60);
-  const h = formatTimeSegment((seconds / (60 * 60)) % 24);
-  const d = formatTimeSegment(seconds / (60 * 60 * 24));
-
-  return `${d === '00' ? '' : `${d}:`}${h}:${m}:${s}`;
-};
 
 const AuctionCard = ({ nft, image }: Props) => {
   // const [liked, setLiked] = useState(false);

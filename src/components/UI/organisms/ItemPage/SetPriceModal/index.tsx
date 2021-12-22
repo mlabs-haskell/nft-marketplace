@@ -61,11 +61,7 @@ const SetPriceModal = ({
               type="number"
               onChange={handleOnChangeInput}
             />
-            <Dropdown
-              options={['ADA']}
-              dropdownClass={styles.dropdown}
-              infoText="ada"
-            />
+            <Dropdown options={['ADA']} dropdownClass={styles.dropdown} />
           </div>
         </div>
         <Button
