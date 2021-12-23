@@ -8,10 +8,18 @@ interface Props {
   text: string;
   isActive: boolean;
   id: string;
+  section: string;
   onItemClick: (id: string) => void;
 }
 
-const AccordionItem = ({ title, text, isActive, id, onItemClick }: Props) => {
+const AccordionItem = ({
+  title,
+  text,
+  isActive,
+  id,
+  onItemClick,
+  section,
+}: Props) => {
   const onHeaderClick = () => {
     if (isActive) {
       onItemClick('');
@@ -25,6 +33,7 @@ const AccordionItem = ({ title, text, isActive, id, onItemClick }: Props) => {
       className={`${styles.accordionItem} ${
         isActive ? styles.accordionItemActive : ''
       }`}
+      id={section}
     >
       <div
         role="button"
