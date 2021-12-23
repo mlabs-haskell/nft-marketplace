@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <div>
-      <Header artists={artists.list} />
+      <Header artists={artists.listRandomized} />
       {nfts.getLiveAuctionList().length > 0 && <Auction />}
       <ExploreHeader />
       <Explore

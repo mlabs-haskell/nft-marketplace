@@ -22,32 +22,25 @@ const SwiperInstance: React.FC<ISwiperInstance> = Swiper;
 
 const Header = (props: Props) => {
   const { artists } = props;
-  const artistsRandomized = artists.sort(() => 0.5 - Math.random());
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const swiperRef: any = useRef(null);
 
   const renderBigSlide = () => {
-    if (!artistsRandomized?.length) return null;
+    if (!artists?.length) return null;
     return (
       <SwiperSlide className={styles['swiper-slide']}>
         <div className={styles['big-card-wrapper']}>
-          <ArtistCard
-            {...artistsRandomized[0]}
-            className={styles['card-big']}
-          />
+          <ArtistCard {...artists[0]} className={styles['card-big']} />
         </div>
       </SwiperSlide>
     );
   };
 
   const renderSmallSlides = () => {
-    if (!artistsRandomized?.length) return null;
+    if (!artists?.length) return null;
 
-    const withoutFirst = artistsRandomized.filter(
-      (item, counter) => counter !== 0
-    );
-    const separatedArray = separateArrayByArrays(withoutFirst, 2);
+    const separatedArray = separateArrayByArrays(artists.slice(1), 2);
 
     return separatedArray.map((subArray) => (
       <SwiperSlide

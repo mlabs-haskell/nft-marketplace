@@ -16,6 +16,7 @@ type AppMessage = {
 export type NftContextType = {
   artists: {
     list: ArtistsType.Artist[];
+    listRandomized: ArtistsType.Artist[];
     getByPubKeyHash: (pkh: string) => Maybe<ArtistsType.Artist>;
     fetch: () => void;
   };
@@ -45,6 +46,7 @@ export type NftContextType = {
 export const NftContext = createContext<NftContextType>({
   artists: {
     list: [],
+    listRandomized: [],
     getByPubKeyHash: () => undefined,
     fetch: () => {},
   },
@@ -107,6 +109,7 @@ export const NftContextProvider: FC = ({ children }) => {
   // Artists
 
   const artistsList = useMemo(() => [...artistsByPkh.values()], [artistsByPkh]);
+  const artistsListRandomized = artistsList.sort(() => 0.5 - Math.random());
 
   const getArtistByPubKeyHash = (pkh: string) => artistsByPkh.get(pkh);
 
@@ -241,6 +244,7 @@ export const NftContextProvider: FC = ({ children }) => {
       value={{
         artists: {
           list: artistsList,
+          listRandomized: artistsListRandomized,
           getByPubKeyHash: getArtistByPubKeyHash,
           fetch: fetchArtists,
         },
