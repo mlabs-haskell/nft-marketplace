@@ -14,7 +14,6 @@ export type WalletContextType = {
   wallets: WalletName[];
   connected: WalletName;
   getPubKeyHashes: () => Promise<string[]>;
-  fetchWallets: () => void;
   signAndSubmitTx: (tx: TransactionCborHex) => Promise<TransactionHash>;
   connect: (wallet: WalletName) => void;
 };
@@ -23,7 +22,6 @@ export const WalletContext = createContext<WalletContextType>({
   wallets: [],
   connected: 'NONE',
   getPubKeyHashes: () => Promise.resolve([]),
-  fetchWallets: () => {},
   signAndSubmitTx: () => Promise.resolve(''),
   connect: () => {},
 });
@@ -33,6 +31,16 @@ export const WalletContextProvider: FC = ({ children }) => {
   const [wallets, setWallets] = useState<WalletName[]>([]);
   const [connected, setConnected] = useState<WalletName>('NONE');
 
+  const connect = (wallet: WalletName): void => {
+    /* if (!wallets.includes(wallet)) {
+      console.error(
+        `Attempted to connect to wallet (${wallet}) that is not available`
+      );
+      return;
+    } */
+
+    setConnected(wallet);
+  };
   const getPubKeyHashes = () => {
     switch (connected) {
       case 'TEST':
@@ -40,21 +48,6 @@ export const WalletContextProvider: FC = ({ children }) => {
       default:
         return Promise.resolve([]);
     }
-  };
-
-  const fetchWallets = () => {
-    setWallets(['TEST']);
-  };
-
-  const connect = (wallet: WalletName): void => {
-    if (!wallets.includes(wallet)) {
-      console.error(
-        `Attempted to connect to wallet (${wallet}) that is not available`
-      );
-      return;
-    }
-
-    setConnected(wallet);
   };
 
   const signAndSubmitTx = (tx: TransactionCborHex) =>
@@ -66,7 +59,6 @@ export const WalletContextProvider: FC = ({ children }) => {
         wallets,
         connected,
         getPubKeyHashes,
-        fetchWallets,
         connect,
         signAndSubmitTx,
       }}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { NftContextType } from '../../../../../context/NftContext';
 import Button from '../../../atoms/Button';
@@ -13,10 +13,40 @@ interface Props {
 }
 
 const Explore = ({ images, getImageByNftId, nfts }: Props) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
+  const watchTicker = () => {
+    const ticker = localStorage.getItem('ticker');
+    return ticker?.includes('LOAD')
+      ? parseInt(ticker?.replace('LOAD', ''), 10)
+      : 1;
+  };
+  const [currentPage, setCurrentPage] = useState(watchTicker());
   const cardsPerPage = 25;
   const limitedNfts = nfts.slice(0, currentPage * cardsPerPage);
+
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+  useEffect(() => {
+    const homeScrollPosition = parseInt(
+      localStorage.getItem('homeScrollPosition') || '1',
+      10
+    );
+    window.scrollTo(0, homeScrollPosition);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('homeScrollPosition', JSON.stringify(scrollPosition));
+  }, [scrollPosition]);
+
+  useEffect(() => {
+    localStorage.setItem('ticker', JSON.stringify(currentPage));
+  }, [currentPage]);
 
   return (
     <div className={styles.contatiner}>

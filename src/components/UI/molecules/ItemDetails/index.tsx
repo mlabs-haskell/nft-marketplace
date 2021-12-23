@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import girl from 'assets/svg/girl.svg';
+import formatTime from 'components/Util/formatTime';
 import UserPhoto from '../UserPhoto';
 import styles from './index.module.scss';
 import Button from '../../atoms/Button';
@@ -14,6 +15,7 @@ interface Props {
   creatorImagePath?: string;
   ownerPKH: string;
   ownerImagePath?: string;
+  deadline?: Date;
 }
 
 const ItemDetails = ({
@@ -26,9 +28,32 @@ const ItemDetails = ({
   creatorImagePath,
   ownerPKH,
   ownerImagePath,
+  deadline,
 }: Props) => {
   const truncatePubKeyHash = (pkh: string) =>
     pkh.length <= 15 ? pkh : `${pkh.slice(0, 10)}...${pkh.slice(-4)}`;
+
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const handleDesciption = () => setShowFullDescription(!showFullDescription);
+
+  //  Time
+  const calcRemainingTime = (): number | undefined => {
+    if (!deadline) return undefined;
+
+    const endTime = deadline;
+    const nowDate = new Date();
+    const remaining = endTime.getTime() - nowDate.getTime();
+
+    return remaining > 0 ? remaining : undefined;
+  };
+
+  const [timeRemaining, setTimeRemaining] = useState(calcRemainingTime());
+
+  useEffect(() => {
+    setInterval(() => {
+      setTimeRemaining(calcRemainingTime());
+    }, 1000);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -46,12 +71,23 @@ const ItemDetails = ({
         </ul>
       </div>
       <p className={styles.description}>
-        {description.substring(0, 256) +
-          (description.length > 256 ? '...' : '')}{' '}
-        <span role="button" tabIndex={0} className={styles.button}>
-          Read more
+        {showFullDescription
+          ? description
+          : `${description.substring(0, 256)}...`}
+        <span
+          role="button"
+          tabIndex={0}
+          className={styles.button}
+          onClick={() => handleDesciption()}
+        >
+          {showFullDescription ? 'Read less' : 'Read more'}
         </span>
       </p>
+      {timeRemaining && (
+        <div className={styles['time-wrapper']}>
+          <span className={styles.time}>{formatTime(timeRemaining)}</span>
+        </div>
+      )}
       <div className={styles['user-details-container']}>
         <div className={styles['user-details']}>
           <p className={styles['user-details-text']}>
