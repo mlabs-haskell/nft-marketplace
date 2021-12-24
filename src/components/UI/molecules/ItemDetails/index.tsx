@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import girl from 'assets/svg/girl.svg';
-import formatTime from 'components/Util/formatTime';
+import { formtTimeItemDetail } from 'components/Util/formatTime';
 import UserPhoto from '../UserPhoto';
 import styles from './index.module.scss';
 import Button from '../../atoms/Button';
@@ -83,11 +83,6 @@ const ItemDetails = ({
           {showFullDescription ? 'Read less' : 'Read more'}
         </span>
       </p>
-      {timeRemaining && (
-        <div className={styles['time-wrapper']}>
-          <span className={styles.time}>{formatTime(timeRemaining)}</span>
-        </div>
-      )}
       <div className={styles['user-details-container']}>
         <div className={styles['user-details']}>
           <p className={styles['user-details-text']}>
@@ -106,6 +101,23 @@ const ItemDetails = ({
           </div>
         </div>
       </div>
+      {timeRemaining && (
+        <div className={styles['info-box']}>
+          <div className={styles['time-container']}>
+            <span className={styles['time-text']}>Auction ends in</span>
+            <div className={styles['time-wrapper']}>
+              {Object.entries(formtTimeItemDetail(timeRemaining)).map(
+                (item, i) => (
+                  <div key={`${item[0]}`} className={styles['time-div']}>
+                    <span className={styles.time}>{item[1]}</span>
+                    <span className={styles['time-text']}>{item[0]}</span>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
