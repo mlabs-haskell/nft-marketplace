@@ -4,7 +4,7 @@ import { priceToADA } from 'utils/priceToADA';
 import dots from 'assets/svg/dots.svg';
 import { useEffect, useState } from 'react';
 import { InformationNft } from 'seabug-sdk/src/common';
-import formatTime from 'components/Util/formatTime';
+import { formatTimeLiveAuction } from 'components/Util/formatTime';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 
@@ -67,7 +67,9 @@ const AuctionCard = ({ nft, image }: Props) => {
           <img src={image?.path} alt="nft-item" />
           {timeRemaining && (
             <div className={styles['time-wrapper']}>
-              <span className={styles.time}>{formatTime(timeRemaining)}</span>
+              <span className={styles.time}>
+                {formatTimeLiveAuction(timeRemaining)}
+              </span>
             </div>
           )}
         </div>
