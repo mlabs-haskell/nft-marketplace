@@ -1,3 +1,5 @@
+import { HashLink as Link } from 'react-router-hash-link';
+import { faqContent } from 'context/FaqContext';
 import ButhrefnInput from '../../UI/molecules/ButtonInput';
 import styles from './index.module.scss';
 import instagram from '../../../assets/svg/instagram.svg';
@@ -9,6 +11,10 @@ import Dropdown from '../../UI/molecules/Dropdown';
 
 const Footer = () => {
   const option = ['English', 'Spanish'];
+
+  const capitalizeFistLetter = (word: string) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  };
   return (
     <div className={styles.container}>
       <div className={`${styles.footer} row`}>
@@ -49,12 +55,13 @@ const Footer = () => {
         <div className="col-lg-3">
           <p>Seabug</p>
           <ul>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
+            {faqContent.map((faq) => (
+              <li key={faq.id}>
+                <Link to={`help#${faq.section}`}>
+                  FAQ - <span>{capitalizeFistLetter(faq.section)}</span>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="col-lg-3">
