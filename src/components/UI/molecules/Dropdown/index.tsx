@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import classNames from 'classnames';
+import { useEffect } from '@storybook/addons';
 import arrow from '../../../../assets/svg/dropdown.svg';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
@@ -9,13 +10,18 @@ interface Props {
   options: string[];
   dropdownClass?: string;
   infoText?: string;
+  handleParentFunction?: (item: string) => void;
 }
 
-const Dropdown = ({ options, dropdownClass, infoText }: Props) => {
+const Dropdown = ({
+  options,
+  dropdownClass,
+  infoText,
+  handleParentFunction = () => {},
+}: Props) => {
   const [option, setOption] = useState(false);
   const [activeOption, setActiveOption] = useState(0);
   const [value, setValue] = useState(options[0]);
-
   const toggle = (id: number) => {
     const val = id === activeOption ? 1 : id;
     setActiveOption(val);
@@ -43,6 +49,7 @@ const Dropdown = ({ options, dropdownClass, infoText }: Props) => {
                 onClick={() => {
                   toggle(index);
                   setValue(item);
+                  handleParentFunction(item);
                 }}
                 role="presentation"
               >

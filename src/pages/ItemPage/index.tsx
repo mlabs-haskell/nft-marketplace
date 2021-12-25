@@ -51,6 +51,7 @@ const ItemPage = ({ type }: Props) => {
     };
     refreshPubKey();
   }, [connected]);
+
   const rationalToFloat = (share: Rational, decimals: number) => {
     const sharePercent = (share[0] * 100) / share[1];
     const multiplier = 10 ** decimals;

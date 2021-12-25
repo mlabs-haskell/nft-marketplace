@@ -26,7 +26,7 @@
     display: flex;
     align-items: center;
 
-    ul {
+    .list {
       display: inline-flex;
       align-items: center;
       list-style: none;
@@ -71,7 +71,71 @@
   }
 }
 
+.wallet-list{
+  display: inline-flex;
+  list-style: none;
+  font-size: pxToRem(14);
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+};
+
 .wallet-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   height: 44px;
+  border-radius: 16px;
+  @media only screen and (max-width: $breakpointPhone) {
+    width: 60%;
+  }
+  width: 150px;
+  display: flex;
   overflow: hidden;
+};
+.wallet-wrapper {
+  background-color: #3983F2;
+  border-radius: 16px;
+  z-index: 170;
+  display: flex;
+  flex-direction: row;
+}
+.wallet-name{
+  font-size: 13px;
+  line-height: 21px;
+  @media only screen and (max-width: $breakpointPhone) {
+    min-width: 50px;
+  }
+  letter-spacing: -0.02em;
+}
+
+.dropdown {
+  position: absolute;
+  border: 1px solid $lightText;
+  background-color: #3983F2;
+  color: black;
+  height: 44px;
+  border: none;
+  display: flex;
+  width: 75px;
+  flex-direction: row;
+  transition: 0.2s ease;
+  p{ 
+    display: none;
+  }
+}
+.dropdown-active{
+  position: absolute;
+  border: 1px solid $lightText;
+  background-color: #3983F2;
+  color: black;
+  height: 44px;
+  border: none;
+  display: flex;
+  @media only screen and (max-width: $breakpointPhone) {
+    width: 110px;
+  }
+  width: 150px;
+  flex-direction: row;
+  transition: 0.2s ease;
 }
