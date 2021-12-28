@@ -1,4 +1,5 @@
 import { createContext, useState, FC, useMemo, useContext } from 'react';
+import toast from 'react-hot-toast';
 import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
 import { ArtistsType } from 'types/artists';
@@ -10,7 +11,7 @@ import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
-  userMsg?: string;
+  userMsg: string;
   debugMsg?: any;
 };
 
@@ -91,7 +92,7 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const addMessage = (msg: AppMessage) => {
     if (!msg.userMsg && !msg.debugMsg) {
-      console.error('Attempted to add message with no content!');
+      toast.error('Attempted to add message with no content!');
       return;
     }
 
@@ -99,9 +100,10 @@ export const NftContextProvider: FC = ({ children }) => {
 
     if (msg.debugMsg) {
       if (msg.type === 'Error') {
-        console.error(msg.debugMsg);
-      } else {
+        toast.error(msg.userMsg);
         console.log(msg.debugMsg);
+      } else {
+        toast.success(msg.userMsg);
       }
     }
   };
