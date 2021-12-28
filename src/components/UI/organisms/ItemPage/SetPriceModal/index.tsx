@@ -1,4 +1,5 @@
 import Input from 'components/UI/atoms/Input';
+import toast from 'react-hot-toast';
 import { NftContext } from 'context/NftContext';
 import { useContext, useState } from 'react';
 import { priceToADA } from 'utils/priceToADA';
@@ -33,6 +34,7 @@ const SetPriceModal = ({
       nftId: { contentHash: nftId },
       price: ToLovelace(Math.ceil(newPrice)),
     });
+    toast.success('price changed successfully');
     closeModal();
   };
 
