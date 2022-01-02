@@ -22,12 +22,13 @@ const ArtistPage = () => {
     // TODO: get artist by pubKeyHash
     const newArtist = artists.list.find((item) => item.id === artistId);
     setArtist(newArtist);
+    console.log(artist);
   };
 
   const getArtistNfts = () => {
     // TODO: Move into NftContext (and memoize?)
     const newNfts = nfts.list.filter(
-      (items) => items.owner.pubKeyHash === artist?.pubKeyHash
+      (items) => items.author.pubKeyHash === artist?.pubKeyHash
     );
     setNfts(newNfts);
   };
@@ -35,7 +36,7 @@ const ArtistPage = () => {
   useEffect(() => {
     getArtist();
     getArtistNfts();
-  }, [artist]);
+  }, [artist, artistId]);
 
   return (
     <div>
