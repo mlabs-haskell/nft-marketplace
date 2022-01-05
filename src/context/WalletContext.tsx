@@ -45,7 +45,7 @@ export const WalletContextProvider: FC = ({ children }) => {
   };
   const getPubKeyHashes = () => {
     switch (connected) {
-      case 'TEST':
+      case 'Test Wallet':
         return Promise.resolve(['ff00000001']);
       default:
         return Promise.resolve([]);
@@ -53,7 +53,7 @@ export const WalletContextProvider: FC = ({ children }) => {
   };
 
   const fetchWallets = () => {
-    const walletList = ['TEST'];
+    const walletList = ['Test Wallet'];
 
     setWallets(walletList);
   };

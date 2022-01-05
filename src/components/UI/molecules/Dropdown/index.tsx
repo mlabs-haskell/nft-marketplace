@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import classNames from 'classnames';
-import { useEffect } from '@storybook/addons';
 import arrow from '../../../../assets/svg/dropdown.svg';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';

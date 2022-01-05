@@ -1,4 +1,5 @@
-import Dropdown from 'components/UI/molecules/Dropdown';
+/*eslint-disable  */
+import Box from 'components/UI/atoms/Box';
 import { truncatePubKeyHash } from 'components/Util/TruncateKey';
 import { useWalletContext, WalletName } from 'context/WalletContext';
 import { useEffect, useState } from 'react';
@@ -14,6 +15,13 @@ function NavBar() {
 
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
   const [connectedWallet, setConnectedWallet] = useState(false);
+  const [showWallets, setShowWallets] = useState(false);
+
+  const handleWalletSelection = (e: any) => {
+    setConnectedWallet(true);
+    connect(e.target.innerText);
+    setShowWallets(!showWallets);
+  };
   useEffect(() => {
     const fetch = async () => {
       fetchWallets();
@@ -67,15 +75,39 @@ function NavBar() {
           <img src={person} alt="profile" />
         </li> */}
           <li className={`${styles['wallet-icon']}`}>
-            <div className={`${styles['wallet-wrapper']}`}>
+            <div
+              className={`${styles['wallet-wrapper']}`}
+              role="presentation"
+              onClick={() => setShowWallets(!showWallets)}
+            >
               <img src={wallet} alt="wallet" />
-              <p className={`${styles['wallet-name']}`}>
-                {walletsPubKeyHashes.length !== 0 && connectedWallet
+              {connectedWallet &&
+                <p className={`${styles['wallet-name']}`}>
+                  {walletsPubKeyHashes.length !== 0 && connectedWallet
                   ? truncatePubKeyHash(walletsPubKeyHashes[0], 5)
                   : ''}
-              </p>
+                </p>
+              } 
             </div>
-            {wallets && (
+            {showWallets ? (
+              <Box boxClass={styles.option}>
+                <ul
+                  onClick={(e) => handleWalletSelection(e)}
+                  role="presentation"
+                >
+                  {wallets.length === 0 ? (
+                    <li>No Wallets Found</li>
+                  ) : (
+                    wallets?.map((item, index) => (
+                      <li key={item[index]}>{item}</li>
+                    ))
+                  )}
+                </ul>
+              </Box>
+            ) : (
+              ''
+            )}
+            {/* {wallets && (
               <Dropdown
                 options={wallets}
                 dropdownClass={
@@ -89,7 +121,7 @@ function NavBar() {
                   connect(item);
                 }}
               />
-            )}
+            )} */}
           </li>
         </ul>
       </div>
