@@ -11,7 +11,7 @@ import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
-  userMsg: string;
+  userMsg?: string;
   debugMsg?: any;
 };
 
@@ -92,7 +92,7 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const addMessage = (msg: AppMessage) => {
     if (!msg.userMsg && !msg.debugMsg) {
-      toast.error('Attempted to add message with no content!');
+      console.error('Attempted to add message with no content!');
       return;
     }
 
@@ -100,10 +100,10 @@ export const NftContextProvider: FC = ({ children }) => {
 
     if (msg.debugMsg) {
       if (msg.type === 'Error') {
-        toast.error(msg.userMsg);
+        toast.error(msg.userMsg!);
         console.log(msg.debugMsg);
       } else {
-        toast.success(msg.userMsg);
+        toast.success(msg.userMsg!);
       }
     }
   };

@@ -34,7 +34,6 @@ const SetPriceModal = ({
       nftId: { contentHash: nftId },
       price: ToLovelace(Math.ceil(newPrice)),
     });
-    toast.success('price changed successfully');
     closeModal();
   };
 
