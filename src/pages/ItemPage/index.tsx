@@ -38,7 +38,7 @@ const ItemPage = ({ type }: Props) => {
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
     if (!nft || !image) common.fetchAll();
-    connect('TEST');
+    connect('Test Wallet');
   }, []);
 
   useEffect(() => {

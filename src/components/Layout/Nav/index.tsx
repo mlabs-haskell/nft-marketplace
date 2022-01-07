@@ -19,7 +19,7 @@ function NavBar() {
 
   const handleWalletSelection = (e: any) => {
     setConnectedWallet(true);
-    connect(e.target.innerText);
+    connect("Test Wallet");
     setShowWallets(!showWallets);
   };
   useEffect(() => {
