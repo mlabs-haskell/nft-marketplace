@@ -108,7 +108,7 @@ export const NftContextProvider: FC = ({ children }) => {
     if (msg.userMsg) {
       if (msg.type === 'Error') {
         toast.error(msg.userMsg);
-      } else if (msg.type === 'Success'){
+      } else if (msg.type === 'Success') {
         toast.success(msg.userMsg);
       } else {
         toast(msg.userMsg);
