@@ -11,7 +11,7 @@ export type TransactionCborHex = string;
 export type TransactionHash = string;
 
 export type WalletContextType = {
-  wallets: string[];
+  wallets: WalletName[];
   connected: WalletName;
   getPubKeyHashes: () => Promise<string[]>;
   signAndSubmitTx: (tx: TransactionCborHex) => Promise<TransactionHash>;
@@ -30,7 +30,7 @@ export const WalletContext = createContext<WalletContextType>({
 
 // TODO: Implement actual wallet connection logic
 export const WalletContextProvider: FC = ({ children }) => {
-  const [wallets, setWallets] = useState<string[]>([]);
+  const [wallets, setWallets] = useState<WalletName[]>([]);
   const [connected, setConnected] = useState<WalletName>('NONE');
 
   const connect = (wallet: WalletName): void => {
@@ -53,7 +53,7 @@ export const WalletContextProvider: FC = ({ children }) => {
   };
 
   const fetchWallets = () => {
-    const walletList = ['Test Wallet'];
+    const walletList: WalletName[] = ['Test Wallet'];
 
     setWallets(walletList);
   };

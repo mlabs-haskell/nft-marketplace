@@ -18,8 +18,12 @@ function NavBar() {
   const [showWallets, setShowWallets] = useState(false);
 
   const handleWalletSelection = (e: any) => {
-    setConnectedWallet(true);
-    connect("Test Wallet");
+    if(wallets.includes(e.target.innerText)){
+      setConnectedWallet(true);
+      connect(e.target.innerText);
+    } else {
+      setConnectedWallet(false);
+    }
     setShowWallets(!showWallets);
   };
   useEffect(() => {
@@ -58,7 +62,6 @@ function NavBar() {
               Explore
             </NavLink>
           </li>
-          {/* <li><NavLink className={styles.nav} to="/explore" activeClassName={`${styles['active-nav']} active-nav`}>Create</NavLink></li> */}
           <li>
             <NavLink
               className={styles.nav}
@@ -68,7 +71,6 @@ function NavBar() {
               Help
             </NavLink>
           </li>
-          {/* <li><Button label="Sign In" color="primary"/></li> */}
         </ul>
         <ul className={styles['wallet-list']}>
           {/* <li>
@@ -107,21 +109,6 @@ function NavBar() {
             ) : (
               ''
             )}
-            {/* {wallets && (
-              <Dropdown
-                options={wallets}
-                dropdownClass={
-                  connectedWallet ? styles['dropdown-active'] : styles.dropdown
-                }
-                handleParentFunction={(item: string) => {
-                  //  TODO
-                  item === 'TEST'
-                    ? setConnectedWallet(true)
-                    : setConnectedWallet(false);
-                  connect(item);
-                }}
-              />
-            )} */}
           </li>
         </ul>
       </div>
