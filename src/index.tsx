@@ -47,6 +47,19 @@ ReactDOM.render(
                 color: '#fff',
               },
             },
+            success: {
+              duration: 7000,
+              style: {
+                borderRadius: '5px',
+                background: '#fff',
+                color: '#333',
+                padding: 16,
+                paddingLeft: 19,
+                maxWidth: '100%',
+                fontSize: '14px',
+                fontWeight: 'bold',
+              },
+            },
           }}
         />
         <App />
