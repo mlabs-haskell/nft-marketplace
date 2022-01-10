@@ -4,7 +4,7 @@ export type WalletAddress = {
   pubKeyHash: string;
 };
 
-export type WalletName = 'NONE' | 'TEST';
+export type WalletName = 'NONE' | 'Test Wallet';
 
 export type TransactionCborHex = string;
 
@@ -16,6 +16,7 @@ export type WalletContextType = {
   getPubKeyHashes: () => Promise<string[]>;
   signAndSubmitTx: (tx: TransactionCborHex) => Promise<TransactionHash>;
   connect: (wallet: WalletName) => void;
+  fetchWallets: () => void;
 };
 
 export const WalletContext = createContext<WalletContextType>({
@@ -24,6 +25,7 @@ export const WalletContext = createContext<WalletContextType>({
   getPubKeyHashes: () => Promise.resolve([]),
   signAndSubmitTx: () => Promise.resolve(''),
   connect: () => {},
+  fetchWallets: () => {},
 });
 
 // TODO: Implement actual wallet connection logic
@@ -43,11 +45,17 @@ export const WalletContextProvider: FC = ({ children }) => {
   };
   const getPubKeyHashes = () => {
     switch (connected) {
-      case 'TEST':
+      case 'Test Wallet':
         return Promise.resolve(['ff00000001']);
       default:
         return Promise.resolve([]);
     }
+  };
+
+  const fetchWallets = () => {
+    const walletList: WalletName[] = ['Test Wallet'];
+
+    setWallets(walletList);
   };
 
   const signAndSubmitTx = (tx: TransactionCborHex) =>
@@ -61,6 +69,7 @@ export const WalletContextProvider: FC = ({ children }) => {
         getPubKeyHashes,
         connect,
         signAndSubmitTx,
+        fetchWallets,
       }}
     >
       {children}
