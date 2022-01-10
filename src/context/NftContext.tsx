@@ -11,13 +11,14 @@ import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
-  userMsg: string;
+  userMsg?: string;
   debugMsg?: any;
 };
 
 export type NftContextType = {
   artists: {
     list: ArtistsType.Artist[];
+    listRandomized: ArtistsType.Artist[];
     getByPubKeyHash: (pkh: string) => Maybe<ArtistsType.Artist>;
     fetch: () => void;
   };
@@ -48,6 +49,7 @@ export type NftContextType = {
 export const NftContext = createContext<NftContextType>({
   artists: {
     list: [],
+    listRandomized: [],
     getByPubKeyHash: () => undefined,
     fetch: () => {},
   },
@@ -92,7 +94,7 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const addMessage = (msg: AppMessage) => {
     if (!msg.userMsg && !msg.debugMsg) {
-      toast.error('Attempted to add message with no content!');
+      console.error('Attempted to add message with no content!');
       return;
     }
 
@@ -100,10 +102,18 @@ export const NftContextProvider: FC = ({ children }) => {
 
     if (msg.debugMsg) {
       if (msg.type === 'Error') {
-        toast.error(msg.userMsg);
-        console.log(msg.debugMsg);
+        console.error(msg.debugMsg);
       } else {
+        console.log(msg.debugMsg);
+      }
+    }
+    if (msg.userMsg) {
+      if (msg.type === 'Error') {
+        toast.error(msg.userMsg);
+      } else if (msg.type === 'Success') {
         toast.success(msg.userMsg);
+      } else {
+        toast(msg.userMsg);
       }
     }
   };
@@ -111,6 +121,7 @@ export const NftContextProvider: FC = ({ children }) => {
   // Artists
 
   const artistsList = useMemo(() => [...artistsByPkh.values()], [artistsByPkh]);
+  const artistsListRandomized = artistsList.sort(() => 0.5 - Math.random());
 
   const getArtistByPubKeyHash = (pkh: string) => artistsByPkh.get(pkh);
 
@@ -265,6 +276,7 @@ export const NftContextProvider: FC = ({ children }) => {
       value={{
         artists: {
           list: artistsList,
+          listRandomized: artistsListRandomized,
           getByPubKeyHash: getArtistByPubKeyHash,
           fetch: fetchArtists,
         },

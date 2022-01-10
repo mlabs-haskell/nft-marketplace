@@ -11,7 +11,8 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/typescript"
   ],
   "plugins": ["@typescript-eslint", "import", "prettier"],
   "settings": {

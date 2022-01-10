@@ -40,8 +40,7 @@ const Header = (props: Props) => {
   const renderSmallSlides = () => {
     if (!artists?.length) return null;
 
-    const withoutFirst = artists.filter((item, counter) => counter !== 0);
-    const separatedArray = separateArrayByArrays(withoutFirst, 2);
+    const separatedArray = separateArrayByArrays(artists.slice(1), 2);
 
     return separatedArray.map((subArray) => (
       <SwiperSlide
