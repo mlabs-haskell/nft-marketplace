@@ -1,4 +1,5 @@
 import { createContext, useState, FC, useMemo, useContext } from 'react';
+import toast from 'react-hot-toast';
 import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
 import { ArtistsType } from 'types/artists';
@@ -104,6 +105,15 @@ export const NftContextProvider: FC = ({ children }) => {
         console.error(msg.debugMsg);
       } else {
         console.log(msg.debugMsg);
+      }
+    }
+    if (msg.userMsg) {
+      if (msg.type === 'Error') {
+        toast.error(msg.userMsg);
+      } else if (msg.type === 'Success') {
+        toast.success(msg.userMsg);
+      } else {
+        toast(msg.userMsg);
       }
     }
   };

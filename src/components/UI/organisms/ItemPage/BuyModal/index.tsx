@@ -1,5 +1,6 @@
 import { NftContext } from 'context/NftContext';
-import { useContext, useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { useContext } from 'react';
 import { BuyParams } from 'seabug-sdk/src/buy';
 import { priceToADA } from 'utils/priceToADA';
 import Button from '../../../atoms/Button';
@@ -53,6 +54,7 @@ const BuyModal = ({
     // TODO: Leave modal open and show transaction status once wallet
     // integration is ready.
     nfts.buy(data);
+    toast.success('Transaction Complete');
     closeModal();
   };
 
