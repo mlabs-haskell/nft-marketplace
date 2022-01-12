@@ -25,8 +25,9 @@
   .nav-links {
     display: flex;
     align-items: center;
+    position: relative;
 
-    ul {
+    .list {
       display: inline-flex;
       align-items: center;
       list-style: none;
@@ -71,7 +72,76 @@
   }
 }
 
+.wallet-list{
+  display: inline-flex;
+  list-style: none;
+  font-size: pxToRem(14);
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+};
+
 .wallet-icon {
+  display: flex;
+  align-items: flex-start;
   height: 44px;
+  border-radius: 16px;
+  background-color: #3983F2;
+  display: flex;
   overflow: hidden;
+};
+.wallet-wrapper {
+  z-index: 170;
+  display: flex;
+  flex-direction: row;
+}
+.wallet-name{
+  font-size: 13px;
+  line-height: 21px;
+  color: #fff;
+  margin-right: 15px;
+  @media only screen and (max-width: $breakpointPhone) {
+    min-width: 50px;
+  }
+  letter-spacing: -0.02em;
+}
+
+.option {
+  position: absolute;
+  top: 60px;
+  right: 0px;
+  width: 60%;
+  box-shadow: 0px 0px 45px 0px rgba(19, 15, 73, 0.13);
+  border-radius: 5px;
+  z-index: 100;
+  background-color: #fff;
+  max-height: 200px;
+  overflow-y: scroll;
+  padding: 20px;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+
+    a {
+      color: #000;
+      margin-bottom: 30px;
+      font-size: 16px;
+      width: 100%;
+
+      li {
+        color: #000;
+        padding-left: 20px;
+        &:hover {
+          background-color: #f7f7f7;
+          padding: 10px 0 10px 20px;
+          border: 5px;
+        }
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 }

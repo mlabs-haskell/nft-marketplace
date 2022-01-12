@@ -38,7 +38,7 @@ const ItemPage = ({ type }: Props) => {
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
     if (!nft || !image) common.fetchAll();
-    connect('TEST');
+    connect('Test Wallet');
   }, []);
 
   useEffect(() => {
@@ -51,6 +51,7 @@ const ItemPage = ({ type }: Props) => {
     };
     refreshPubKey();
   }, [connected]);
+
   const rationalToFloat = (share: Rational, decimals: number) => {
     const sharePercent = (share[0] * 100) / share[1];
     const multiplier = 10 ** decimals;
