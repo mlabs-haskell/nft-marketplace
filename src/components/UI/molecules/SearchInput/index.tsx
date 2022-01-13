@@ -25,7 +25,7 @@ const SearchInput = ({ placeholder }: Props) => {
   const handleChange = (e: any) => {
     e.preventDefault();
     setValue(e.target.value);
-    setDisplay(e.target.value);
+    setDisplay(true);
     search.setText(e.target.value);
   };
 
@@ -57,7 +57,10 @@ const SearchInput = ({ placeholder }: Props) => {
       </div>
       {display ? (
         <Box boxClass={styles.option}>
-          <ul onClick={(e) => handleArtistSelection(e)} role="presentation">
+          <ul
+            onClick={(e: React.SyntheticEvent) => handleArtistSelection(e)}
+            role="presentation"
+          >
             {matchingArtists.length === 0 ? (
               <li>No matches</li>
             ) : (
