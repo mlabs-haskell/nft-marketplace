@@ -22,7 +22,6 @@ const ArtistPage = () => {
     // TODO: get artist by pubKeyHash
     const newArtist = artists.list.find((item) => item.id === artistId);
     setArtist(newArtist);
-    console.log(artist);
   };
 
   const getArtistNfts = () => {
@@ -36,7 +35,7 @@ const ArtistPage = () => {
   useEffect(() => {
     getArtist();
     getArtistNfts();
-  }, [artist, artistId]);
+  }, [artistId]);
 
   return (
     <div>
