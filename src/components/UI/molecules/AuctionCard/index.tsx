@@ -94,7 +94,6 @@ const AuctionCard = ({ nft, image }: Props) => {
       <div className={styles.footer}>
         <div className={styles.amount}>
           <h3>{price}</h3>
-          {/* {quantity && <p>{quantity}</p>} */}
         </div>
         <div className={styles.bid}>
           <p>{bid}</p>
