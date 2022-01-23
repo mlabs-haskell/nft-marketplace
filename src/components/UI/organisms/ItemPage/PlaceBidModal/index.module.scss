@@ -1,0 +1,76 @@
+@import '../../../../../assets/scss/abstracts/variables';
+
+.modal-content-wrapper {
+  width: 320px;
+}
+
+.button {
+  width: 100%;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.table-wrapper {
+  margin-bottom: 40px;
+}
+
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.item-name {
+  font-weight: 400;
+  color: $lightText;
+  width: calc(100% - 110px);
+}
+
+.item-value {
+  font-weight: 700;
+  width: 110px;
+  text-align: right;
+}
+
+.from {
+  color: $lightText;
+}
+
+.author {
+  color: $primary;
+}
+
+.input-box {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid $lightText;
+  border-radius: 16px;
+  width: 100%;
+  margin: 8px 0 20px 0;
+  .input{
+    height: 48px;
+    border-radius: 16px;
+    border: none;
+    padding: 0px 17px;
+  }
+  
+  .dropdown {
+    border: 1px solid $lightText;
+    background-color: #fff;
+    color: #afafaf;
+    border: none;
+    width: 100px;
+  
+    img {
+      height: 30px;
+      filter: invert(77%) sepia(1%) saturate(0%) hue-rotate(57deg)
+        brightness(91%) contrast(0%);
+    }
+  }
+}
