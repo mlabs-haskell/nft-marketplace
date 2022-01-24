@@ -34,7 +34,7 @@ export type NftContextType = {
     fetch: () => void;
     buy: (buyParams: BuyParams) => void;
     setPrice: (setPriceParams: SetPriceParams) => void;
-    getByPubKeyHash: (pkh: string) => InformationNft[];
+    getByPubKeyHash: (pkh: string) => Maybe<InformationNft[]>;
   };
   search: {
     text: string;
@@ -92,9 +92,7 @@ export const NftContextProvider: FC = ({ children }) => {
   );
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
-  const [artistNfts, setArtistNfts] = useState<Map<string, InformationNft>>(
-    new Map()
-  );
+
   // App Messages
 
   const addMessage = (msg: AppMessage) => {
@@ -210,12 +208,7 @@ export const NftContextProvider: FC = ({ children }) => {
         newNfts.map((nft) => [nft.id.contentHash, nft])
       );
 
-      const newNftsByPkh = new Map(
-        newNfts.map((nft) => [nft.author.pubKeyHash, nft])
-      );
-
       setNftsById(newNftsById);
-      setArtistNfts(newNftsByPkh);
     } catch (err) {
       addMessage({
         type: 'Error',
@@ -264,12 +257,20 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   }
 
-  const artistNftList = useMemo(() => [...artistNfts.values()], [artistNfts]);
+  const nftsByArtistPkh = useMemo(() => {
+    const nftsMap = new Map<string, InformationNft[]>();
 
-  const getNftsByPubKeyHash = (pkh: string) =>
-    artistNftList.filter((item) => {
-      item.author.pubKeyHash === pkh;
+    nftsById.forEach((nft) => {
+      nftsMap.set(nft.author.pubKeyHash, [
+        ...(nftsMap.get(nft.author.pubKeyHash) ?? []),
+        nft,
+      ]);
     });
+
+    return nftsMap;
+  }, [nftsById, artistsByPkh]);
+
+  const getNftsByPubKeyHash = (pkh: string) => nftsByArtistPkh.get(pkh);
 
   // Search
 

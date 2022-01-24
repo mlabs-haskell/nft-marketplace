@@ -17,10 +17,12 @@ const ArtistCard = ({ name, className, id, pubKeyHash }: Props) => {
   const isLight = true;
   const { nfts, images } = useNftContext();
 
-  const getImages = (example: InformationNft[]) => {
-    const random = Math.floor(Math.random() * example.length);
+  const getImages = (artistNfts: InformationNft[] | undefined) => {
+    if (!artistNfts) return [];
+
+    const random = Math.floor(Math.random() * artistNfts.length);
     return images.list.filter(
-      (items) => items.sha256hash === example[random]?.id?.contentHash
+      (items) => items.sha256hash === artistNfts[random]?.id?.contentHash
     );
   };
   const artistNfts = nfts.getByPubKeyHash(pubKeyHash);
