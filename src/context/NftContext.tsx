@@ -34,6 +34,7 @@ export type NftContextType = {
     fetch: () => void;
     buy: (buyParams: BuyParams) => void;
     setPrice: (setPriceParams: SetPriceParams) => void;
+    getByPubKeyHash: (pkh: string) => Maybe<InformationNft[]>;
   };
   search: {
     text: string;
@@ -65,6 +66,7 @@ export const NftContext = createContext<NftContextType>({
     fetch: () => {},
     buy: () => undefined,
     setPrice: () => {},
+    getByPubKeyHash: () => [],
   },
   search: {
     text: '',
@@ -90,6 +92,7 @@ export const NftContextProvider: FC = ({ children }) => {
   );
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
+
   // App Messages
 
   const addMessage = (msg: AppMessage) => {
@@ -254,6 +257,21 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   }
 
+  const nftsByArtistPkh = useMemo(() => {
+    const nftsMap = new Map<string, InformationNft[]>();
+
+    nftsById.forEach((nft) => {
+      nftsMap.set(nft.author.pubKeyHash, [
+        ...(nftsMap.get(nft.author.pubKeyHash) ?? []),
+        nft,
+      ]);
+    });
+
+    return nftsMap;
+  }, [nftsById, artistsByPkh]);
+
+  const getNftsByPubKeyHash = (pkh: string) => nftsByArtistPkh.get(pkh);
+
   // Search
 
   // TODO: optimize search performance (e.g., n-grams search index, memoize results, etc.)
@@ -292,6 +310,7 @@ export const NftContextProvider: FC = ({ children }) => {
           fetch: fetchNfts,
           buy: buyNft,
           setPrice: ChangePrice,
+          getByPubKeyHash: getNftsByPubKeyHash,
         },
         search: {
           text: searchText,
