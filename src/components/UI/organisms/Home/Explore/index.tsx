@@ -63,22 +63,6 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
 
   const limitedNfts = nftsAfterSaleFilter.slice(0, currentPage * cardsPerPage);
 
-  // const getLimitedNfts = () => {
-  //   setLimitedNfts(nfts.slice(0, currentPage * cardsPerPage));
-  // };
-  // const getCollections = () => {
-  //   const artistCollections = nfts.filter(
-  //     (item) => item.owner.pubKeyHash === walletsPubKeyHashes[0]
-  //   );
-  //   setLimitedNfts(artistCollections);
-  // };
-  // const getSales = () => {
-  //   const artistSales = nfts.filter(
-  //     (item) =>
-  //       item.owner.pubKeyHash === walletsPubKeyHashes[0] && item.auctionState
-  //   );
-  //   setLimitedNfts(artistSales);
-  // };
   useEffect(() => {
     const homeScrollPosition = parseInt(
       localStorage.getItem('homeScrollPosition') || '1',
