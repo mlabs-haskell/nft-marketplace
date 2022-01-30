@@ -31,7 +31,7 @@ export const WalletContext = createContext<WalletContextType>({
 // TODO: Implement actual wallet connection logic
 export const WalletContextProvider: FC = ({ children }) => {
   const [wallets, setWallets] = useState<WalletName[]>([]);
-  const [connected, setConnected] = useState<WalletName>('Test Wallet');
+  const [connected, setConnected] = useState<WalletName>('NONE');
 
   const connect = (wallet: WalletName): void => {
     /* if (!wallets.includes(wallet)) {

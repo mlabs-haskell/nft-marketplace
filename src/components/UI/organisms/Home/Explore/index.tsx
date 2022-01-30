@@ -15,6 +15,8 @@ interface Props {
   nfts: NftContextType['nfts']['list'];
 }
 
+type FilterState = 'ALL' | 'SALES' | 'COLLECTION';
+
 const Explore = ({ images, getImageByNftId, nfts }: Props) => {
   const watchTicker = () => {
     const ticker = localStorage.getItem('ticker');
@@ -24,8 +26,12 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
   };
   const cardsPerPage = 25;
   const [currentPage, setCurrentPage] = useState(watchTicker());
-  const [limitedNfts, setLimitedNfts] = useState<InformationNft[]>([]);
+  // const [limitedNfts, setLimitedNfts] = useState<InformationNft[]>([]);
   // const limitedNfts = nfts.slice(0, currentPage * cardsPerPage);
+  const [filterState, setFilterState] = useState<FilterState>('ALL');
+
+  const handleMySalesClick = () => setFilterState('SALES');
+  const handleMyCollectionClick = () => setFilterState('COLLECTION');
 
   const [scrollPosition, setScrollPosition] = useState(0);
   const handleScroll = () => {
@@ -35,22 +41,44 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
   const { getPubKeyHashes, connected } = useWalletContext();
 
-  const getLimitedNfts = () => {
-    setLimitedNfts(nfts.slice(0, currentPage * cardsPerPage));
-  };
-  const getCollections = () => {
-    const artistCollections = nfts.filter(
-      (item) => item.owner.pubKeyHash === walletsPubKeyHashes[0]
+  const filterByOwner = (ownerNfts: InformationNft[]) =>
+    ownerNfts.filter((nft) =>
+      walletsPubKeyHashes.includes(nft.owner.pubKeyHash)
     );
-    setLimitedNfts(artistCollections);
-  };
-  const getSales = () => {
-    const artistSales = nfts.filter(
-      (item) =>
-        item.owner.pubKeyHash === walletsPubKeyHashes[0] && item.auctionState
+
+  const filterByOnSale = (ownerNfts: InformationNft[]) =>
+    ownerNfts.filter(
+      (nft) =>
+        nft.price ||
+        (nft?.auctionState?.deadline && nft.auctionState.deadline < new Date())
     );
-    setLimitedNfts(artistSales);
-  };
+
+  const nftsAfterOwnerFilter =
+    filterState === 'COLLECTION' || filterState === 'SALES'
+      ? filterByOwner(nfts)
+      : nfts;
+
+  const nftsAfterSaleFilter =
+    filterState === 'SALES' ? filterByOnSale(nftsAfterOwnerFilter) : nfts;
+
+  const limitedNfts = nftsAfterSaleFilter.slice(0, currentPage * cardsPerPage);
+
+  // const getLimitedNfts = () => {
+  //   setLimitedNfts(nfts.slice(0, currentPage * cardsPerPage));
+  // };
+  // const getCollections = () => {
+  //   const artistCollections = nfts.filter(
+  //     (item) => item.owner.pubKeyHash === walletsPubKeyHashes[0]
+  //   );
+  //   setLimitedNfts(artistCollections);
+  // };
+  // const getSales = () => {
+  //   const artistSales = nfts.filter(
+  //     (item) =>
+  //       item.owner.pubKeyHash === walletsPubKeyHashes[0] && item.auctionState
+  //   );
+  //   setLimitedNfts(artistSales);
+  // };
   useEffect(() => {
     const homeScrollPosition = parseInt(
       localStorage.getItem('homeScrollPosition') || '1',
@@ -78,12 +106,12 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
     };
     refreshPubKey();
   }, [connected]);
-  useEffect(() => {
-    getLimitedNfts();
-  }, [nfts]);
   return (
     <>
-      <ExploreHeader collections={getCollections} sales={getSales} />
+      <ExploreHeader
+        collections={handleMyCollectionClick}
+        sales={handleMySalesClick}
+      />
       <div className={styles.contatiner}>
         <InfiniteScroll
           dataLength={limitedNfts.length} // This is important field to render the next data
