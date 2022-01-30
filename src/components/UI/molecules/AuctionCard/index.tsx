@@ -3,6 +3,7 @@ import { ImageType } from 'types/image';
 import { priceToADA } from 'utils/priceToADA';
 import dots from 'assets/svg/dots.svg';
 import { useEffect, useState } from 'react';
+import { useNftContext } from 'context/NftContext';
 import { InformationNft } from 'seabug-sdk/src/common';
 import { formatTimeLiveAuction } from 'components/Util/formatTime';
 import Box from '../../atoms/Box';
@@ -15,6 +16,7 @@ interface Props {
 
 const AuctionCard = ({ nft, image }: Props) => {
   const [refresh, setRefresh] = useState(false);
+  const { common } = useNftContext();
 
   const calcRemainingTime = (): number | undefined => {
     if (!nft?.auctionState?.deadline) return undefined;
@@ -48,7 +50,7 @@ const AuctionCard = ({ nft, image }: Props) => {
   }
 
   const handleRefresh = () => {
-    window.location.reload();
+    common.fetchAll();
   };
 
   return (
@@ -63,7 +65,7 @@ const AuctionCard = ({ nft, image }: Props) => {
             <span
               className={styles.span}
               role="presentation"
-              onClick={() => setRefresh(!refresh)}
+              onClick={() => setRefresh(true)}
             >
               <img src={dots} className={styles.dots} alt="more" />
               {refresh ? (
