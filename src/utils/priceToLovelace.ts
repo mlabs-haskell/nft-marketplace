@@ -1,5 +1,5 @@
-export const priceToLovelace = (value?: bigint): string => {
+export const priceToLovelace = (value?: number): string => {
   if (!value) return '';
-  const result = Number(value) * 1000000;
+  const result = value * 1000000;
   return `${result} Lovelace`;
 };

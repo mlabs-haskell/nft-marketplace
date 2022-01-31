@@ -29,19 +29,19 @@ const PlaceBidModal = ({
   percentTax,
 }: Props) => {
   const { nfts } = useContext(NftContext);
-  const [bid, setBid] = useState<bigint>(0);
+  const [bid, setBid] = useState<number>(0);
   const calculatePercentFee = () => {
-    const currentFeeSumm = bid ? (Number(bid) * percentTax).toFixed(0) : 0;
-    return BigInt(currentFeeSumm);
+    const currentFeeSumm = bid ? (bid * percentTax).toFixed(0) : 0;
+    return Number(currentFeeSumm);
   };
 
   const handleBidChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBid(BigInt(e.target.value));
+    setBid(parseFloat(e.target.value));
   };
 
   const calculateSummPay = () => {
     const summPay = bid ? calculatePercentFee() + bid : 0;
-    return BigInt(summPay);
+    return Number(summPay);
   };
 
   const onPlaceBid = async () => {
@@ -49,7 +49,7 @@ const PlaceBidModal = ({
       nftId: {
         contentHash: nftId,
       },
-      price: bid,
+      price: BigInt(bid),
       newPrice: undefined,
     };
 
