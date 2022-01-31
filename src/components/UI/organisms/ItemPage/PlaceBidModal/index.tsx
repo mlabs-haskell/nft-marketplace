@@ -4,7 +4,7 @@ import Input from 'components/UI/atoms/Input';
 import Dropdown from 'components/UI/molecules/Dropdown';
 import { useContext, useState } from 'react';
 import { BuyParams } from 'seabug-sdk/src/buy';
-import { priceToADA } from 'utils/priceToADA';
+import { priceToLovelace } from 'utils/priceToLovelace';
 import Button from '../../../atoms/Button';
 import Modal from '../../../molecules/Modal';
 import styles from './index.module.scss';
@@ -16,8 +16,6 @@ type Props = {
   from: string;
   balance: number;
   percentTax: number;
-  nftPrice: bigint;
-
   closeModal: () => void;
 };
 
@@ -29,23 +27,20 @@ const PlaceBidModal = ({
   from,
   balance,
   percentTax,
-  nftPrice,
 }: Props) => {
   const { nfts } = useContext(NftContext);
+  const [bid, setBid] = useState<bigint>(0);
   const calculatePercentFee = () => {
-    const currentFeeSumm = nftPrice
-      ? (Number(nftPrice) * percentTax).toFixed(0)
-      : 0;
+    const currentFeeSumm = bid ? (Number(bid) * percentTax).toFixed(0) : 0;
     return BigInt(currentFeeSumm);
   };
-  const [bid, setBid] = useState<number>(0);
 
-  const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBid(parseFloat(e.target.value));
+  const handleBidChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBid(BigInt(e.target.value));
   };
 
   const calculateSummPay = () => {
-    const summPay = nftPrice ? calculatePercentFee() + nftPrice : 0;
+    const summPay = bid ? calculatePercentFee() + bid : 0;
     return BigInt(summPay);
   };
 
@@ -54,7 +49,7 @@ const PlaceBidModal = ({
       nftId: {
         contentHash: nftId,
       },
-      price: nftPrice,
+      price: bid,
       newPrice: undefined,
     };
 
@@ -79,7 +74,7 @@ const PlaceBidModal = ({
             placeholder="Enter bid"
             textClass={styles.input}
             type="number"
-            onChange={handleOnChangeInput}
+            onChange={handleBidChange}
           />
           <Dropdown options={['ADA']} dropdownClass={styles.dropdown} />
         </div>
@@ -89,21 +84,17 @@ const PlaceBidModal = ({
             <span className={styles['item-value']}>{balance} ADA</span>
           </div>
           <div className={styles['table-row']}>
-            <span className={styles['item-name']}>Balance</span>
-            <span className={styles['item-value']}>{balance} ADA</span>
-          </div>
-          <div className={styles['table-row']}>
             <span className={styles['item-name']}>
               Service fee {percentTax}%
             </span>
             <span className={styles['item-value']}>
-              {priceToADA(calculatePercentFee()) || '0 ADA'}
+              {priceToLovelace(calculatePercentFee()) || '0 Lovelace'}
             </span>
           </div>
           <div className={styles['table-row']}>
             <span className={styles['item-name']}>You will pay</span>
             <span className={styles['item-value']}>
-              {priceToADA(calculateSummPay()) || '0 ADA'}
+              {priceToLovelace(calculateSummPay()) || '0 Lovelace'}
             </span>
           </div>
         </div>

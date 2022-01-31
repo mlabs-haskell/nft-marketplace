@@ -164,7 +164,6 @@ const ItemPage = ({ type }: Props) => {
         from={artist?.name || ''}
         balance={0}
         percentTax={0.0}
-        nftPrice={nft?.price || BigInt(0)}
         nftId={nftId}
       />
     </>
