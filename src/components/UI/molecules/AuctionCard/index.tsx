@@ -3,6 +3,7 @@ import { ImageType } from 'types/image';
 import { priceToADA } from 'utils/priceToADA';
 import dots from 'assets/svg/dots.svg';
 import { useEffect, useState } from 'react';
+import { useNftContext } from 'context/NftContext';
 import { InformationNft } from 'seabug-sdk/src/common';
 import { formatTimeLiveAuction } from 'components/Util/formatTime';
 import Box from '../../atoms/Box';
@@ -14,7 +15,8 @@ interface Props {
 }
 
 const AuctionCard = ({ nft, image }: Props) => {
-  // const [liked, setLiked] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const { common } = useNftContext();
 
   const calcRemainingTime = (): number | undefined => {
     if (!nft?.auctionState?.deadline) return undefined;
@@ -47,6 +49,10 @@ const AuctionCard = ({ nft, image }: Props) => {
     }
   }
 
+  const handleRefresh = () => {
+    common.fetchAll();
+  };
+
   return (
     <Box boxClass={styles.container}>
       <div className={styles.header}>
@@ -56,8 +62,21 @@ const AuctionCard = ({ nft, image }: Props) => {
             {/* <span className={styles.span}>
               <img src="https://picsum.photos/id/33/32/32" alt="avatar" className={styles.avatar} />
             </span> */}
-            <span className={styles.span}>
+            <span
+              className={styles.span}
+              role="presentation"
+              onClick={() => setRefresh(true)}
+            >
               <img src={dots} className={styles.dots} alt="more" />
+              {refresh ? (
+                <Box boxClass={styles.option}>
+                  <ul onClick={() => handleRefresh()} role="presentation">
+                    <li>Refresh</li>
+                  </ul>
+                </Box>
+              ) : (
+                ''
+              )}
             </span>
           </div>
         </div>
@@ -77,7 +96,6 @@ const AuctionCard = ({ nft, image }: Props) => {
       <div className={styles.footer}>
         <div className={styles.amount}>
           <h3>{price}</h3>
-          {/* {quantity && <p>{quantity}</p>} */}
         </div>
         <div className={styles.bid}>
           <p>{bid}</p>
