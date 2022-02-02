@@ -3,8 +3,9 @@ import toast from 'react-hot-toast';
 import Input from 'components/UI/atoms/Input';
 import Dropdown from 'components/UI/molecules/Dropdown';
 import { useContext, useState } from 'react';
-import { BuyParams } from 'seabug-sdk/src/buy';
-import { priceToLovelace } from 'utils/priceToLovelace';
+import { AuctionBidParams } from 'seabug-sdk/src/auction';
+import ToLovelace from 'components/Util/ToLovelace';
+import { priceToADA } from 'utils/priceToADA';
 import Button from '../../../atoms/Button';
 import Modal from '../../../molecules/Modal';
 import styles from './index.module.scss';
@@ -32,7 +33,7 @@ const PlaceBidModal = ({
   const [bid, setBid] = useState<number>(0);
   const calculatePercentFee = () => {
     const currentFeeSumm = bid ? (bid * percentTax).toFixed(0) : 0;
-    return Number(currentFeeSumm);
+    return currentFeeSumm;
   };
 
   const handleBidChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,22 +41,19 @@ const PlaceBidModal = ({
   };
 
   const calculateSummPay = () => {
-    const summPay = bid ? calculatePercentFee() + bid : 0;
-    return Number(summPay);
+    const summPay = bid ? Number(calculatePercentFee()) + bid : 0;
+    return summPay;
   };
 
   const onPlaceBid = async () => {
-    const data: BuyParams = {
+    const data: AuctionBidParams = {
       nftId: {
         contentHash: nftId,
       },
-      price: BigInt(bid),
-      newPrice: undefined,
+      bidAmount: ToLovelace(Math.ceil(bid)),
     };
 
-    // TODO: Leave modal open and show transaction status once wallet
-    // integration is ready.
-    nfts.buy(data);
+    nfts.bid(data);
     toast.success('Transaction Complete');
     closeModal();
   };
@@ -88,13 +86,13 @@ const PlaceBidModal = ({
               Service fee {percentTax}%
             </span>
             <span className={styles['item-value']}>
-              {priceToLovelace(calculatePercentFee()) || '0 Lovelace'}
+              {calculatePercentFee() || '0 ADA'}
             </span>
           </div>
           <div className={styles['table-row']}>
             <span className={styles['item-name']}>You will pay</span>
             <span className={styles['item-value']}>
-              {priceToLovelace(calculateSummPay()) || '0 Lovelace'}
+              {`${calculateSummPay()} ADA` || '0 ADA'}
             </span>
           </div>
         </div>
