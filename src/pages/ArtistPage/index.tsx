@@ -35,7 +35,7 @@ const ArtistPage = () => {
   useEffect(() => {
     getArtist();
     getArtistNfts();
-  }, [artistId]);
+  }, [artistId, artist]);
 
   return (
     <div>

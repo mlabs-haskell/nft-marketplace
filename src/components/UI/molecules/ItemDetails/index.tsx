@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import girl from 'assets/svg/girl.svg';
+import person from 'assets/svg/navIcons/person-icon.svg';
 import { formtTimeItemDetail } from 'components/Util/formatTime';
 import UserPhoto from '../UserPhoto';
 import styles from './index.module.scss';
@@ -89,14 +89,22 @@ const ItemDetails = ({
             Creator: <span>{creatorValue}</span>
           </p>
           <div className={styles['user-photo-container']}>
-            <UserPhoto imgUrl={creatorImagePath} />
+            {creatorImagePath ? (
+              <UserPhoto imgUrl={creatorImagePath} />
+            ) : (
+              <img src={person} alt="person" />
+            )}
             <p>{creatorName}</p>
           </div>
         </div>
         <div className={styles['user-details']}>
           <p className={styles['user-details-text']}>Owner</p>
           <div className={styles['user-photo-container']}>
-            <UserPhoto imgUrl={ownerImagePath} />
+            {ownerImagePath ? (
+              <UserPhoto imgUrl={ownerImagePath} />
+            ) : (
+              <img src={person} alt="person" />
+            )}
             <p>{truncatePubKeyHash(ownerPKH)}</p>
           </div>
         </div>
