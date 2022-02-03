@@ -5,7 +5,7 @@ import Dropdown from 'components/UI/molecules/Dropdown';
 import { useContext, useState } from 'react';
 import { AuctionBidParams } from 'seabug-sdk/src/auction';
 import ToLovelace from 'components/Util/ToLovelace';
-import { priceToADA } from 'utils/priceToADA';
+import { adaToLovelace } from 'utils/adaToLovelace';
 import Button from '../../../atoms/Button';
 import Modal from '../../../molecules/Modal';
 import styles from './index.module.scss';
@@ -50,7 +50,7 @@ const PlaceBidModal = ({
       nftId: {
         contentHash: nftId,
       },
-      bidAmount: ToLovelace(Math.ceil(bid)),
+      bidAmount: adaToLovelace(bid),
     };
 
     nfts.bid(data);
