@@ -78,7 +78,7 @@ const PlaceBidModal = ({
         </div>
         <div className={styles['table-wrapper']}>
           <div className={styles['table-row']}>
-            <span className={styles['item-name']}>Your bidding balnce</span>
+            <span className={styles['item-name']}>Your bidding balance</span>
             <span className={styles['item-value']}>{balance} ADA</span>
           </div>
           <div className={styles['table-row']}>
