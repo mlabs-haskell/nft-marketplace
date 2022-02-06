@@ -32,6 +32,7 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
 
   const handleMySalesClick = () => setFilterState('SALES');
   const handleMyCollectionClick = () => setFilterState('COLLECTION');
+  const handleAllClick = () => setFilterState('ALL');
 
   const [scrollPosition, setScrollPosition] = useState(0);
   const handleScroll = () => {
@@ -59,7 +60,9 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
       : nfts;
 
   const nftsAfterSaleFilter =
-    filterState === 'SALES' ? filterByOnSale(nftsAfterOwnerFilter) : nfts;
+    filterState === 'SALES'
+      ? filterByOnSale(nftsAfterOwnerFilter)
+      : nftsAfterOwnerFilter;
 
   const limitedNfts = nftsAfterSaleFilter.slice(0, currentPage * cardsPerPage);
 
@@ -95,6 +98,7 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
       <ExploreHeader
         collections={handleMyCollectionClick}
         sales={handleMySalesClick}
+        all={handleAllClick}
       />
       <div className={styles.contatiner}>
         <InfiniteScroll
