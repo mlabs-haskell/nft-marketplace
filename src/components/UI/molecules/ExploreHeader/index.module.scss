@@ -19,7 +19,7 @@
 .button {
   display: flex;
 
-  button:nth-child(1) {
+  button {
     margin-right: 20px;
   }
   @media screen and (max-width: $breakpointPhone) {
