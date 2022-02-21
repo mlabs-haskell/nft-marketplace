@@ -1,17 +1,25 @@
-import { createContext, useState, FC, useContext } from 'react';
+import {
+  createContext,
+  useState,
+  FC,
+  useContext,
+  SetStateAction,
+  Dispatch,
+} from 'react';
 import { InformationNft } from 'seabug-sdk/src/common';
 
 export type UIContextType = {
-  scrollPosition: number;
-  handleScroll: () => void;
-  currentPage: number;
-  handelPageChange: (value: number) => void;
-  filterByOwner: (value: InformationNft[], key: string[]) => InformationNft[];
-  filterByOnSale: (value: InformationNft[]) => InformationNft[];
-  filterState: FilterState;
-  handleMySalesClick: () => void;
-  handleMyCollectionClick: () => void;
-  handleAllClick: () => void;
+  home: {
+    scrollPosition: number;
+    handleScroll: () => void;
+    currentPage: number;
+    setCurrentPage: Dispatch<SetStateAction<number>>;
+    incrementCurrentPage: () => void;
+    filterByOwner: (value: InformationNft[], key: string[]) => InformationNft[];
+    filterByOnSale: (value: InformationNft[]) => InformationNft[];
+    filterState: FilterState;
+    setFilterState: Dispatch<SetStateAction<FilterState>>;
+  };
 };
 type FilterState = 'ALL' | 'SALES' | 'COLLECTION';
 
@@ -20,17 +28,14 @@ export const UIContext = createContext<UIContextType>({} as UIContextType);
 export const UIContextProvider: FC = ({ children }) => {
   const [filterState, setFilterState] = useState<FilterState>('ALL');
 
-  const handleMySalesClick = () => setFilterState('SALES');
-  const handleMyCollectionClick = () => setFilterState('COLLECTION');
-  const handleAllClick = () => setFilterState('ALL');
   const [scrollPosition, setScrollPosition] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
   };
-  const handelPageChange = (value: number) => {
-    setCurrentPage(value + 1);
+  const incrementCurrentPage = () => {
+    setCurrentPage(currentPage + 1);
   };
 
   const filterByOwner = (ownerNfts: InformationNft[], key: string[]) =>
@@ -46,16 +51,17 @@ export const UIContextProvider: FC = ({ children }) => {
   return (
     <UIContext.Provider
       value={{
-        scrollPosition,
-        handleScroll,
-        currentPage,
-        handelPageChange,
-        filterByOwner,
-        filterByOnSale,
-        filterState,
-        handleMySalesClick,
-        handleMyCollectionClick,
-        handleAllClick,
+        home: {
+          scrollPosition,
+          handleScroll,
+          currentPage,
+          setCurrentPage,
+          incrementCurrentPage,
+          filterByOwner,
+          filterByOnSale,
+          filterState,
+          setFilterState,
+        },
       }}
     >
       {children}

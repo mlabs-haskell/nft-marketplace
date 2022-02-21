@@ -15,34 +15,29 @@ interface Props {
 }
 
 const Explore = ({ images, getImageByNftId, nfts }: Props) => {
-  const {
-    handelPageChange,
-    currentPage,
-    filterByOwner,
-    filterByOnSale,
-    filterState,
-    handleAllClick,
-    handleMyCollectionClick,
-    handleMySalesClick,
-  } = useUIContext();
+  const { home } = useUIContext();
   const cardsPerPage = 25;
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
   const { getPubKeyHashes, connected } = useWalletContext();
 
+  const handleMySalesClick = () => home.setFilterState('SALES');
+  const handleMyCollectionClick = () => home.setFilterState('COLLECTION');
+  const handleAllClick = () => home.setFilterState('ALL');
   const nftsAfterOwnerFilter =
-    filterState === 'COLLECTION' || filterState === 'SALES'
-      ? filterByOwner(nfts, walletsPubKeyHashes)
+    home.filterState === 'COLLECTION' || home.filterState === 'SALES'
+      ? home.filterByOwner(nfts, walletsPubKeyHashes)
       : nfts;
 
   const nftsAfterSaleFilter =
-    filterState === 'SALES'
-      ? filterByOnSale(nftsAfterOwnerFilter)
+    home.filterState === 'SALES'
+      ? home.filterByOnSale(nftsAfterOwnerFilter)
       : nftsAfterOwnerFilter;
 
-  let limitedNfts = nftsAfterSaleFilter.slice(0, currentPage * cardsPerPage);
-  const setLimitedNfts = () => {
-    limitedNfts = nfts.slice(0, currentPage * cardsPerPage);
-  };
+  const limitedNfts = nftsAfterSaleFilter.slice(
+    0,
+    home.currentPage * cardsPerPage
+  );
+
   useEffect(() => {
     // TODO
     const refreshPubKey = async () => {
@@ -61,18 +56,14 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
       <div className={styles.contatiner}>
         <InfiniteScroll
           dataLength={limitedNfts.length}
-          next={setLimitedNfts}
+          next={() => {
+            if (home.currentPage !== 1)
+              home.setCurrentPage(home.currentPage + 1);
+          }}
           hasMore
-          loader={
-            <div className={styles.btn}>
-              <Button
-                label="Load More"
-                color="primary"
-                size="large"
-                onClick={() => handelPageChange(currentPage)}
-              />
-            </div>
-          }
+          loader={Array(25).map((value, i) => (
+            <AuctionCard key={i.toString()} />
+          ))}
           scrollableTarget={styles['card-container']}
           endMessage={
             <p style={{ textAlign: 'center' }}>
@@ -89,6 +80,14 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
                 <AuctionCard key={nft.id.contentHash} nft={nft} image={image} />
               );
             })}
+          </div>
+          <div className={styles.btn}>
+            <Button
+              label="Load More"
+              color="primary"
+              size="large"
+              onClick={() => home.incrementCurrentPage()}
+            />
           </div>
         </InfiniteScroll>
       </div>
