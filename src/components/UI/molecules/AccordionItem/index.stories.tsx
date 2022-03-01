@@ -7,7 +7,9 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof AccordionItem>;
 
-const Template: ComponentStory<typeof AccordionItem> = (args) => <AccordionItem {...args} />;
+const Template: ComponentStory<typeof AccordionItem> = (args) => (
+  <AccordionItem {...args} />
+);
 
 export const Default = Template.bind({});
 Default.args = {

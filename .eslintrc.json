@@ -11,12 +11,13 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/typescript"
   ],
   "plugins": ["@typescript-eslint", "import", "prettier"],
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
+      "@typescript-eslint/parser": [".ts", ".tsx", ".native.js"]
     },
     "import/resolver": {
       "typescript": {}
@@ -26,7 +27,12 @@
     }
   },
   "rules": {
-    "prettier/prettier": ["error"],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "no-unused-vars": "off",
     "quotes": [
       "warn",
@@ -37,6 +43,8 @@
     ],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
     "indent": "off",
+    "prefer-destructuring": "off",
+    "no-unused-expressions": "off",
     "semi": ["error", "always"],
     "no-shadow": "error",
     "no-trailing-spaces": "error",
@@ -50,23 +58,26 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-use-before-define": [
-      "error",
-      {
-        "functions": false,
-        "classes": true,
-        "variables": true,
-        "typedefs": true
-      }
-    ],
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/require-await": "off",
+    "@typescript-eslint/await-thenable": "off",
+    "array-callback-return": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    //report incorrect errors
+    "import/prefer-default-export": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "lines-between-class-members": "off",
     "no-lone-blocks": 0,
     "import/extensions": 0,
     "no-lonely-if": 0,
+    "no-param-reassign": "off",
     "no-useless-escape": 0,
     "react/jsx-fragments": 0,
     "import/no-extraneous-dependencies": "off",
@@ -94,7 +105,7 @@
       { "groups": [["builtin", "external", "internal"]] }
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-floating-promises": "off"
-   
+    "@typescript-eslint/no-floating-promises": "off",
+    "arrow-body-style": "off"
   }
 }

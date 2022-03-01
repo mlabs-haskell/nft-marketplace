@@ -1,4 +1,3 @@
-/* eslint-disable */
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import Box from '../../atoms/Box';
@@ -28,7 +27,6 @@ const Modal = ({ children, title, onClose, showModal, modalClass }: Props) => {
 
   return (
     <>
-      (
       {showModal && (
         <div
           className={classNames([styles.container, modalClass])}
@@ -46,7 +44,6 @@ const Modal = ({ children, title, onClose, showModal, modalClass }: Props) => {
           </Box>
         </div>
       )}
-      )
     </>
   );
 };

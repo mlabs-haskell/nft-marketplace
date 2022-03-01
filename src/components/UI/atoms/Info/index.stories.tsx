@@ -12,5 +12,5 @@ const Template: ComponentStory<typeof Info> = (args) => <Info {...args} />;
 
 export const Normal = Template.bind({});
 Normal.args = {
-    infoText: "This is an info"
+  infoText: 'This is an info',
 };

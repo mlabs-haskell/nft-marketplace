@@ -1,15 +1,17 @@
-/* eslint-disable */
 import { BrowserRouter as Router } from 'react-router-dom';
-import Footer from './components/Layout/Footer';
+import ScrollToTop from 'components/Util/ScrollToTop';
+import Footer from 'components/Layout/Footer';
 import NavBar from './components/Layout/Nav';
 import Routes from './routes/routes';
+import './assets/libs/swiper.css';
 
 function App() {
   return (
     <Router>
-      <NavBar/>
+      <ScrollToTop />
+      <NavBar />
       <Routes />
-      <Footer/>
+      <Footer />
     </Router>
   );
 }

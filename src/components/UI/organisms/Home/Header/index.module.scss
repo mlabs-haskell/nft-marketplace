@@ -4,40 +4,87 @@
 @import '../../../../../assets/scss/abstracts/functions';
 @import '../../../../../assets/scss/abstracts/variables';
 
-.contatiner{
-    padding-bottom: 54px;
+.contatiner {
+  padding-bottom: 54px;
 }
 
-.slide {
-    display: flex;
-    justify-content: space-between;
-    
-    .card {
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
+.card {
+  height: 205px;
+  margin-bottom: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.swiper-container-1 {
+  .swiper-slide:first-child {
+    @media only screen and (max-width: $breakpointPhone) {
+      width: 100%;
     }
+  }
+  .swiper-slide {
+    @media only screen and (max-width: $breakpointPhone) {
+      width: 100%;
+    }
+  }
 }
 
 .small-cards-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    width: 60%;
-
-    .card{
-        width: calc(33.33% - 52px);
-        height: 195px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
+  width: 100%;
+  height: 100%;
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
 }
 
 .big-card-wrapper {
-    width: calc(40% - 20px);
+  width: calc(100% - 50px);
+  height: 100%;
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
 
-    .card {
-        height: 440px;
-    }
+.card-big {
+  height: 480px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.left-arrow,
+.right-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: transparent;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.left-arrow {
+  left: -50px;
+
+  img {
+    transform: rotate(180deg);
+  }
+  @media only screen and (max-width: $breakpointPhone) {
+    left: -20px;
+  }
+}
+
+.right-arrow {
+  right: -50px;
+  @media only screen and (max-width: $breakpointPhone) {
+    right: 0px;
+  }
+}
+
+.arrow-buttons-wrapper {
+  position: relative;
+  bottom: 260px;
 }

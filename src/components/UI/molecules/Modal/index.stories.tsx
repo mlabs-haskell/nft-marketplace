@@ -13,7 +13,7 @@ const Template: ComponentStory<typeof Modal> = (args) => <Modal {...args} />;
 
 export const Normal = Template.bind({});
 Normal.args = {
-    children: <Button label='button'/>,
-    title: "hello",
-    showModal: true,
+  children: <Button label="button" />,
+  title: 'hello',
+  showModal: true,
 };

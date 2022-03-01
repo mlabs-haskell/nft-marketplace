@@ -2,53 +2,84 @@
 @import '../../../../assets/scss/abstracts/variables';
 
 .container {
-  max-width: 490px;
-  margin-left: 105px;
+  width: 100%;
 
-  @media only screen and (max-width: $breakpointPhone){
-    width: 100%;
-    margin: 0 auto;
-    margin-top: 30px;
-  };
-
-  h2{
+  h2 {
     margin-top: 0;
   }
-  h3, h4, p, span{
+  h3,
+  h4,
+  p,
+  span {
     font-size: pxToRem(14);
   }
-  h4{
-    span{
+  h4 {
+    span {
       margin-left: 10px;
       color: $lightText;
     }
   }
-
   .title {
     color: $primary;
     font-size: pxToRem(24);
   }
-  .top-text{
+  .info-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 8px;
+  }
+  .time-container{
+    width: 50%;
+    padding: 0px 15px;
+    z-index: 99;
+    border-left: 1px solid $light2;
+    margin-top: 8px;
+  }
+  .time-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  .time-div{
+    display: flex;
+    flex-direction: column;
+    margin-right: 12px;
+  }
+  .time {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    font-size: 20px;
+  }
+  .time-text{
+    font-family: inherit;
+    font-weight: 400;
+    color: $lightText;
+    font-size: 14px;
+  }
+  .top-text {
     display: flex;
     margin-top: 10px;
 
-    ul{
+    ul {
       list-style: none;
       margin: 0;
       padding: 0;
 
-      &:first-child{
+      &:first-child {
         margin-right: 30px;
       }
 
-      li{
+      li {
         font-size: pxToRem(14);
         font-style: normal;
-        color: $light4;
+        color: $light2;
         margin-right: 6px;
         margin-bottom: 20px;
 
-        span{
+        span {
           color: #000;
           font-weight: 400;
           margin-left: 10px;
@@ -65,6 +96,7 @@
     color: black;
     line-height: 26px;
     margin: 0;
+    white-space: pre-wrap;
     span {
       &.button {
         color: $primary;
@@ -76,7 +108,19 @@
       }
     }
   }
-  .creator {
+  .user-details-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 36px;
+    @media only screen and (max-width: $breakpointPhone) {
+      flex-direction: column;
+    }
+  }
+  .user-details {
+    width: calc(50% - 10px);
+  }
+  .user-details-text {
     margin-top: 30px;
     color: black;
     font-size: 14px;
@@ -93,11 +137,10 @@
     right: -2px;
     bottom: 5px;
   }
-  .creator_img {
+  .user-photo-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 36px;
     p {
       font-size: 14px;
       line-height: 21px;
@@ -110,13 +153,13 @@
       height: 47px;
     }
   }
-  .box-container{
+  .box-container {
     display: block;
     margin: 20px 0;
     padding: 0;
     box-shadow: 0px 4px 33px rgba(0, 0, 0, 0.06);
-  
-    .tab-container{
+
+    .tab-container {
       display: flex;
       list-style: none;
       justify-content: space-between;
@@ -125,11 +168,12 @@
       width: 85%;
       cursor: pointer;
     }
-    .content{
-        color: $lightText;
-        margin: 0 20px;
-        padding: 10px;
+    .content {
+      color: $lightText;
+      margin: 0 20px;
+      padding: 10px;
     }
+
     .block {
       padding: 18px 18px 28px;
       background-color: white;
@@ -156,15 +200,5 @@
         }
       }
     }
-  }
-  .buttons{
-    display: flex;
-    margin-top: 25px;
-    width: 100%;
-    justify-content: space-between;
-
-  .btn{
-    width: 47%;
-  }
   }
 }

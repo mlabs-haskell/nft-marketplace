@@ -1,11 +1,18 @@
-import axios from 'axios';
+import { ArtistsType } from 'types/artists';
 
-export const getArtist = async () => {
-    const response = await axios.get('artists');
-    return response;
-}
+const baseHash = 'ff00000000';
 
-export const getArtistbyId = async (id: string) => {
-    const response = await axios.get(`artists/${id}`);
-    return response;
-}
+const makeMockArtists = (count: number): ArtistsType.Artist[] =>
+  [...Array(count).keys()].map((idNum) => {
+    const id = idNum.toString();
+    return {
+      name: `Hennkok ${id}`,
+      createdAt: new Date(),
+      pubKeyHash: baseHash.substring(0, baseHash.length - id.length) + id,
+      id,
+      imagePath: `https://picsum.photos/id/${idNum * 11}/500/500`,
+    };
+  });
+
+export const getArtists = (): Promise<ArtistsType.Artist[]> =>
+  Promise.resolve(makeMockArtists(22));

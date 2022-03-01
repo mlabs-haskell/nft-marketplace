@@ -1,48 +1,67 @@
-/* eslint-disable */
-import ButtonInput from '../../UI/molecules/ButtonInput';
+import { HashLink as Link } from 'react-router-hash-link';
+import { faqContent } from 'context/FaqContext';
+import ButhrefnInput from '../../UI/molecules/ButtonInput';
 import styles from './index.module.scss';
 import instagram from '../../../assets/svg/instagram.svg';
 import twitter from '../../../assets/svg/twitter.svg';
-import messenger from '../../../assets/svg/messanger.svg';
-import meta from '../../../assets/svg/meta.svg';
+import medium from '../../../assets/svg/messanger.svg';
+import discord from '../../../assets/svg/meta.svg';
 import youtube from '../../../assets/svg/youtube.svg';
 import Dropdown from '../../UI/molecules/Dropdown';
 
 const Footer = () => {
   const option = ['English', 'Spanish'];
+
+  const capitalizeFistLetter = (word: string) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  };
   return (
     <div className={styles.container}>
       <div className={`${styles.footer} row`}>
         <div className="col-lg-6">
           <p>Get the latest Seabug updates</p>
-          <ButtonInput placeholder="Your Email.:" btnClass={styles.button} />
+          <ButhrefnInput
+            placeholder="Your Email.:"
+            btnClass={styles.buthrefn}
+          />
           <ul className={styles['social-links']}>
             <li>
-              <img src={instagram} alt="instagram" />
+              <a href="https://www.instagram.com/seabugnft">
+                <img src={instagram} alt="instagram" />
+              </a>
             </li>
             <li>
-              <img src={meta} alt="meta" />
+              <a href="https://discord.com/invite/984WhhxgFG">
+                <img src={discord} alt="discord" />
+              </a>
             </li>
             <li>
-              <img src={messenger} alt="messenger" />
+              <a href="https://seabug.medium.com">
+                <img src={medium} alt="medium" />
+              </a>
             </li>
             <li>
-              <img src={twitter} alt="twitter" />
+              <a href="https://twitter.com/seabugnft">
+                <img src={twitter} alt="twitter" />
+              </a>
             </li>
             <li>
-              <img src={youtube} alt="youtube" />
+              <a href="https://www.youtube.com/channel/UC4u_QtUHAv2QpOitcnpt7ZA">
+                <img src={youtube} alt="youtube" />
+              </a>
             </li>
           </ul>
         </div>
         <div className="col-lg-3">
           <p>Seabug</p>
           <ul>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
-            <li>FAQ - 1</li>
+            {faqContent.map((faq) => (
+              <li key={faq.id}>
+                <Link to={`help#${faq.section}`}>
+                  FAQ - <span>{capitalizeFistLetter(faq.section)}</span>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="col-lg-3">
@@ -56,8 +75,8 @@ const Footer = () => {
         </div>
         <div className={`${styles['footer-text']} col-lg-3`}>
           <p>
-            Terms
-            <span>Privacy policy</span>
+            <a href="/terms">Terms</a>
+            <a href="/policy">Privacy policy</a>
           </p>
           <p>© Seabug, Inc. All rights reserved.</p>
         </div>

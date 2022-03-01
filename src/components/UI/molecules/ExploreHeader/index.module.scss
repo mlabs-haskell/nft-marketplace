@@ -1,0 +1,27 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins/breakpoints';
+@import 'assets/scss/abstracts/functions';
+@import 'assets/scss/abstracts/variables';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px 0;
+
+  h2 {
+    font-size: pxToRem(30);
+    font-weight: 700;
+    margin: 0;
+  }
+}
+.button {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  @media screen and (max-width: $breakpointPhone) {
+    display: none;
+  }
+}

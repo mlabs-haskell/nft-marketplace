@@ -1,8 +1,24 @@
 @import '../../../../../assets/scss/abstracts/functions';
 @import '../../../../../assets/scss/abstracts/variables';
 
-.header{
-    font-size: pxToRem(30);
-    font-weight: 700;
-    margin: 0 0 54px;
+.header {
+  font-size: pxToRem(30);
+  font-weight: 700;
+  margin: 0 0 54px;
+}
+
+.card-wrapper {
+  max-width: calc(12.5% - 20px);
+
+  @media screen and (max-width: 2500px) {
+    max-width: calc(20% - 20px);
+  }
+
+  @media screen and (max-width: 1024px) {
+    max-width: calc(33.3% - 20px);
+  }
+
+  @media screen and (max-width: $breakpointPhone) {
+    max-width: calc(100% - 20px);
+  }
 }

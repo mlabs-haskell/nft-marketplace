@@ -1,12 +1,25 @@
 # NFT-Marketplace
 
+## Getting Started
+
+After cloning the repo, run the following commands to install dependencies:
+
+```
+git submodule init
+git submodule update
+npm install
+```
+
+When a submodule has been bumped to a new version, run `git submodule update` again to pull the
+latest submodule changes.
+
 ## Development Policy
 
 If you are working a full day the expectation is:
 
-* a minimum of 2 mergable PRs per day
-* avoid using rebase, only use PR merges or 'git merge'
-* avoid squashing commits and force-pushing (unless security credentials were accidentally committed)
+- a minimum of 2 mergable PRs per day
+- avoid using rebase, only use PR merges or 'git merge'
+- avoid squashing commits and force-pushing (unless security credentials were accidentally committed)
 
 PRs will be reviewed and merged on a daily basis.
 

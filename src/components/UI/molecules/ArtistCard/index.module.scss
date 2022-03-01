@@ -1,0 +1,35 @@
+@import '../../../../assets/scss/abstracts/functions';
+@import '../../../../assets/scss/abstracts/variables';
+
+.container {
+  background-color: $light2;
+  color: #fff;
+  position: relative;
+  .title {
+    position: relative;
+    margin: 0;
+    font-size: pxToRem(18);
+    line-height: 1;
+    font-weight: 700;
+    z-index: 11;
+  }
+  p {
+    margin-top: 0px;
+    font-weight: 400;
+  }
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  inset: 0px;
+  transform: translate3d(0px, 0px, 0px);
+  border-radius: 30px;
+  background: linear-gradient(
+    142deg,
+    rgba(41, 41, 41, 0.7) 0%,
+    rgba(41, 41, 41, 0) 50%
+  );
+  z-index: 10;
+  color: white;
+}
