@@ -25,7 +25,6 @@ const ItemPage = ({ type }: Props) => {
   >('NONE');
 
   const nft = nfts.getById({ contentHash: nftId ?? '' });
-  console.log('nft ===> ', nft);
   const artist = nft
     ? artists.getByPubKeyHash(nft.author.pubKeyHash)
     : undefined;
