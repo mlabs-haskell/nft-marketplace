@@ -21,7 +21,7 @@ export type UIContextType = {
     setFilterState: Dispatch<SetStateAction<FilterState>>;
   };
 };
-type FilterState = 'ALL' | 'SALES' | 'COLLECTION';
+export type FilterState = 'ALL' | 'SALES' | 'COLLECTION';
 
 export const UIContext = createContext<UIContextType>({} as UIContextType);
 

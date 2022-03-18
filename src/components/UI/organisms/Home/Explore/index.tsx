@@ -52,6 +52,7 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
         collections={handleMyCollectionClick}
         sales={handleMySalesClick}
         all={handleAllClick}
+        filterState={home.filterState}
       />
       <div className={styles.contatiner}>
         <InfiniteScroll
