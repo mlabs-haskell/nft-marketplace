@@ -82,7 +82,7 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
               );
             })}
           </div>
-          {limitedNfts.length > 0 && (
+          {limitedNfts.length > 0 && connected ? (
             <div className={styles.btn}>
               <Button
                 label="Load More"
@@ -90,6 +90,10 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
                 size="large"
                 onClick={() => home.incrementCurrentPage()}
               />
+            </div>
+          ) : (
+            <div className="d-flex justify-content-center mt-4 mb-4">
+              <p>Nothing to see here!</p>
             </div>
           )}
         </InfiniteScroll>
