@@ -29,24 +29,28 @@ function ItemSell({ display, handleParentFunction }: Props) {
           <input className={styles.inputBox} placeholder="Enter Bid" />
           <div className={styles.inside}>
             <div className={styles.iconBox}>
-              <div className={styles.questionMark}></div>
+              <div className={styles.questionMark} />
               <span>ADA</span>
-              <div className={styles.arrowDown}></div>
+              <div className={styles.arrowDown} />
             </div>
           </div>
         </div>
         <div className={styles.box}>
           <p className={styles.title}>Expiration Date</p>
-          <input className={styles.inputBox} placeholder="Enter Bid"></input>
+          <input className={styles.inputBox} placeholder="Enter Bid" />
           <div className={styles.inside}>
             <div className={styles.iconBox}>
-              <div className={styles.questionMark}></div>
+              <div className={styles.questionMark} />
               <span>ADA</span>
-              <div className={styles.arrowDown}></div>
+              <div className={styles.arrowDown} />
             </div>
           </div>
         </div>
-        <div className={styles.button} onClick={(e) => handleParentFunction()}>
+        <div
+          role="presentation"
+          className={styles.button}
+          onClick={(e) => handleParentFunction()}
+        >
           <p>Post Listing</p>
         </div>
       </div>
