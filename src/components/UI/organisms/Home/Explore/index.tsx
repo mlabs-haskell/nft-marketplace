@@ -4,15 +4,13 @@ import { NftContextType } from '../../../../../context/NftContext';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
-import { priceToADA } from '../../../../../utils/priceToADA';
 
 interface Props {
-  images: NftContextType['images']['list'];
   getImageByNftId: NftContextType['images']['getByNftId'];
   nfts: NftContextType['nfts']['list'];
 }
 
-const Explore = ({ images, getImageByNftId, nfts }: Props) => {
+const Explore = ({ getImageByNftId, nfts }: Props) => {
   const watchTicker = () => {
     const ticker = localStorage.getItem('ticker');
     return ticker?.includes('LOAD')
