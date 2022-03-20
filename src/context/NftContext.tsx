@@ -8,6 +8,7 @@ import makeSdk from 'seabug-sdk/src';
 import { InformationNft, Maybe, NftId } from 'seabug-sdk/src/common';
 import { BuyParams } from 'seabug-sdk/src/buy';
 import { SetPriceParams } from 'seabug-sdk/src/setPrice';
+import { AuctionBidParams } from 'seabug-sdk/src/auction';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -33,6 +34,7 @@ export type NftContextType = {
     getLiveAuctionList: () => InformationNft[];
     fetch: () => void;
     buy: (buyParams: BuyParams) => void;
+    bid: (bidParams: AuctionBidParams) => void;
     setPrice: (setPriceParams: SetPriceParams) => void;
     getByPubKeyHash: (pkh: string) => Maybe<InformationNft[]>;
   };
@@ -65,6 +67,7 @@ export const NftContext = createContext<NftContextType>({
     getLiveAuctionList: () => [],
     fetch: () => {},
     buy: () => undefined,
+    bid: () => undefined,
     setPrice: () => {},
     getByPubKeyHash: () => [],
   },
@@ -236,6 +239,24 @@ export const NftContextProvider: FC = ({ children }) => {
       });
     }
   }
+  async function bidNft(bidParams: AuctionBidParams) {
+    try {
+      const url = '';
+      const walletId = '';
+
+      const sdk = await makeSdk(url, walletId);
+      const response = await sdk.makeTransaction.auction.bid(bidParams);
+
+      // TODO: Get transaction from response, sign and submit it
+      // (once wallet integration is ready)
+    } catch (err) {
+      addMessage({
+        type: 'Error',
+        userMsg: 'Unable to bid on NFT',
+        debugMsg: err,
+      });
+    }
+  }
 
   async function ChangePrice(setPriceParams: SetPriceParams) {
     try {
@@ -309,6 +330,7 @@ export const NftContextProvider: FC = ({ children }) => {
           getLiveAuctionList: getLiveAuctionNftsList,
           fetch: fetchNfts,
           buy: buyNft,
+          bid: bidNft,
           setPrice: ChangePrice,
           getByPubKeyHash: getNftsByPubKeyHash,
         },

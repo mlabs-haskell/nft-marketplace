@@ -1,6 +1,7 @@
 import Button from 'components/UI/atoms/Button';
 import ItemDetails from 'components/UI/molecules/ItemDetails';
 import ItemPhotoCard from 'components/UI/molecules/ItemPhotoCard';
+import PlaceBidModal from 'components/UI/organisms/ItemPage/PlaceBidModal';
 import { NftContext } from 'context/NftContext';
 import { WalletContext } from 'context/WalletContext';
 import { useContext, useEffect, useState } from 'react';
@@ -20,7 +21,7 @@ const ItemPage = ({ type }: Props) => {
   const { artists, images, nfts, common } = useContext(NftContext);
   const { connected, connect, getPubKeyHashes } = useContext(WalletContext);
   const [displayModal, setDisplayModal] = useState<
-    'NONE' | 'BUY' | 'SET_PRICE'
+    'NONE' | 'BUY' | 'SET_PRICE' | 'PLACE_BID'
   >('NONE');
 
   const nft = nfts.getById({ contentHash: nftId ?? '' });
@@ -71,7 +72,12 @@ const ItemPage = ({ type }: Props) => {
     return (
       <>
         <div className={styles.buttons}>
-          <Button label="Place a bid" color="secondary" btnClass={styles.btn} />
+          <Button
+            label="Place a bid"
+            color="secondary"
+            btnClass={styles.btn}
+            onClick={() => setDisplayModal('PLACE_BID')}
+          />
           <Button
             label={type}
             color="primary"
@@ -149,6 +155,15 @@ const ItemPage = ({ type }: Props) => {
         balance={0}
         percentTax={0.0}
         nftPrice={nft?.price || BigInt(0)}
+        nftId={nftId}
+      />
+      <PlaceBidModal
+        isOpen={displayModal === 'PLACE_BID'}
+        closeModal={closeModal}
+        title={image?.title || ''}
+        from={artist?.name || ''}
+        balance={0}
+        percentTax={0.0}
         nftId={nftId}
       />
     </>

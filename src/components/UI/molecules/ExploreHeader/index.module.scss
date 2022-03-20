@@ -18,10 +18,9 @@
 }
 .button {
   display: flex;
+  justify-content: space-between;
+  gap: 20px;
 
-  button:nth-child(1) {
-    margin-right: 20px;
-  }
   @media screen and (max-width: $breakpointPhone) {
     display: none;
   }
