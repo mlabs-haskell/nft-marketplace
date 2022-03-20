@@ -77,18 +77,20 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
           })}
         </div>
       </InfiniteScroll>
-      <div className={styles.btn}>
-        {currentPage === 1 ? (
-          <Button
-            label="Load More"
-            color="primary"
-            size="large"
-            onClick={() => setCurrentPage(currentPage + 1)}
-          />
-        ) : (
-          <></>
-        )}
-      </div>
+      {limitedNfts.length > 0 && (
+        <div className={styles.btn}>
+          {currentPage === 1 ? (
+            <Button
+              label="Load More"
+              color="primary"
+              size="large"
+              onClick={() => setCurrentPage(currentPage + 1)}
+            />
+          ) : (
+            <></>
+          )}
+        </div>
+      )}
     </div>
   );
 };
