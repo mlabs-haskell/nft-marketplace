@@ -37,7 +37,7 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
     0,
     home.currentPage * cardsPerPage
   );
-  
+
   useEffect(() => {
     // TODO
     const refreshPubKey = async () => {
