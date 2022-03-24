@@ -47,12 +47,10 @@ const SearchInput = ({ placeholder }: Props) => {
             value={value}
           />
         </div>
-        {value ? (
+        {value && (
           <span onClick={handleClose} role="presentation">
             x
           </span>
-        ) : (
-          <img src={arrow} alt="arrow-down" />
         )}
       </div>
       {display ? (
