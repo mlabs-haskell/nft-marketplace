@@ -32,7 +32,7 @@ const ExploreHeader = ({ collections, sales, all, filterState }: Props) => {
     },
     {
       id: 3,
-      label: 'My Collenction',
+      label: 'My Collection',
       filterItem: 'COLLECTION',
       handleClick: collections,
     },
