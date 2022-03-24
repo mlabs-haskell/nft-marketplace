@@ -9,12 +9,11 @@ import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
 interface Props {
-  images: NftContextType['images']['list'];
   getImageByNftId: NftContextType['images']['getByNftId'];
   nfts: NftContextType['nfts']['list'];
 }
 
-const Explore = ({ images, getImageByNftId, nfts }: Props) => {
+const Explore = ({ getImageByNftId, nfts }: Props) => {
   const { home } = useUIContext();
   const cardsPerPage = 25;
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);

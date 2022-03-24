@@ -15,11 +15,7 @@ const Home = () => {
     <div>
       <Header artists={artists.listRandomized} />
       {nfts.getLiveAuctionList().length > 0 && <Auction />}
-      <Explore
-        images={images.list}
-        getImageByNftId={images.getByNftId}
-        nfts={nfts.list}
-      />
+      <Explore getImageByNftId={images.getByNftId} nfts={nfts.list} />
     </div>
   );
 };
