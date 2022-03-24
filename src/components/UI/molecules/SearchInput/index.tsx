@@ -65,7 +65,7 @@ const SearchInput = ({ placeholder }: Props) => {
               <li>No matches</li>
             ) : (
               matchingArtists?.map((item) => (
-                <div key={item.id} className="d-flex align-items-center mb-2">
+                <div key={item.id} className="d-flex align-items-center">
                   <div className={styles['artist-image']}>
                     <img src={item.imagePath} alt="artist" />
                   </div>
