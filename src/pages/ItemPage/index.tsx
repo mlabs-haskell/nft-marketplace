@@ -102,7 +102,7 @@ const ItemPage = ({ type }: Props) => {
         <Button
           label="Change Price"
           color="secondary"
-          btnClass={styles['full-btn']}
+          btnClass={styles.btn}
           onClick={() => setDisplayModal('SET_PRICE')}
         />
       </div>
