@@ -40,7 +40,11 @@ const ArtistPage = () => {
   return (
     <div>
       <h2>{artist?.name}</h2>
-      <Explore getImageByNftId={images.getByNftId} nfts={artistNfts} />
+      <Explore
+        showFilterButton={false}
+        getImageByNftId={images.getByNftId}
+        nfts={artistNfts}
+      />
     </div>
   );
 };

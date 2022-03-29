@@ -7,6 +7,7 @@ interface Props {
   sales?: () => void;
   all?: () => void;
   filterState?: FilterState;
+  showFilterButton: boolean;
 }
 
 interface FilterList {
@@ -16,7 +17,13 @@ interface FilterList {
   handleClick?: () => void;
 }
 
-const ExploreHeader = ({ collections, sales, all, filterState }: Props) => {
+const ExploreHeader = ({
+  collections,
+  sales,
+  all,
+  filterState,
+  showFilterButton,
+}: Props) => {
   const filterList: FilterList[] = [
     {
       id: 1,
@@ -41,16 +48,20 @@ const ExploreHeader = ({ collections, sales, all, filterState }: Props) => {
   return (
     <div className={styles.header}>
       <h2>Explore</h2>
-      <div className={styles.button}>
-        {filterList.map((filter) => (
-          <Button
-            key={filter.id}
-            label={filter.label}
-            color={filterState === filter.filterItem ? 'primary' : 'secondary'}
-            onClick={filter.handleClick}
-          />
-        ))}
-      </div>
+      {showFilterButton && (
+        <div className={styles.button}>
+          {filterList.map((filter) => (
+            <Button
+              key={filter.id}
+              label={filter.label}
+              color={
+                filterState === filter.filterItem ? 'primary' : 'secondary'
+              }
+              onClick={filter.handleClick}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
