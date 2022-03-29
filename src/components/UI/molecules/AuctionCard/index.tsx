@@ -4,6 +4,7 @@ import { priceToADA } from 'utils/priceToADA';
 import dots from 'assets/svg/dots.svg';
 import { useEffect, useState } from 'react';
 import { useNftContext } from 'context/NftContext';
+import { ImagesType } from 'types/images';
 import { InformationNft } from 'seabug-sdk/src/common';
 import { formatTimeLiveAuction } from 'components/Util/formatTime';
 import Box from '../../atoms/Box';
@@ -11,12 +12,13 @@ import styles from './index.module.scss';
 
 interface Props {
   nft?: InformationNft;
-  image?: ImageType.NftImage;
+  image?: ImagesType.Image;
 }
 
 const AuctionCard = ({ nft, image }: Props) => {
   const [refresh, setRefresh] = useState(false);
   const { common } = useNftContext();
+  const ImagePath = process.env.IMAGE_URL;
 
   const calcRemainingTime = (): number | undefined => {
     if (!nft?.auctionState?.deadline) return undefined;
@@ -83,7 +85,7 @@ const AuctionCard = ({ nft, image }: Props) => {
       </div>
       <Link to={`/itempage/${nft?.id.contentHash ?? ''}`}>
         <div className={styles.image}>
-          <img src={image?.path} alt="nft-item" />
+          <img src={`${ImagePath}/${image?.ipfsHash}`} alt="nft-item" />
           {timeRemaining && (
             <div className={styles['time-wrapper']}>
               <span className={styles.time}>

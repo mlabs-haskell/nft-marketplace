@@ -1,3 +1,4 @@
+/* eslint-disable */
 export namespace ImagesType {
   export interface Image {
     path: string;
@@ -5,6 +6,8 @@ export namespace ImagesType {
     title: string;
     sha256hash: string;
     id: number;
+    description: string;
+    ipfsHash: string;
   }
 
   export interface AddImageResponse {

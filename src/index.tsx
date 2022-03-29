@@ -11,10 +11,6 @@ import './assets/scss/app.scss';
 import './index.scss';
 
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
-  const token = localStorage.getItem('token');
-  if (token != null) {
-    config.headers.common.Authorization = `${token}`;
-  }
   config.baseURL = process.env.REACT_APP_BASE_URL;
 
   config.headers.common['Content-Type'] = 'application/json';

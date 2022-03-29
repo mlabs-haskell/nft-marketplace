@@ -1,3 +1,4 @@
+/* eslint-disable */
 export namespace ArtistsType {
   export interface Artist {
     name: string;

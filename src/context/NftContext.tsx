@@ -1,14 +1,21 @@
-import { createContext, useState, FC, useMemo, useContext } from 'react';
+import {
+  createContext,
+  useState,
+  FC,
+  useMemo,
+  useContext,
+  useEffect,
+} from 'react';
 import toast from 'react-hot-toast';
 import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
 import { ArtistsType } from 'types/artists';
-import { ImageType } from 'types/image';
 import makeSdk from 'seabug-sdk/src';
 import { InformationNft, Maybe, NftId } from 'seabug-sdk/src/common';
 import { BuyParams } from 'seabug-sdk/src/buy';
 import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 import { AuctionBidParams } from 'seabug-sdk/src/auction';
+import { ImagesType } from 'types/images';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -24,8 +31,8 @@ export type NftContextType = {
     fetch: () => void;
   };
   images: {
-    list: ImageType.NftImage[];
-    getByNftId: (nftId: NftId) => Maybe<ImageType.NftImage>;
+    list: ImagesType.Image[];
+    getByNftId: (nftId: NftId) => Maybe<ImagesType.Image>;
     fetch: () => void;
   };
   nfts: {
@@ -88,7 +95,7 @@ export const NftContextProvider: FC = ({ children }) => {
     Map<string, ArtistsType.Artist>
   >(new Map());
   const [imagesByNftId, setImagesByNftId] = useState<
-    Map<string, ImageType.NftImage>
+    Map<string, ImagesType.Image>
   >(new Map());
   const [nftsById, setNftsById] = useState<Map<string, InformationNft>>(
     new Map()
@@ -172,6 +179,19 @@ export const NftContextProvider: FC = ({ children }) => {
       });
     }
   }
+
+  // const fetchImage = async () => {
+  //   try {
+  //     const data = await getImage();
+  //     setImages(data);
+  //   } catch (err) {
+  //     addMessage({
+  //       type: 'Error',
+  //       userMsg: 'Unable to fetch images. Please try again.',
+  //       debugMsg: err,
+  //     });
+  //   }
+  // };
 
   // NFTs
 

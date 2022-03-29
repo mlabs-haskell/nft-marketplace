@@ -1,3 +1,4 @@
+/* eslint-disable */
 export namespace ImageType {
   export interface NftImage {
     path: string;
