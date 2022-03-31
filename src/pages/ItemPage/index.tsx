@@ -109,12 +109,6 @@ const ItemPage = ({ type }: Props) => {
           btnClass={styles.btn}
           onClick={() => setDisplayModal('SET_PRICE')}
         />
-        <Button
-          label="SELL"
-          color="primary"
-          btnClass={styles.btn}
-          onClick={() => {}}
-        />
       </div>
     );
   };
