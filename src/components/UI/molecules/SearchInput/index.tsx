@@ -1,7 +1,7 @@
+/* eslint-disable */
 import { useState } from 'react';
 import Box from 'components/UI/atoms/Box';
 import { useNftContext } from 'context/NftContext';
-import { ArtistsType } from 'types/artists';
 import { Link } from 'react-router-dom';
 import searchIcon from '../../../../assets/svg/search.svg';
 import arrow from '../../../../assets/svg/arrow-down.svg';
@@ -47,12 +47,10 @@ const SearchInput = ({ placeholder }: Props) => {
             value={value}
           />
         </div>
-        {value ? (
+        {value && (
           <span onClick={handleClose} role="presentation">
             x
           </span>
-        ) : (
-          <img src={arrow} alt="arrow-down" />
         )}
       </div>
       {display ? (
@@ -65,9 +63,14 @@ const SearchInput = ({ placeholder }: Props) => {
               <li>No matches</li>
             ) : (
               matchingArtists?.map((item) => (
-                <Link to={`/artist/${item.id}`} key={item.id}>
-                  <li>{item.name}</li>
-                </Link>
+                <div key={item.id} className="d-flex align-items-center">
+                  <div className={styles['artist-image']}>
+                    <img src={item.imagePath} alt="artist" />
+                  </div>
+                  <Link to={`/artist/${item.id}`}>
+                    <li>{item.name}</li>
+                  </Link>
+                </div>
               ))
             )}
           </ul>

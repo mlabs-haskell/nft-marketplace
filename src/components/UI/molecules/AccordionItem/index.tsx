@@ -7,7 +7,6 @@ interface Props {
   title: string;
   text: string;
   isActive: boolean;
-  id: string;
   section: string;
   onItemClick: (id: string) => void;
 }
@@ -16,7 +15,6 @@ const AccordionItem = ({
   title,
   text,
   isActive,
-  id,
   onItemClick,
   section,
 }: Props) => {
@@ -24,7 +22,7 @@ const AccordionItem = ({
     if (isActive) {
       onItemClick('');
     } else {
-      onItemClick(id);
+      onItemClick(section);
     }
   };
 

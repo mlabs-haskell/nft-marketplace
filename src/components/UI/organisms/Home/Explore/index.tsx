@@ -9,12 +9,11 @@ import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
 interface Props {
-  images: NftContextType['images']['list'];
   getImageByNftId: NftContextType['images']['getByNftId'];
   nfts: NftContextType['nfts']['list'];
 }
 
-const Explore = ({ images, getImageByNftId, nfts }: Props) => {
+const Explore = ({ getImageByNftId, nfts }: Props) => {
   const { home } = useUIContext();
   const cardsPerPage = 25;
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
@@ -52,6 +51,7 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
         collections={handleMyCollectionClick}
         sales={handleMySalesClick}
         all={handleAllClick}
+        filterState={home.filterState}
       />
       <div className={styles.contatiner}>
         <InfiniteScroll
@@ -74,21 +74,33 @@ const Explore = ({ images, getImageByNftId, nfts }: Props) => {
           // below props only if you need pull down functionality
         >
           <div className={styles['card-container']}>
-            {limitedNfts.map((nft) => {
-              const image = getImageByNftId(nft.id);
-              return (
-                <AuctionCard key={nft.id.contentHash} nft={nft} image={image} />
-              );
-            })}
+            {limitedNfts.length === 0 ? (
+              <div className="d-flex justify-content-center mt-4 mb-4">
+                <h2>No NFTs found</h2>
+              </div>
+            ) : (
+              limitedNfts.map((nft) => {
+                const image = getImageByNftId(nft.id);
+                return (
+                  <AuctionCard
+                    key={nft.id.contentHash}
+                    nft={nft}
+                    image={image}
+                  />
+                );
+              })
+            )}
           </div>
-          <div className={styles.btn}>
-            <Button
-              label="Load More"
-              color="primary"
-              size="large"
-              onClick={() => home.incrementCurrentPage()}
-            />
-          </div>
+          {home.currentPage === 1 && nftsAfterSaleFilter.length > cardsPerPage && (
+            <div className={styles.btn}>
+              <Button
+                label="Load More"
+                color="primary"
+                size="large"
+                onClick={() => home.incrementCurrentPage()}
+              />
+            </div>
+          )}
         </InfiniteScroll>
       </div>
     </>
