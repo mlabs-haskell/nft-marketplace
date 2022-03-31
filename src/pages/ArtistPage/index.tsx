@@ -41,7 +41,7 @@ const ArtistPage = () => {
     <div>
       <h2>{artist?.name}</h2>
       <Explore
-        showFilterButton={false}
+        showFilterButtons={false}
         getImageByNftId={images.getByNftId}
         nfts={artistNfts}
       />

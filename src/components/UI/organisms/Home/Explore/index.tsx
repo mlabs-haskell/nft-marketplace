@@ -11,10 +11,10 @@ import styles from './index.module.scss';
 interface Props {
   getImageByNftId: NftContextType['images']['getByNftId'];
   nfts: NftContextType['nfts']['list'];
-  showFilterButton: boolean;
+  showFilterButtons: boolean;
 }
 
-const Explore = ({ getImageByNftId, nfts, showFilterButton }: Props) => {
+const Explore = ({ getImageByNftId, nfts, showFilterButtons }: Props) => {
   const { home } = useUIContext();
   const cardsPerPage = 25;
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
@@ -53,7 +53,7 @@ const Explore = ({ getImageByNftId, nfts, showFilterButton }: Props) => {
         sales={handleMySalesClick}
         all={handleAllClick}
         filterState={home.filterState}
-        showFilterButton={showFilterButton}
+        showFilterButtons={showFilterButtons}
       />
       <div className={styles.contatiner}>
         <InfiniteScroll

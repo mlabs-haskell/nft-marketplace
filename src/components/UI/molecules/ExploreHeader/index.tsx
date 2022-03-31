@@ -7,7 +7,7 @@ interface Props {
   sales?: () => void;
   all?: () => void;
   filterState?: FilterState;
-  showFilterButton: boolean;
+  showFilterButtons: boolean;
 }
 
 interface FilterList {
@@ -22,7 +22,7 @@ const ExploreHeader = ({
   sales,
   all,
   filterState,
-  showFilterButton,
+  showFilterButtons,
 }: Props) => {
   const filterList: FilterList[] = [
     {
@@ -48,7 +48,7 @@ const ExploreHeader = ({
   return (
     <div className={styles.header}>
       <h2>Explore</h2>
-      {showFilterButton && (
+      {showFilterButtons && (
         <div className={styles.button}>
           {filterList.map((filter) => (
             <Button
