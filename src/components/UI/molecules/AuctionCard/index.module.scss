@@ -78,10 +78,10 @@
           margin: 0;
           padding: 0;
           cursor: pointer;
-  
+
           li {
             color: #000;
-  
+
             &:hover {
               color: $primary;
             }
@@ -89,7 +89,6 @@
         }
       }
     }
-
 
     .dots {
       width: 24px;

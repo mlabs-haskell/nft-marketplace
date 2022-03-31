@@ -72,12 +72,14 @@ const ItemPage = ({ type }: Props) => {
     return (
       <>
         <div className={styles.buttons}>
-          <Button
-            label="Place a bid"
-            color="secondary"
-            btnClass={styles.btn}
-            onClick={() => setDisplayModal('PLACE_BID')}
-          />
+          {nft?.auctionState && (
+            <Button
+              label="Place a bid"
+              color="secondary"
+              btnClass={styles.btn}
+              onClick={() => setDisplayModal('PLACE_BID')}
+            />
+          )}
           <Button
             label={type}
             color="primary"
@@ -85,9 +87,11 @@ const ItemPage = ({ type }: Props) => {
             onClick={() => setDisplayModal('BUY')}
           />
         </div>
-        <p style={{ fontSize: '12px', lineHeight: '18px' }}>
-          There&apos;s no bids yet. Be the first!
-        </p>
+        {nft?.auctionState && (
+          <p style={{ fontSize: '12px', lineHeight: '18px' }}>
+            There&apos;s no bids yet. Be the first!
+          </p>
+        )}
       </>
     );
   };
@@ -104,12 +108,6 @@ const ItemPage = ({ type }: Props) => {
           color="secondary"
           btnClass={styles.btn}
           onClick={() => setDisplayModal('SET_PRICE')}
-        />
-        <Button
-          label="SELL"
-          color="primary"
-          btnClass={styles.btn}
-          onClick={() => {}}
         />
       </div>
     );
