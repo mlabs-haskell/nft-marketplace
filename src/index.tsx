@@ -11,10 +11,10 @@ import './assets/scss/app.scss';
 import './index.scss';
 
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
-  config.baseURL = process.env.REACT_APP_BASE_URL;
+  config.baseURL = process.env.REACT_APP_API_BASE_URL;
 
   config.headers.common['Content-Type'] = 'application/json';
-  config.headers.common.Accept = 'application/json';
+  config.headers.Accept = 'application/json';
 
   return config;
 });

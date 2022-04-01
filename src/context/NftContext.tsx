@@ -9,13 +9,13 @@ import {
 import toast from 'react-hot-toast';
 import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
-import { ArtistsType } from 'types/artists';
+import { Artist } from 'types/artists';
 import makeSdk from 'seabug-sdk/src';
 import { InformationNft, Maybe, NftId } from 'seabug-sdk/src/common';
 import { BuyParams } from 'seabug-sdk/src/buy';
 import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 import { AuctionBidParams } from 'seabug-sdk/src/auction';
-import { ImagesType } from 'types/images';
+import { Image } from 'types/images';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -25,14 +25,14 @@ type AppMessage = {
 
 export type NftContextType = {
   artists: {
-    list: ArtistsType.Artist[];
-    listRandomized: ArtistsType.Artist[];
-    getByPubKeyHash: (pkh: string) => Maybe<ArtistsType.Artist>;
+    list: Artist[];
+    listRandomized: Artist[];
+    getByPubKeyHash: (pkh: string) => Maybe<Artist>;
     fetch: () => void;
   };
   images: {
-    list: ImagesType.Image[];
-    getByNftId: (nftId: NftId) => Maybe<ImagesType.Image>;
+    list: Image[];
+    getByNftId: (nftId: NftId) => Maybe<Image>;
     fetch: () => void;
   };
   nfts: {
@@ -48,7 +48,7 @@ export type NftContextType = {
   search: {
     text: string;
     setText: (searchText: string) => void;
-    getMatchingArtists: () => ArtistsType.Artist[];
+    getMatchingArtists: () => Artist[];
   };
   common: {
     messages: AppMessage[];
@@ -91,12 +91,12 @@ export const NftContext = createContext<NftContextType>({
 
 export const NftContextProvider: FC = ({ children }) => {
   // Internal state
-  const [artistsByPkh, setArtistsByPkh] = useState<
-    Map<string, ArtistsType.Artist>
-  >(new Map());
-  const [imagesByNftId, setImagesByNftId] = useState<
-    Map<string, ImagesType.Image>
-  >(new Map());
+  const [artistsByPkh, setArtistsByPkh] = useState<Map<string, Artist>>(
+    new Map()
+  );
+  const [imagesByNftId, setImagesByNftId] = useState<Map<string, Image>>(
+    new Map()
+  );
   const [nftsById, setNftsById] = useState<Map<string, InformationNft>>(
     new Map()
   );
@@ -140,9 +140,10 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const fetchArtists = async () => {
     try {
-      const newArtists = await getArtists();
+      const data = await getArtists();
+      console.log(data);
       const newArtistsByPkh = new Map(
-        newArtists.map((artist) => [artist.pubKeyHash, artist])
+        data?.map((artist) => [artist.pubKeyHash, artist])
       );
       setArtistsByPkh(newArtistsByPkh);
     } catch (err) {
@@ -166,9 +167,9 @@ export const NftContextProvider: FC = ({ children }) => {
 
   async function fetchImages() {
     try {
-      const newImages = await getImages();
+      const { data } = await getImages();
       const newImagesByNftId = new Map(
-        newImages.map((image) => [image.sha256hash, image])
+        data?.map((image) => [image.sha256hash, image])
       );
       setImagesByNftId(newImagesByNftId);
     } catch (err) {
@@ -179,19 +180,6 @@ export const NftContextProvider: FC = ({ children }) => {
       });
     }
   }
-
-  // const fetchImage = async () => {
-  //   try {
-  //     const data = await getImage();
-  //     setImages(data);
-  //   } catch (err) {
-  //     addMessage({
-  //       type: 'Error',
-  //       userMsg: 'Unable to fetch images. Please try again.',
-  //       debugMsg: err,
-  //     });
-  //   }
-  // };
 
   // NFTs
 

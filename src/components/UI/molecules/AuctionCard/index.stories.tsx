@@ -1,7 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { InformationNft } from 'seabug-sdk/src/common';
-import { ImageType } from 'types/image';
-import { ImagesType } from 'types/images';
+import { Image } from 'types/images';
 import AuctionCard from '.';
 
 export default {
@@ -27,7 +26,7 @@ const nft: InformationNft = {
   },
 };
 
-const image: ImagesType.Image = {
+const image: Image = {
   sha256hash: 'aa00000000',
   path: `https://picsum.photos/id/${50}/500/500}`,
   createdAt: new Date(),
