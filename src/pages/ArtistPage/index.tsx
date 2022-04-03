@@ -16,7 +16,7 @@ const ArtistPage = () => {
   // TODO: Move into NftContext
   const [artistNfts, setNfts] = useState<InformationNft[]>([]);
 
-  const { images, nfts, artists, search } = useNftContext();
+  const { images, nfts, artists } = useNftContext();
 
   const getArtist = () => {
     // TODO: get artist by pubKeyHash

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import classNames from 'classnames';
 import { useNftContext } from 'context/NftContext';
 import { InformationNft } from 'seabug-sdk/src/common';
 import { Link } from 'react-router-dom';
 import { ArtistsType } from 'types/artists';
-import { ImageType } from 'types/image';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 

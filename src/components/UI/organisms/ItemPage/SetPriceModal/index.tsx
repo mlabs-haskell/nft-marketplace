@@ -1,5 +1,4 @@
 import Input from 'components/UI/atoms/Input';
-import toast from 'react-hot-toast';
 import { NftContext } from 'context/NftContext';
 import { useContext, useState } from 'react';
 import { priceToADA } from 'utils/priceToADA';

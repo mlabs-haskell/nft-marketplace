@@ -100,7 +100,6 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const addMessage = (msg: AppMessage) => {
     if (!msg.userMsg && !msg.debugMsg) {
-      console.error('Attempted to add message with no content!');
       return;
     }
 
@@ -108,9 +107,9 @@ export const NftContextProvider: FC = ({ children }) => {
 
     if (msg.debugMsg) {
       if (msg.type === 'Error') {
-        console.error(msg.debugMsg);
+        // code for Debug Error cases
       } else {
-        console.log(msg.debugMsg);
+        // code for None Debug Error cases
       }
     }
     if (msg.userMsg) {
@@ -178,6 +177,7 @@ export const NftContextProvider: FC = ({ children }) => {
   const nftsList = useMemo(() => [...nftsById.values()], [nftsById]);
 
   const nftsOnAuctionList = useMemo(() => {
+    // eslint-disable-next-line no-console
     console.log(
       `listOnAuction() called. Length: ${
         nftsList.filter(
@@ -227,6 +227,7 @@ export const NftContextProvider: FC = ({ children }) => {
       const walletId = '';
 
       const sdk = await makeSdk(url, walletId);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await sdk.makeTransaction.buy(buyParams);
 
       // TODO: Get transaction from response, sign and submit it
@@ -245,6 +246,7 @@ export const NftContextProvider: FC = ({ children }) => {
       const walletId = '';
 
       const sdk = await makeSdk(url, walletId);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await sdk.makeTransaction.auction.bid(bidParams);
 
       // TODO: Get transaction from response, sign and submit it
@@ -265,8 +267,9 @@ export const NftContextProvider: FC = ({ children }) => {
 
       const sdk = await makeSdk(url, walletId);
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await sdk.makeTransaction.setPrice(setPriceParams);
-      console.log(response);
+
       // TODO: Get transaction from response, sign and submit it
       // (once wallet integration is ready)
     } catch (err) {

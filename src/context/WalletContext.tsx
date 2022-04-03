@@ -59,7 +59,9 @@ export const WalletContextProvider: FC = ({ children }) => {
   };
 
   const signAndSubmitTx = (tx: TransactionCborHex) =>
-    Promise.resolve('abcd1234');
+    Promise.resolve(`abcd1234${tx}`);
+  // Tx value will be used in the future.
+  // This lie is to fix the eslint warning.
 
   return (
     <WalletContext.Provider

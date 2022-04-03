@@ -4,7 +4,6 @@ import Input from 'components/UI/atoms/Input';
 import Dropdown from 'components/UI/molecules/Dropdown';
 import { useContext, useState } from 'react';
 import { AuctionBidParams } from 'seabug-sdk/src/auction';
-import ToLovelace from 'components/Util/ToLovelace';
 import { adaToLovelace } from 'utils/adaToLovelace';
 import Button from '../../../atoms/Button';
 import Modal from '../../../molecules/Modal';
