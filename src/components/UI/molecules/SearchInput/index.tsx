@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from 'components/UI/atoms/Box';
 import { useNftContext } from 'context/NftContext';
 import { Link } from 'react-router-dom';
@@ -12,15 +12,19 @@ interface Props {
 }
 
 const SearchInput = ({ placeholder }: Props) => {
-  const [value, setValue] = useState('');
-  const [display, setDisplay] = useState(false);
   const { search } = useNftContext();
+  const [value, setValue] = useState(search.text);
+  const [display, setDisplay] = useState(false);
 
   const handleClose = () => {
     setValue('');
     setDisplay(false);
     search.setText('');
   };
+
+  useEffect(() => {
+    setValue(search.text)
+  }, [search])
 
   const handleChange = (e: any) => {
     e.preventDefault();
