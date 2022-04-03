@@ -13,7 +13,7 @@ interface Props {
 
 const SearchInput = ({ placeholder }: Props) => {
   const { search } = useNftContext();
-  const [value, setValue] = useState(search.text);
+  const [value, setValue] = useState('');
   const [display, setDisplay] = useState(false);
 
   const handleClose = () => {
