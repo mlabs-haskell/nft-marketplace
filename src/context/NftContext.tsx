@@ -29,6 +29,7 @@ export type NftContextType = {
     fetch: () => void;
   };
   nfts: {
+    test: () => void;
     list: InformationNft[];
     getById: (nftId: NftId) => Maybe<InformationNft>;
     getLiveAuctionList: () => InformationNft[];
@@ -62,6 +63,7 @@ export const NftContext = createContext<NftContextType>({
     fetch: () => {},
   },
   nfts: {
+    test: () => undefined,
     list: [],
     getById: () => undefined,
     getLiveAuctionList: () => [],
@@ -174,6 +176,14 @@ export const NftContextProvider: FC = ({ children }) => {
   }
 
   // NFTs
+
+  const test = async () => {
+    const seabug = await import('cardano-transaction-lib-seabug');
+
+    const result = await seabug.callMarketPlaceBuyTest('hi from JS');
+
+    console.log({ result });
+  };
 
   const nftsList = useMemo(() => [...nftsById.values()], [nftsById]);
 
@@ -325,6 +335,7 @@ export const NftContextProvider: FC = ({ children }) => {
           fetch: fetchImages,
         },
         nfts: {
+          test,
           list: nftsList,
           getById: getNftById,
           getLiveAuctionList: getLiveAuctionNftsList,

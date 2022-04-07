@@ -8,6 +8,8 @@ const Home = () => {
   const { artists, images, nfts, common, search } = useContext(NftContext);
 
   useEffect(() => {
+    nfts.test();
+
     search.setText('');
     if (nfts.list.length === 0) common.fetchAll();
   }, []);
