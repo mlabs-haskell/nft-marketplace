@@ -116,7 +116,7 @@ const ItemPage = ({ type }: Props) => {
   return (
     <>
       <div className={styles.container}>
-        <ItemPhotoCard imageUrl={image?.path} likeCount="167" />
+        <ItemPhotoCard imageUrl={image?.path} />
         <div className={styles['item-details-container']}>
           <ItemDetails
             title={image?.title ?? ''}

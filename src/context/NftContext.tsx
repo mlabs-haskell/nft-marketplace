@@ -107,9 +107,11 @@ export const NftContextProvider: FC = ({ children }) => {
 
     if (msg.debugMsg) {
       if (msg.type === 'Error') {
-        // code for Debug Error cases
+        // eslint-disable-next-line no-console
+        console.error(msg.debugMsg);
       } else {
-        // code for None Debug Error cases
+        // eslint-disable-next-line no-console
+        console.log(msg.debugMsg);
       }
     }
     if (msg.userMsg) {
@@ -177,15 +179,6 @@ export const NftContextProvider: FC = ({ children }) => {
   const nftsList = useMemo(() => [...nftsById.values()], [nftsById]);
 
   const nftsOnAuctionList = useMemo(() => {
-    // eslint-disable-next-line no-console
-    console.log(
-      `listOnAuction() called. Length: ${
-        nftsList.filter(
-          (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
-        ).length
-      }`
-    );
-
     return nftsList.filter(
       (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
     );

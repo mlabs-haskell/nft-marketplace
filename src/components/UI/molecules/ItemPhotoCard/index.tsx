@@ -2,14 +2,12 @@ import styles from './index.module.scss';
 
 interface Props {
   imageUrl?: string;
-  likeCount: string;
 }
 
 // TODO: Uncomment heart code once feature is ready
 
 // This line is for eslit error unused likeCount
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function ItemPhotoCard({ imageUrl, likeCount }: Props) {
+function ItemPhotoCard({ imageUrl }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.photobox}>
