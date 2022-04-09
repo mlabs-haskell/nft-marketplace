@@ -1,3 +1,4 @@
+import { NftListing } from 'cardano-transaction-lib-seabug';
 import {
   createContext,
   useState,
@@ -6,7 +7,6 @@ import {
   SetStateAction,
   Dispatch,
 } from 'react';
-import { InformationNft } from 'seabug-sdk/src/common';
 
 export type UIContextType = {
   home: {
@@ -15,8 +15,8 @@ export type UIContextType = {
     currentPage: number;
     setCurrentPage: Dispatch<SetStateAction<number>>;
     incrementCurrentPage: () => void;
-    filterByOwner: (value: InformationNft[], key: string[]) => InformationNft[];
-    filterByOnSale: (value: InformationNft[]) => InformationNft[];
+    filterByOwner: (value: NftListing[], key: string[]) => NftListing[];
+    filterByOnSale: (value: NftListing[]) => NftListing[];
     filterState: FilterState;
     setFilterState: Dispatch<SetStateAction<FilterState>>;
   };
@@ -38,15 +38,13 @@ export const UIContextProvider: FC = ({ children }) => {
     setCurrentPage(currentPage + 1);
   };
 
-  const filterByOwner = (ownerNfts: InformationNft[], key: string[]) =>
-    ownerNfts.filter((nft) => key.includes(nft.owner.pubKeyHash));
-
-  const filterByOnSale = (ownerNfts: InformationNft[]) =>
-    ownerNfts.filter(
-      (nft) =>
-        nft.price ||
-        (nft?.auctionState?.deadline && nft.auctionState.deadline < new Date())
+  const filterByOwner = (ownerNfts: NftListing[], key: string[]) =>
+    ownerNfts.filter((nft) =>
+      key.includes(nft.metadata.seabugMetadata.ownerPkh)
     );
+
+  // TODO: Remove filter logic if no longer required
+  const filterByOnSale = (ownerNfts: NftListing[]) => ownerNfts;
 
   return (
     <UIContext.Provider

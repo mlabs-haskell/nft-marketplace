@@ -2,6 +2,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import AuctionCard from '.';
 import { InformationNft } from 'seabug-sdk/src/common';
 import { ImageType } from 'types/image';
+import { NftListing } from 'cardano-transaction-lib-seabug';
 
 export default {
   title: 'Atoms/AuctionCard',
@@ -13,18 +14,39 @@ const Template: ComponentStory<typeof AuctionCard> = (args) => (
   <AuctionCard {...args} />
 );
 
-const nft: InformationNft = {
-  id: { contentHash: 'aa00000000' },
-  share: [1, 10],
-  author: { pubKeyHash: 'ff00000000' },
-  owner: { pubKeyHash: 'ff00000000' },
-  price: 25000000n,
-  auctionState: {
-    highestBid: undefined,
-    deadline: new Date(Date.now() + 1000 * 60 * 10),
-    minBid: 10000000n,
+// TODO: Add sample data for NftListing
+const nft: NftListing = {
+  input: {
+    transaction_id: '',
+    input_index: 0
   },
-};
+  output: {
+    address: '',
+    value: {
+      currencySymbol: '',
+      tokenName: '',
+      amount: 0n
+    },
+    data_hash: '',
+  },
+  metadata: {
+    seabugMetadata: {
+      policyId: '',
+      mintPolicy: '',
+      collectionNftCS: '',
+      collectionNftTN: '',
+      lockingScript: '',
+      authorPkh: '',
+      authorShare: 0n,
+      marketplaceScript: '',
+      marketplaceShare: 0n,
+      ownerPkh: '',
+      ownerPrice: 0n
+    },
+    ipfsHash: 'abc123',
+  }
+
+}
 
 const image: ImageType.NftImage = {
   sha256hash: 'aa00000000',

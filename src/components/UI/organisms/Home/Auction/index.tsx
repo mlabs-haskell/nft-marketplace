@@ -44,20 +44,8 @@ function Auction() {
   const renderAuctionCards = () => {
     const now = new Date();
 
-    return nfts.list
-      .filter(
-        (nft) => nft.auctionState?.highestBid && nft.auctionState.deadline > now
-      )
-      .sort(
-        (a, b) =>
-          (a.auctionState?.deadline?.getTime() ?? Infinity) -
-          (b.auctionState?.deadline?.getTime() ?? Infinity)
-      )
-      .map((nft) => (
-        <div key={nft.id.contentHash} className={styles['card-wrapper']}>
-          <AuctionCard image={images.getByNftId(nft.id)} nft={nft} />
-        </div>
-      ));
+    // TODO: Implement or remove auction logic
+    return [];
   };
 
   return (

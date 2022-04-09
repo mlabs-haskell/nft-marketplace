@@ -4,13 +4,13 @@ import { priceToADA } from 'utils/priceToADA';
 import dots from 'assets/svg/dots.svg';
 import { useEffect, useState } from 'react';
 import { useNftContext } from 'context/NftContext';
-import { InformationNft } from 'seabug-sdk/src/common';
 import { formatTimeLiveAuction } from 'components/Util/formatTime';
+import { NftListing } from 'cardano-transaction-lib-seabug';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 
 interface Props {
-  nft?: InformationNft;
+  nft?: NftListing;
   image?: ImageType.NftImage;
 }
 
@@ -18,14 +18,9 @@ const AuctionCard = ({ nft, image }: Props) => {
   const [refresh, setRefresh] = useState(false);
   const { common } = useNftContext();
 
+  // TODO: Implement or remove
   const calcRemainingTime = (): number | undefined => {
-    if (!nft?.auctionState?.deadline) return undefined;
-
-    const endTime = nft.auctionState.deadline;
-    const nowDate = new Date();
-    const remaining = endTime.getTime() - nowDate.getTime();
-
-    return remaining > 0 ? remaining : undefined;
+    return undefined;
   };
 
   const [timeRemaining, setTimeRemaining] = useState(calcRemainingTime());
@@ -36,18 +31,7 @@ const AuctionCard = ({ nft, image }: Props) => {
     }, 1000);
   }, []);
 
-  const price = nft ? priceToADA(nft.price) : '';
-  let bid = '';
-
-  if (nft?.auctionState) {
-    if (nft.auctionState.highestBid) {
-      bid = `Top bid: ${priceToADA(nft.auctionState.highestBid.bid)}`;
-    } else if (nft.auctionState.minBid) {
-      bid = `Min bid: ${priceToADA(nft.auctionState.minBid)}`;
-    } else {
-      bid = 'Place bid';
-    }
-  }
+  const price = nft ? priceToADA(nft.metadata.seabugMetadata.ownerPrice) : '';
 
   const handleRefresh = () => {
     common.fetchAll();
@@ -81,7 +65,7 @@ const AuctionCard = ({ nft, image }: Props) => {
           </div>
         </div>
       </div>
-      <Link to={`/itempage/${nft?.id.contentHash ?? ''}`}>
+      <Link to={`/itempage/${nft?.metadata.ipfsHash ?? ''}`}>
         <div className={styles.image}>
           <img src={image?.path} alt="nft-item" />
           {timeRemaining && (
@@ -98,7 +82,7 @@ const AuctionCard = ({ nft, image }: Props) => {
           <h3>{price}</h3>
         </div>
         <div className={styles.bid}>
-          <p>{bid}</p>
+          <p />
           {/* <div className={styles['likes-wrapper']}>
             <p className={styles['bid-value']}>{likes}</p>
             <img src={liked ? filled : heart} alt="heart" onClick={() => setLiked(!liked)}></img>

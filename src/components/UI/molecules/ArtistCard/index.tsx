@@ -2,10 +2,10 @@
 import { useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import { useNftContext } from 'context/NftContext';
-import { InformationNft } from 'seabug-sdk/src/common';
 import { Link } from 'react-router-dom';
 import { ArtistsType } from 'types/artists';
 import { ImageType } from 'types/image';
+import { NftListing } from 'cardano-transaction-lib-seabug';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 
@@ -17,12 +17,12 @@ const ArtistCard = ({ name, className, id, pubKeyHash }: Props) => {
   const isLight = true;
   const { nfts, images } = useNftContext();
 
-  const getImages = (artistNfts: InformationNft[] | undefined) => {
+  const getImages = (artistNfts: NftListing[] | undefined) => {
     if (!artistNfts) return [];
 
     const random = Math.floor(Math.random() * artistNfts.length);
     return images.list.filter(
-      (items) => items.sha256hash === artistNfts[random]?.id?.contentHash
+      (items) => items.sha256hash === artistNfts[random]?.metadata.ipfsHash
     );
   };
   const artistNfts = nfts.getByPubKeyHash(pubKeyHash);

@@ -5,10 +5,12 @@ import { getArtists } from 'api/artist';
 import { ArtistsType } from 'types/artists';
 import { ImageType } from 'types/image';
 import makeSdk from 'seabug-sdk/src';
-import { InformationNft, Maybe, NftId } from 'seabug-sdk/src/common';
+import { Maybe, NftId } from 'seabug-sdk/src/common';
 import { BuyParams } from 'seabug-sdk/src/buy';
 import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 import { AuctionBidParams } from 'seabug-sdk/src/auction';
+import { getAppConfig } from 'utils/appConfig';
+import { NftListing } from 'cardano-transaction-lib-seabug';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -25,19 +27,18 @@ export type NftContextType = {
   };
   images: {
     list: ImageType.NftImage[];
-    getByNftId: (nftId: NftId) => Maybe<ImageType.NftImage>;
+    getByNftId: (ipfsHash: string) => Maybe<ImageType.NftImage>;
     fetch: () => void;
   };
   nfts: {
-    test: () => void;
-    list: InformationNft[];
-    getById: (nftId: NftId) => Maybe<InformationNft>;
-    getLiveAuctionList: () => InformationNft[];
+    list: NftListing[];
+    getById: (nftId: NftId) => Maybe<NftListing>;
+    getLiveAuctionList: () => NftListing[];
     fetch: () => void;
     buy: (buyParams: BuyParams) => void;
     bid: (bidParams: AuctionBidParams) => void;
     setPrice: (setPriceParams: SetPriceParams) => void;
-    getByPubKeyHash: (pkh: string) => Maybe<InformationNft[]>;
+    getByPubKeyHash: (pkh: string) => Maybe<NftListing[]>;
   };
   search: {
     text: string;
@@ -63,7 +64,6 @@ export const NftContext = createContext<NftContextType>({
     fetch: () => {},
   },
   nfts: {
-    test: () => undefined,
     list: [],
     getById: () => undefined,
     getLiveAuctionList: () => [],
@@ -92,9 +92,7 @@ export const NftContextProvider: FC = ({ children }) => {
   const [imagesByNftId, setImagesByNftId] = useState<
     Map<string, ImageType.NftImage>
   >(new Map());
-  const [nftsById, setNftsById] = useState<Map<string, InformationNft>>(
-    new Map()
-  );
+  const [nftsById, setNftsById] = useState<Map<string, NftListing>>(new Map());
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
 
@@ -156,8 +154,7 @@ export const NftContextProvider: FC = ({ children }) => {
     [imagesByNftId]
   );
 
-  const getImageByNftId = (nftId: NftId) =>
-    imagesByNftId.get(nftId.contentHash);
+  const getImageByNftId = (ipfsHash: string) => imagesByNftId.get(ipfsHash);
 
   async function fetchImages() {
     try {
@@ -177,48 +174,45 @@ export const NftContextProvider: FC = ({ children }) => {
 
   // NFTs
 
-  const test = async () => {
-    const seabug = await import('cardano-transaction-lib-seabug');
-
-    const result = await seabug.callMarketPlaceBuyTest('hi from JS');
-
-    console.log({ result });
-  };
-
   const nftsList = useMemo(() => [...nftsById.values()], [nftsById]);
 
+  // TODO: Implement or remove auction logic
   const nftsOnAuctionList = useMemo(() => {
-    console.log(
-      `listOnAuction() called. Length: ${
-        nftsList.filter(
-          (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
-        ).length
-      }`
-    );
-
-    return nftsList.filter(
-      (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
-    );
+    return [];
   }, [nftsList]);
 
   const getNftById = (nftId: NftId) => nftsById.get(nftId.contentHash);
 
-  const getLiveAuctionNftsList = () =>
-    nftsOnAuctionList.filter(
-      (nft) => (nft?.auctionState?.deadline ?? 0) > Date.now()
-    );
+  const getLiveAuctionNftsList = () => [];
 
   async function fetchNfts() {
     try {
-      // TODO: Replace with actual url and walletId once server and wallet integration ready
-      const url = '';
-      const walletId = '';
+      const ctl = await import('cardano-transaction-lib-seabug');
+      const appConfig = getAppConfig();
 
-      const sdk = await makeSdk(url, walletId);
-      const newNfts = await sdk.query.listNfts();
+      if (!appConfig) return;
+
+      const newNfts = await ctl.callMarketPlaceListNft({
+        serverHost: appConfig.ctl.server.host,
+        serverPort: appConfig.ctl.server.port,
+        serverSecureConn: appConfig.ctl.server.secureConn,
+        ogmiosHost: appConfig.ctl.ogmios.host,
+        ogmiosPort: appConfig.ctl.ogmios.port,
+        // If Ogmios uses SSL
+        ogmiosSecureConn: appConfig.ctl.ogmios.secureConn,
+        datumCacheHost: appConfig.ctl.datumCache.host,
+        datumCachePort: appConfig.ctl.datumCache.port,
+        // If ogmios-datum-cache uses SSL
+        datumCacheSecureConn: appConfig.ctl.datumCache.secureConn,
+        networkId: appConfig.ctl.networkId,
+        // blockfrost.io API key
+        projectId: appConfig.ctl.projectId,
+      });
+
+      console.log({ newNfts });
 
       const newNftsById = new Map(
-        newNfts.map((nft) => [nft.id.contentHash, nft])
+        newNfts.map((nft) => [nft.metadata.ipfsHash, nft])
       );
 
       setNftsById(newNftsById);
@@ -289,11 +283,11 @@ export const NftContextProvider: FC = ({ children }) => {
   }
 
   const nftsByArtistPkh = useMemo(() => {
-    const nftsMap = new Map<string, InformationNft[]>();
+    const nftsMap = new Map<string, NftListing[]>();
 
     nftsById.forEach((nft) => {
-      nftsMap.set(nft.author.pubKeyHash, [
-        ...(nftsMap.get(nft.author.pubKeyHash) ?? []),
+      nftsMap.set(nft.metadata.seabugMetadata.authorPkh, [
+        ...(nftsMap.get(nft.metadata.seabugMetadata.authorPkh) ?? []),
         nft,
       ]);
     });
@@ -335,7 +329,6 @@ export const NftContextProvider: FC = ({ children }) => {
           fetch: fetchImages,
         },
         nfts: {
-          test,
           list: nftsList,
           getById: getNftById,
           getLiveAuctionList: getLiveAuctionNftsList,

@@ -26,10 +26,12 @@ const ItemPage = ({ type }: Props) => {
 
   const nft = nfts.getById({ contentHash: nftId ?? '' });
   const artist = nft
-    ? artists.getByPubKeyHash(nft.author.pubKeyHash)
+    ? artists.getByPubKeyHash(nft.metadata.seabugMetadata.authorPkh)
     : undefined;
-  const owner = nft ? artists.getByPubKeyHash(nft.owner.pubKeyHash) : undefined;
-  const image = images.getByNftId({ contentHash: nftId ?? '' });
+  const owner = nft
+    ? artists.getByPubKeyHash(nft.metadata.seabugMetadata.ownerPkh)
+    : undefined;
+  const image = images.getByNftId(nftId ?? '');
 
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<Set<string>>(
     new Set()
@@ -53,8 +55,8 @@ const ItemPage = ({ type }: Props) => {
     refreshPubKey();
   }, [connected]);
 
-  const rationalToFloat = (share: Rational, decimals: number) => {
-    const sharePercent = (share[0] * 100) / share[1];
+  const shareToFloat = (share: bigint, decimals: number) => {
+    const sharePercent = Number(share) / 10000;
     const multiplier = 10 ** decimals;
 
     return Math.round(sharePercent * multiplier) / multiplier;
@@ -68,18 +70,11 @@ const ItemPage = ({ type }: Props) => {
   };
   HomeExploreLoading();
 
+  // TODO: Implement or remove auction logic
   const renderBuyButtons = () => {
     return (
       <>
         <div className={styles.buttons}>
-          {nft?.auctionState && (
-            <Button
-              label="Place a bid"
-              color="secondary"
-              btnClass={styles.btn}
-              onClick={() => setDisplayModal('PLACE_BID')}
-            />
-          )}
           <Button
             label={type}
             color="primary"
@@ -87,11 +82,6 @@ const ItemPage = ({ type }: Props) => {
             onClick={() => setDisplayModal('BUY')}
           />
         </div>
-        {nft?.auctionState && (
-          <p style={{ fontSize: '12px', lineHeight: '18px' }}>
-            There&apos;s no bids yet. Be the first!
-          </p>
-        )}
       </>
     );
   };
@@ -120,12 +110,13 @@ const ItemPage = ({ type }: Props) => {
         <div className={styles['item-details-container']}>
           <ItemDetails
             title={image?.title ?? ''}
-            deadline={nft?.auctionState?.deadline}
-            saleValue={priceToADA(nft?.price)}
-            topBidValue={priceToADA(nft?.auctionState?.highestBid?.bid)}
+            saleValue={priceToADA(nft?.metadata.seabugMetadata.ownerPrice)}
+            topBidValue=""
             description={image?.description ?? ''}
             creatorValue={`${
-              nft?.share ? rationalToFloat(nft?.share, 2) : 0
+              nft?.metadata.seabugMetadata.authorShare
+                ? shareToFloat(nft?.metadata.seabugMetadata.authorShare, 2)
+                : 0
             }% royalties`}
             creatorName={artist?.name ?? ''}
             creatorImagePath={artist?.imagePath}
@@ -142,7 +133,7 @@ const ItemPage = ({ type }: Props) => {
         closeModal={closeModal}
         title={image?.title || ''}
         from={artist?.name || ''}
-        nftPrice={nft?.price || BigInt(0)}
+        nftPrice={nft?.metadata.seabugMetadata.ownerPrice || BigInt(0)}
         nftId={nftId}
       />
       <BuyModal
@@ -152,7 +143,7 @@ const ItemPage = ({ type }: Props) => {
         from={artist?.name || ''}
         balance={0}
         percentTax={0.0}
-        nftPrice={nft?.price || BigInt(0)}
+        nftPrice={nft?.metadata.seabugMetadata.ownerPrice || BigInt(0)}
         nftId={nftId}
       />
       <PlaceBidModal

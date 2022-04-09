@@ -82,10 +82,10 @@ const Explore = ({ getImageByNftId, nfts, showFilterButtons }: Props) => {
               </div>
             ) : (
               limitedNfts.map((nft) => {
-                const image = getImageByNftId(nft.id);
+                const image = getImageByNftId(nft.metadata.ipfsHash);
                 return (
                   <AuctionCard
-                    key={nft.id.contentHash}
+                    key={nft.metadata.ipfsHash}
                     nft={nft}
                     image={image}
                   />
