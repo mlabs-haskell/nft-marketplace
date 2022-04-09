@@ -43,17 +43,15 @@ const BuyModal = ({
   };
 
   const onCheckout = async () => {
-    const data: BuyParams = {
-      nftId: {
-        contentHash: nftId,
-      },
-      price: nftPrice,
-      newPrice: undefined,
-    };
-
     // TODO: Leave modal open and show transaction status once wallet
     // integration is ready.
-    nfts.buy(data);
+    const nft = nfts.getById(nftId);
+    if (!nft) {
+      console.log(`Problem buying NFT: Nft with id '${nftId}' not found.`);
+      return;
+    }
+
+    nfts.buy(nft.metadata);
     toast.success('Transaction Complete');
     closeModal();
   };

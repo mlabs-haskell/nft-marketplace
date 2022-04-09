@@ -1,4 +1,4 @@
-interface AppConfig {
+export interface AppConfig {
   baseUrl: string;
   ctl: {
     server: {
@@ -77,37 +77,32 @@ const parseNetworkIdVar = (name: string) => {
 let config: AppConfig | undefined;
 
 /**
- * Returns the app config (or undefined if the config is invalid)
+ * Returns the app config
  */
-export const getAppConfig = (): AppConfig | undefined => {
+export const getAppConfig = (): AppConfig => {
   if (!config) {
-    try {
-      config = {
-        baseUrl: parseStringVar('REACT_APP_BASE_URL'),
-        ctl: {
-          server: {
-            host: parseStringVar('REACT_APP_CTL_SERVER_HOST'),
-            port: parseNumberVar('REACT_APP_CTL_SERVER_PORT'),
-            secureConn: parseBoolVar('REACT_APP_CTL_SERVER_SECURE_CONN'),
-          },
-          ogmios: {
-            host: parseStringVar('REACT_APP_CTL_OGMIOS_HOST'),
-            port: parseNumberVar('REACT_APP_CTL_OGMIOS_PORT'),
-            secureConn: parseBoolVar('REACT_APP_CTL_OGMIOS_SECURE_CONN'),
-          },
-          datumCache: {
-            host: parseStringVar('REACT_APP_CTL_DATUM_CACHE_HOST'),
-            port: parseNumberVar('REACT_APP_CTL_DATUM_CACHE_PORT'),
-            secureConn: parseBoolVar('REACT_APP_CTL_DATUM_CACHE_SECURE_CONN'),
-          },
-          networkId: parseNetworkIdVar('REACT_APP_CTL_NETWORK_ID'),
-          projectId: parseStringVar('REACT_APP_CTL_PROJECT_ID'),
+    config = Object.freeze({
+      baseUrl: parseStringVar('REACT_APP_BASE_URL'),
+      ctl: {
+        server: {
+          host: parseStringVar('REACT_APP_CTL_SERVER_HOST'),
+          port: parseNumberVar('REACT_APP_CTL_SERVER_PORT'),
+          secureConn: parseBoolVar('REACT_APP_CTL_SERVER_SECURE_CONN'),
         },
-      };
-    } catch (err) {
-      console.error(err);
-      return undefined;
-    }
+        ogmios: {
+          host: parseStringVar('REACT_APP_CTL_OGMIOS_HOST'),
+          port: parseNumberVar('REACT_APP_CTL_OGMIOS_PORT'),
+          secureConn: parseBoolVar('REACT_APP_CTL_OGMIOS_SECURE_CONN'),
+        },
+        datumCache: {
+          host: parseStringVar('REACT_APP_CTL_DATUM_CACHE_HOST'),
+          port: parseNumberVar('REACT_APP_CTL_DATUM_CACHE_PORT'),
+          secureConn: parseBoolVar('REACT_APP_CTL_DATUM_CACHE_SECURE_CONN'),
+        },
+        networkId: parseNetworkIdVar('REACT_APP_CTL_NETWORK_ID'),
+        projectId: parseStringVar('REACT_APP_CTL_PROJECT_ID'),
+      },
+    });
   }
 
   return config;

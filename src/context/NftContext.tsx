@@ -4,13 +4,11 @@ import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
 import { ArtistsType } from 'types/artists';
 import { ImageType } from 'types/image';
-import makeSdk from 'seabug-sdk/src';
 import { Maybe, NftId } from 'seabug-sdk/src/common';
-import { BuyParams } from 'seabug-sdk/src/buy';
 import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 import { AuctionBidParams } from 'seabug-sdk/src/auction';
-import { getAppConfig } from 'utils/appConfig';
-import { NftListing } from 'cardano-transaction-lib-seabug';
+import { Metadata, NftListing } from 'cardano-transaction-lib-seabug';
+import { getCtl } from 'ctl';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -32,10 +30,10 @@ export type NftContextType = {
   };
   nfts: {
     list: NftListing[];
-    getById: (nftId: NftId) => Maybe<NftListing>;
+    getById: (nftId: string) => Maybe<NftListing>;
     getLiveAuctionList: () => NftListing[];
     fetch: () => void;
-    buy: (buyParams: BuyParams) => void;
+    buy: (nftMetadata: Metadata) => void;
     bid: (bidParams: AuctionBidParams) => void;
     setPrice: (setPriceParams: SetPriceParams) => void;
     getByPubKeyHash: (pkh: string) => Maybe<NftListing[]>;
@@ -176,38 +174,15 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const nftsList = useMemo(() => [...nftsById.values()], [nftsById]);
 
+  const getNftById = (nftId: string) => nftsById.get(nftId);
+
   // TODO: Implement or remove auction logic
-  const nftsOnAuctionList = useMemo(() => {
-    return [];
-  }, [nftsList]);
-
-  const getNftById = (nftId: NftId) => nftsById.get(nftId.contentHash);
-
   const getLiveAuctionNftsList = () => [];
 
   async function fetchNfts() {
     try {
-      const ctl = await import('cardano-transaction-lib-seabug');
-      const appConfig = getAppConfig();
-
-      if (!appConfig) return;
-
-      const newNfts = await ctl.callMarketPlaceListNft({
-        serverHost: appConfig.ctl.server.host,
-        serverPort: appConfig.ctl.server.port,
-        serverSecureConn: appConfig.ctl.server.secureConn,
-        ogmiosHost: appConfig.ctl.ogmios.host,
-        ogmiosPort: appConfig.ctl.ogmios.port,
-        // If Ogmios uses SSL
-        ogmiosSecureConn: appConfig.ctl.ogmios.secureConn,
-        datumCacheHost: appConfig.ctl.datumCache.host,
-        datumCachePort: appConfig.ctl.datumCache.port,
-        // If ogmios-datum-cache uses SSL
-        datumCacheSecureConn: appConfig.ctl.datumCache.secureConn,
-        networkId: appConfig.ctl.networkId,
-        // blockfrost.io API key
-        projectId: appConfig.ctl.projectId,
-      });
+      const ctl = await getCtl();
+      const newNfts = await ctl.listNfts();
 
       console.log({ newNfts });
 
@@ -225,16 +200,27 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   }
 
-  async function buyNft(buyParams: BuyParams) {
+  async function buyNft(nftMetadata: Metadata) {
     try {
-      const url = '';
-      const walletId = '';
+      const ctl = await getCtl();
 
-      const sdk = await makeSdk(url, walletId);
-      const response = await sdk.makeTransaction.buy(buyParams);
-
-      // TODO: Get transaction from response, sign and submit it
-      // (once wallet integration is ready)
+      await ctl.buyNft({
+        nftCollectionArgs: {
+          collectionNftCs: nftMetadata.seabugMetadata.collectionNftCS,
+          lockLockup: 0n,
+          lockLockupEnd: 0n,
+          lockingScript: nftMetadata.seabugMetadata.lockingScript,
+          author: nftMetadata.seabugMetadata.authorPkh,
+          daoScript: nftMetadata.seabugMetadata.marketplaceScript,
+          authorShare: nftMetadata.seabugMetadata.authorShare,
+          daoShare: nftMetadata.seabugMetadata.marketplaceShare,
+        },
+        nftIdArgs: {
+          collectionNftTn: nftMetadata.seabugMetadata.collectionNftTN,
+          price: nftMetadata.seabugMetadata.ownerPrice,
+          owner: nftMetadata.seabugMetadata.ownerPkh,
+        },
+      });
     } catch (err) {
       addMessage({
         type: 'Error',
@@ -244,42 +230,11 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   }
   async function bidNft(bidParams: AuctionBidParams) {
-    try {
-      const url = '';
-      const walletId = '';
-
-      const sdk = await makeSdk(url, walletId);
-      const response = await sdk.makeTransaction.auction.bid(bidParams);
-
-      // TODO: Get transaction from response, sign and submit it
-      // (once wallet integration is ready)
-    } catch (err) {
-      addMessage({
-        type: 'Error',
-        userMsg: 'Unable to bid on NFT',
-        debugMsg: err,
-      });
-    }
+    // TODO: Add bid logic
   }
 
   async function ChangePrice(setPriceParams: SetPriceParams) {
-    try {
-      const url = '';
-      const walletId = '';
-
-      const sdk = await makeSdk(url, walletId);
-
-      const response = await sdk.makeTransaction.setPrice(setPriceParams);
-      console.log(response);
-      // TODO: Get transaction from response, sign and submit it
-      // (once wallet integration is ready)
-    } catch (err) {
-      addMessage({
-        type: 'Error',
-        userMsg: 'Unable to change price of NFT',
-        debugMsg: err,
-      });
-    }
+    // TODO: Add price change logic
   }
 
   const nftsByArtistPkh = useMemo(() => {

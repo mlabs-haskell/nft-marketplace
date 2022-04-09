@@ -24,7 +24,7 @@ const ItemPage = ({ type }: Props) => {
     'NONE' | 'BUY' | 'SET_PRICE' | 'PLACE_BID'
   >('NONE');
 
-  const nft = nfts.getById({ contentHash: nftId ?? '' });
+  const nft = nfts.getById(nftId);
   const artist = nft
     ? artists.getByPubKeyHash(nft.metadata.seabugMetadata.authorPkh)
     : undefined;
