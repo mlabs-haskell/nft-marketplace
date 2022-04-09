@@ -2,16 +2,14 @@
 
 ## Getting Started
 
-After cloning the repo, run the following commands to install dependencies:
+1. Clone the https://github.com/Plutonomicon/cardano-browser-tx repo, switch to the `seabug-deployment` branch and follow the
+   the instructions here: https://github.com/Plutonomicon/cardano-browser-tx/tree/seabug-deployment/npm-packages/seabug-example.
+2. Clone the `nft-marketplace` repo.
+3. CD into the `nft-marketplace` and run `npm install`.
+4. Run `npm link cardano-transaction-lib-seabug`. This will create link in your 
+   `node_modules` directory to `cardano-transaction-lib-seabug` that you registered in step 1.
 
-```
-git submodule init
-git submodule update
-npm install
-```
-
-When a submodule has been bumped to a new version, run `git submodule update` again to pull the
-latest submodule changes.
+**Important:** each time your run `npm install` or `npm ci`, you will need to run `npm link cardano-transaction-lib-seabug` again.
 
 ## Development Policy
 
