@@ -6,7 +6,6 @@ import { NftContext } from 'context/NftContext';
 import { WalletContext } from 'context/WalletContext';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Rational } from 'seabug-sdk/src/common';
 import { priceToADA } from 'utils/priceToADA';
 import BuyModal from '../../components/UI/organisms/ItemPage/BuyModal';
 import SetPriceModal from '../../components/UI/organisms/ItemPage/SetPriceModal';

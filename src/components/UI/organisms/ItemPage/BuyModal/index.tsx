@@ -1,7 +1,6 @@
 import { NftContext } from 'context/NftContext';
 import toast from 'react-hot-toast';
 import { useContext } from 'react';
-import { BuyParams } from 'seabug-sdk/src/buy';
 import { priceToADA } from 'utils/priceToADA';
 import Button from '../../../atoms/Button';
 import Modal from '../../../molecules/Modal';

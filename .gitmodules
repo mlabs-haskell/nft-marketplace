@@ -1,3 +1,0 @@
-[submodule "src/seabug-sdk"]
-	path = src/seabug-sdk
-	url = https://github.com/mlabs-haskell/nft-marketplace-sdk

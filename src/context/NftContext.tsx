@@ -4,9 +4,8 @@ import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
 import { ArtistsType } from 'types/artists';
 import { ImageType } from 'types/image';
-import { Maybe, NftId } from 'seabug-sdk/src/common';
-import { SetPriceParams } from 'seabug-sdk/src/setPrice';
-import { AuctionBidParams } from 'seabug-sdk/src/auction';
+import { Maybe } from 'types/common';
+import { AuctionBidParams, SetPriceParams } from 'types/legacy';
 import { Metadata, NftListing } from 'cardano-transaction-lib-seabug';
 import { getCtl } from 'ctl';
 

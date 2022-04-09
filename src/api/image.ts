@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { makeMockHash } from 'seabug-sdk/src/mocks';
+import { makeMockHash } from 'utils/mocks';
 import { ImagesType } from 'types/images';
 
 const mockDescription = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed erat aequius Triarium aliquid de dissensione nostra iudicare. Negat esse eam, inquit, propter se expetendam. Hoc non est positum in nostra actione. Cur iustitia laudatur?

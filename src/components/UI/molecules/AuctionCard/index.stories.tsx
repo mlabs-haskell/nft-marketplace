@@ -1,6 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import AuctionCard from '.';
-import { InformationNft } from 'seabug-sdk/src/common';
 import { ImageType } from 'types/image';
 import { NftListing } from 'cardano-transaction-lib-seabug';
 
