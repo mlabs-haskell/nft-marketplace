@@ -5,6 +5,7 @@ import {
   useMemo,
   useContext,
   useEffect,
+  useCallback,
 } from 'react';
 import toast from 'react-hot-toast';
 import { getImages } from 'api/image';
@@ -16,6 +17,7 @@ import { BuyParams } from 'seabug-sdk/src/buy';
 import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 import { AuctionBidParams } from 'seabug-sdk/src/auction';
 import { Image } from 'types/images';
+import { Pagination } from 'types/shared';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -28,7 +30,8 @@ export type NftContextType = {
     list: Artist[];
     listRandomized: Artist[];
     getByPubKeyHash: (pkh: string) => Maybe<Artist>;
-    fetch: () => void;
+    fetch: () => Promise<void>;
+    artistPagination: Pagination;
   };
   images: {
     list: Image[];
@@ -56,38 +59,7 @@ export type NftContextType = {
   };
 };
 
-export const NftContext = createContext<NftContextType>({
-  artists: {
-    list: [],
-    listRandomized: [],
-    getByPubKeyHash: () => undefined,
-    fetch: () => {},
-  },
-  images: {
-    list: [],
-    getByNftId: () => undefined,
-    fetch: () => {},
-  },
-  nfts: {
-    list: [],
-    getById: () => undefined,
-    getLiveAuctionList: () => [],
-    fetch: () => {},
-    buy: () => undefined,
-    bid: () => undefined,
-    setPrice: () => {},
-    getByPubKeyHash: () => [],
-  },
-  search: {
-    text: '',
-    setText: () => {},
-    getMatchingArtists: () => [],
-  },
-  common: {
-    messages: [],
-    fetchAll: () => undefined,
-  },
-});
+export const NftContext = createContext<NftContextType>({} as NftContextType);
 
 export const NftContextProvider: FC = ({ children }) => {
   // Internal state
@@ -102,6 +74,9 @@ export const NftContextProvider: FC = ({ children }) => {
   );
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
+  const [artistPagination, setArtistPagination] = useState<Pagination>(
+    {} as Pagination
+  );
 
   // App Messages
 
@@ -140,12 +115,12 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const fetchArtists = async () => {
     try {
-      const data = await getArtists();
-      console.log(data);
+      const { data, headers } = await getArtists();
       const newArtistsByPkh = new Map(
         data?.map((artist) => [artist.pubKeyHash, artist])
       );
       setArtistsByPkh(newArtistsByPkh);
+      setArtistPagination(headers);
     } catch (err) {
       addMessage({
         type: 'Error',
@@ -326,6 +301,7 @@ export const NftContextProvider: FC = ({ children }) => {
           listRandomized: artistsListRandomized,
           getByPubKeyHash: getArtistByPubKeyHash,
           fetch: fetchArtists,
+          artistPagination,
         },
         images: {
           list: imagesList,

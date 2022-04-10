@@ -10,5 +10,5 @@ export interface Artist {
 
 export interface ArtistResponse {
   data: Artist[];
-  // headers: Pagination;
+  headers: Pagination;
 }

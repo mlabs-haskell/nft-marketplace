@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UIContextProvider } from 'context/UIContext';
 import { WalletContextProvider } from 'context/WalletContext';
@@ -10,14 +10,19 @@ import App from './App';
 import './assets/scss/app.scss';
 import './index.scss';
 
-axios.interceptors.request.use((config: AxiosRequestConfig) => {
-  config.baseURL = process.env.REACT_APP_API_BASE_URL;
+axios.interceptors.request.use(
+  async (config) => {
+    config.baseURL = process.env.REACT_APP_API_BASE_URL;
 
-  config.headers.common['Content-Type'] = 'application/json';
-  config.headers.Accept = 'application/json';
+    config.headers['Content-Type'] = 'application/json';
+    config.headers.Accept = 'application/json';
 
-  return config;
-});
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  }
+);
 
 ReactDOM.render(
   <React.StrictMode>

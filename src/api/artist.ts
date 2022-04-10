@@ -1,7 +1,7 @@
-import { Artist } from 'types/artists';
+import { ArtistResponse } from 'types/artists';
 import axios from 'axios';
 
 export const getArtists = async () => {
-  const { data } = await axios.get<Artist[]>('artists');
+  const { data } = await axios.get<ArtistResponse>(`artists`);
   return data;
 };

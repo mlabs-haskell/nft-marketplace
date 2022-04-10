@@ -1,6 +1,6 @@
 export interface Pagination {
-  total_count: number;
-  accept_ranges: string;
-  content_ranges: string;
-  next_range: string;
+  'total-count': string;
+  'accept-ranges': string;
+  'content-ranges': string;
+  'next-range': string;
 }
