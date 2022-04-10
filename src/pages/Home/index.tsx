@@ -5,9 +5,10 @@ import Explore from 'components/UI/organisms/Home/Explore';
 import Header from 'components/UI/organisms/Home/Header';
 
 const Home = () => {
-  const { artists, images, nfts, common } = useContext(NftContext);
+  const { artists, images, nfts, common, search } = useContext(NftContext);
 
   useEffect(() => {
+    search.setText('');
     if (nfts.list.length === 0) common.fetchAll();
   }, []);
 
@@ -16,7 +17,7 @@ const Home = () => {
       <Header artists={artists.listRandomized} />
       {nfts.getLiveAuctionList().length > 0 && <Auction />}
       <Explore
-        images={images.list}
+        showFilterButtons
         getImageByNftId={images.getByNftId}
         nfts={nfts.list}
       />

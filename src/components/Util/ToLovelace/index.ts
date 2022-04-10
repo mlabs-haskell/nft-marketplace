@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 /**
  * This ADA price is converted to Lovelace
  */

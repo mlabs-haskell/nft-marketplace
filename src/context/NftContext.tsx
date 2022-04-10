@@ -37,6 +37,7 @@ export type NftContextType = {
     list: Image[];
     getByNftId: (nftId: NftId) => Maybe<Image>;
     fetch: () => void;
+    imagePagination: Pagination;
   };
   nfts: {
     list: InformationNft[];
@@ -75,6 +76,9 @@ export const NftContextProvider: FC = ({ children }) => {
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
   const [artistPagination, setArtistPagination] = useState<Pagination>(
+    {} as Pagination
+  );
+  const [imagePagination, setImagePagination] = useState<Pagination>(
     {} as Pagination
   );
 
@@ -142,11 +146,12 @@ export const NftContextProvider: FC = ({ children }) => {
 
   async function fetchImages() {
     try {
-      const { data } = await getImages();
+      const { data, headers } = await getImages();
       const newImagesByNftId = new Map(
         data?.map((image) => [image.sha256hash, image])
       );
       setImagesByNftId(newImagesByNftId);
+      setImagePagination(headers);
     } catch (err) {
       addMessage({
         type: 'Error',
@@ -307,6 +312,7 @@ export const NftContextProvider: FC = ({ children }) => {
           list: imagesList,
           getByNftId: getImageByNftId,
           fetch: fetchImages,
+          imagePagination,
         },
         nfts: {
           list: nftsList,

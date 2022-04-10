@@ -15,6 +15,9 @@
     box-shadow: 0px 4px 33px rgba(0, 0, 0, 0.06);
     font-weight: 400;
 
+    &:focus{
+      box-shadow: 20px 4px 33px rgba(0, 0, 0, 0.06);
+    }
     @media only screen and (max-width: $breakpointTablet) {
       display: none;
     }
@@ -55,15 +58,18 @@
     position: absolute;
     top: 60px;
     left: 0px;
-    width: 100%;
+    width: 510px;
     box-shadow: 0px 0px 45px 0px rgba(19, 15, 73, 0.13);
-    border-radius: 5px;
+    border-radius: 16px;
     z-index: 100;
     background-color: #fff;
     max-height: 200px;
     overflow-y: scroll;
-    padding: 20px;
+    padding: 20px 0 20px 20px;
     ul {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       list-style: none;
       margin: 0;
       padding: 0;
@@ -77,16 +83,19 @@
 
         li {
           color: #000;
-          padding-left: 20px;
-          &:hover {
-            background-color: #f7f7f7;
-            padding: 10px 0 10px 20px;
-            border: 5px;
-          }
+          padding-left: 10px;
         }
         &:last-child {
           margin-bottom: 0;
         }
+      }
+    }
+    .artist-image {
+      width: 50px;
+      height: 50px;
+      img {
+        width: 100%;
+        border-radius: 50%;
       }
     }
   }

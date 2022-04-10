@@ -56,8 +56,8 @@ const Footer = () => {
           <p>Seabug</p>
           <ul>
             {faqContent.map((faq) => (
-              <li key={faq.id}>
-                <Link to={`help#${faq.section}`}>
+              <li key={faq.section}>
+                <Link to={`/help#${faq.section}`}>
                   FAQ - <span>{capitalizeFistLetter(faq.section)}</span>
                 </Link>
               </li>

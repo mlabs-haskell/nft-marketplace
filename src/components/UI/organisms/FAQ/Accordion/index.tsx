@@ -1,29 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { faqContent } from 'context/FaqContext';
 import styles from './index.module.scss';
 import AccordionItem from '../../../molecules/AccordionItem';
 
 const Accordion = () => {
+  const history = useHistory();
   const location = useLocation().hash.slice(1);
-  const [currentItemId, setCurrentItemId] = useState(faqContent[0]?.id);
+
+  const goToSection = (section: string) => history.push(`/help#${section}`);
 
   return (
     <div className={styles.accordionWrapper}>
-      {Boolean(faqContent?.length) &&
-        faqContent.map((item) => (
-          <AccordionItem
-            key={uuidv4()}
-            title={item.title}
-            text={item.text}
-            isActive={currentItemId === item.id || location === item.section}
-            id={item.id}
-            onItemClick={setCurrentItemId}
-            section={item.section}
-          />
-        ))}
+      {faqContent.map((item) => (
+        <AccordionItem
+          key={item.section}
+          title={item.title}
+          text={item.text}
+          isActive={location === item.section}
+          onItemClick={goToSection}
+          section={item.section}
+        />
+      ))}
     </div>
   );
 };

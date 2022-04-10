@@ -1,7 +1,7 @@
-import { useState } from 'react';
+/* eslint-disable */
+import { useEffect, useState } from 'react';
 import Box from 'components/UI/atoms/Box';
 import { useNftContext } from 'context/NftContext';
-import { Artist } from 'types/artists';
 import { Link } from 'react-router-dom';
 import searchIcon from '../../../../assets/svg/search.svg';
 import styles from './index.module.scss';
@@ -11,15 +11,19 @@ interface Props {
 }
 
 const SearchInput = ({ placeholder }: Props) => {
+  const { search } = useNftContext();
   const [value, setValue] = useState('');
   const [display, setDisplay] = useState(false);
-  const { search } = useNftContext();
 
   const handleClose = () => {
     setValue('');
     setDisplay(false);
     search.setText('');
   };
+
+  useEffect(() => {
+    setValue(search.text)
+  }, [search])
 
   const handleChange = (e: any) => {
     e.preventDefault();
@@ -62,9 +66,14 @@ const SearchInput = ({ placeholder }: Props) => {
               <li>No matches</li>
             ) : (
               matchingArtists?.map((item) => (
-                <Link to={`/artist/${item.id}`} key={item.id}>
-                  <li>{item.name}</li>
-                </Link>
+                <div key={item.id} className="d-flex align-items-center">
+                  <div className={styles['artist-image']}>
+                    <img src={item.imagePath} alt="artist" />
+                  </div>
+                  <Link to={`/artist/${item.id}`}>
+                    <li>{item.name}</li>
+                  </Link>
+                </div>
               ))
             )}
           </ul>

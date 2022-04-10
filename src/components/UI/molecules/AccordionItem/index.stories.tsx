@@ -16,5 +16,4 @@ Default.args = {
   title: 'How do I find my funds on Polygon?',
   text: 'There are two ways to view your funds on Polygon',
   isActive: true,
-  id: '',
 };
