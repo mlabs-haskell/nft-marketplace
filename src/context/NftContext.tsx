@@ -1,12 +1,4 @@
-import {
-  createContext,
-  useState,
-  FC,
-  useMemo,
-  useContext,
-  useEffect,
-  useCallback,
-} from 'react';
+import { createContext, useState, FC, useMemo, useContext } from 'react';
 import toast from 'react-hot-toast';
 import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
