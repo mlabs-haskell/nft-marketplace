@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useMemo } from 'react';
 import classNames from 'classnames';
 import { useNftContext } from 'context/NftContext';

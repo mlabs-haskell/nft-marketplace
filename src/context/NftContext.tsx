@@ -113,7 +113,10 @@ export const NftContextProvider: FC = ({ children }) => {
 
   // Artists
 
-  const artistsList = useMemo(() => [...artistsByPkh.values()], [artistsByPkh]);
+  const artistsList = useMemo<Artist[]>(
+    () => [...artistsByPkh.values()],
+    [artistsByPkh]
+  );
   const artistsListRandomized = artistsList.sort(() => 0.5 - Math.random());
 
   const getArtistByPubKeyHash = (pkh: string) => artistsByPkh.get(pkh);
