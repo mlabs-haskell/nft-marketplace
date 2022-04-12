@@ -1,4 +1,11 @@
-import { createContext, useState, FC, useMemo, useContext } from 'react';
+import {
+  createContext,
+  useState,
+  FC,
+  useMemo,
+  useContext,
+  useEffect,
+} from 'react';
 import toast from 'react-hot-toast';
 import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
@@ -17,13 +24,17 @@ type AppMessage = {
   debugMsg?: any;
 };
 
+type FetchInfo = {
+  status: 'stopped' | 'fetching';
+  nextRange?: string;
+};
+
 export type NftContextType = {
   artists: {
     list: Artist[];
     listRandomized: Artist[];
     getByPubKeyHash: (pkh: string) => Maybe<Artist>;
     fetch: () => Promise<void>;
-    artistPagination: Pagination;
   };
   images: {
     list: Image[];
@@ -67,9 +78,10 @@ export const NftContextProvider: FC = ({ children }) => {
   );
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
-  const [artistPagination, setArtistPagination] = useState<Pagination>(
-    {} as Pagination
-  );
+  const [artistFetchInfo, setArtistFetchInfo] = useState<FetchInfo>({
+    status: 'stopped',
+    nextRange: undefined,
+  });
   const [imagePagination, setImagePagination] = useState<Pagination>(
     {} as Pagination
   );
@@ -109,22 +121,46 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const getArtistByPubKeyHash = (pkh: string) => artistsByPkh.get(pkh);
 
+  // TODO: Improve pagination logic (fetch pages as user scrolls)
   const fetchArtists = async () => {
-    try {
-      const { data, headers } = await getArtists();
-      const newArtistsByPkh = new Map(
-        data?.map((artist) => [artist.pubKeyHash, artist])
-      );
-      setArtistsByPkh(newArtistsByPkh);
-      setArtistPagination(headers);
-    } catch (err) {
-      addMessage({
-        type: 'Error',
-        userMsg: 'Unable to fetch artists. Please try again.',
-        debugMsg: err,
-      });
-    }
+    setArtistFetchInfo({
+      status: 'fetching',
+    });
   };
+
+  useEffect(() => {
+    if (artistFetchInfo.status !== 'fetching') return;
+
+    const fetchArtistPage = async () => {
+      try {
+        const { artists, nextRange } = await getArtists(
+          artistFetchInfo?.nextRange
+        );
+        const newArtistsByPkh = new Map(
+          artists?.map((artist) => [artist.pubKeyHash, artist])
+        );
+        setArtistsByPkh(newArtistsByPkh);
+
+        const newArtistFetchInfo: FetchInfo =
+          nextRange && artists && artists.length > 0
+            ? {
+                status: 'fetching',
+                nextRange,
+              }
+            : { status: 'stopped' };
+
+        setArtistFetchInfo(newArtistFetchInfo);
+      } catch (err) {
+        addMessage({
+          type: 'Error',
+          userMsg: 'Unable to fetch artists. Please try again.',
+          debugMsg: err,
+        });
+      }
+    };
+
+    fetchArtistPage();
+  }, [artistFetchInfo]);
 
   // Images
 
@@ -298,7 +334,6 @@ export const NftContextProvider: FC = ({ children }) => {
           listRandomized: artistsListRandomized,
           getByPubKeyHash: getArtistByPubKeyHash,
           fetch: fetchArtists,
-          artistPagination,
         },
         images: {
           list: imagesList,

@@ -1,7 +1,11 @@
-import { ArtistResponse } from 'types/artists';
+import { Artist, AxiosArtistResponse } from 'types/artists';
 import axios from 'axios';
 
-export const getArtists = async () => {
-  const { data } = await axios.get<ArtistResponse>(`artists`);
-  return data;
+// TODO: allow pagination to be controlled via arguments
+export const getArtists = async (range?: string) => {
+  const { data, headers }: AxiosArtistResponse = await axios.get(`artists`, {
+    headers: range ? { range } : {},
+  });
+
+  return { artists: data, nextRange: headers['next-range'] };
 };

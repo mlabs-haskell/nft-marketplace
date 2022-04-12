@@ -8,7 +8,7 @@ export interface Artist {
   imagePath: string;
 }
 
-export interface ArtistResponse {
+export interface AxiosArtistResponse {
   data: Artist[];
   headers: Pagination;
 }
