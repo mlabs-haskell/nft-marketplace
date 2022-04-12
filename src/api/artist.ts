@@ -1,4 +1,4 @@
-import { Artist, AxiosArtistResponse } from 'types/artists';
+import { AxiosArtistResponse } from 'types/artists';
 import axios from 'axios';
 
 // TODO: allow pagination to be controlled via arguments

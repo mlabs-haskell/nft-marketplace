@@ -1,4 +1,4 @@
-import { Pagination } from './shared';
+import { PaginationHeaders } from './shared';
 
 export interface Image {
   path: string;
@@ -10,9 +10,9 @@ export interface Image {
   ipfsHash: string;
 }
 
-export interface ImageResponse {
+export interface AxiosImageResponse {
   data: Image[];
-  headers: Pagination;
+  headers: PaginationHeaders;
 }
 export interface AddImageResponse {
   sha256hash: string;

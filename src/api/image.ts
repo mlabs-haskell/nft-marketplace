@@ -1,9 +1,12 @@
 import axios from 'axios';
-import { AddImageResponse, ImageResponse } from 'types/images';
+import { AddImageResponse, AxiosImageResponse } from 'types/images';
 
-export const getImages = async () => {
-  const { data } = await axios.get<ImageResponse>('images');
-  return data;
+export const getImages = async (range?: string) => {
+  const { data, headers }: AxiosImageResponse = await axios.get('images', {
+    headers: range ? { range } : {},
+  });
+
+  return { images: data, nextRange: headers['next-range'] };
 };
 
 export const addImage = async (payload: { image: string; title: string }) => {

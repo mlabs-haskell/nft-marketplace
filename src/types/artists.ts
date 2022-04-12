@@ -1,4 +1,4 @@
-import { Pagination } from './shared';
+import { PaginationHeaders } from './shared';
 
 export interface Artist {
   name: string;
@@ -10,5 +10,5 @@ export interface Artist {
 
 export interface AxiosArtistResponse {
   data: Artist[];
-  headers: Pagination;
+  headers: PaginationHeaders;
 }

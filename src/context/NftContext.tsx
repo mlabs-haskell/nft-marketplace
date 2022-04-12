@@ -16,7 +16,6 @@ import { BuyParams } from 'seabug-sdk/src/buy';
 import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 import { AuctionBidParams } from 'seabug-sdk/src/auction';
 import { Image } from 'types/images';
-import { Pagination } from 'types/shared';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -34,13 +33,12 @@ export type NftContextType = {
     list: Artist[];
     listRandomized: Artist[];
     getByPubKeyHash: (pkh: string) => Maybe<Artist>;
-    fetch: () => Promise<void>;
+    fetch: () => void;
   };
   images: {
     list: Image[];
     getByNftId: (nftId: NftId) => Maybe<Image>;
     fetch: () => void;
-    imagePagination: Pagination;
   };
   nfts: {
     list: InformationNft[];
@@ -80,11 +78,10 @@ export const NftContextProvider: FC = ({ children }) => {
   const [messages, setMessages] = useState<AppMessage[]>([]);
   const [artistFetchInfo, setArtistFetchInfo] = useState<FetchInfo>({
     status: 'stopped',
-    nextRange: undefined,
   });
-  const [imagePagination, setImagePagination] = useState<Pagination>(
-    {} as Pagination
-  );
+  const [imageFetchInfo, setImageFetchInfo] = useState<FetchInfo>({
+    status: 'stopped',
+  });
 
   // App Messages
 
@@ -122,44 +119,38 @@ export const NftContextProvider: FC = ({ children }) => {
   const getArtistByPubKeyHash = (pkh: string) => artistsByPkh.get(pkh);
 
   // TODO: Improve pagination logic (fetch pages as user scrolls)
-  const fetchArtists = async () => {
+  const fetchArtistPage = async () => {
+    try {
+      const { artists, nextRange } = await getArtists(
+        artistFetchInfo?.nextRange
+      );
+      const newArtistsByPkh = new Map(
+        artists?.map((artist) => [artist.pubKeyHash, artist])
+      );
+      const hasMorePages = nextRange && artists && artists.length > 0;
+
+      setArtistsByPkh(newArtistsByPkh);
+      setArtistFetchInfo({
+        status: hasMorePages ? 'fetching' : 'stopped',
+        nextRange: hasMorePages ? nextRange : undefined,
+      });
+    } catch (err) {
+      addMessage({
+        type: 'Error',
+        userMsg: 'Unable to fetch artists. Please try again.',
+        debugMsg: err,
+      });
+    }
+  };
+
+  const fetchArtists = () => {
     setArtistFetchInfo({
       status: 'fetching',
     });
   };
 
   useEffect(() => {
-    if (artistFetchInfo.status !== 'fetching') return;
-
-    const fetchArtistPage = async () => {
-      try {
-        const { artists, nextRange } = await getArtists(
-          artistFetchInfo?.nextRange
-        );
-        const newArtistsByPkh = new Map(
-          artists?.map((artist) => [artist.pubKeyHash, artist])
-        );
-        setArtistsByPkh(newArtistsByPkh);
-
-        const newArtistFetchInfo: FetchInfo =
-          nextRange && artists && artists.length > 0
-            ? {
-                status: 'fetching',
-                nextRange,
-              }
-            : { status: 'stopped' };
-
-        setArtistFetchInfo(newArtistFetchInfo);
-      } catch (err) {
-        addMessage({
-          type: 'Error',
-          userMsg: 'Unable to fetch artists. Please try again.',
-          debugMsg: err,
-        });
-      }
-    };
-
-    fetchArtistPage();
+    if (artistFetchInfo.status === 'fetching') fetchArtistPage();
   }, [artistFetchInfo]);
 
   // Images
@@ -172,14 +163,22 @@ export const NftContextProvider: FC = ({ children }) => {
   const getImageByNftId = (nftId: NftId) =>
     imagesByNftId.get(nftId.contentHash);
 
-  async function fetchImages() {
+  // TODO: Improve pagination logic (fetch pages as user scrolls)
+  const fetchImagePage = async () => {
     try {
-      const { data, headers } = await getImages();
+      const { images, nextRange } = await getImages(imageFetchInfo?.nextRange);
       const newImagesByNftId = new Map(
-        data?.map((image) => [image.sha256hash, image])
+        images?.map((image) => [image.sha256hash, image])
       );
       setImagesByNftId(newImagesByNftId);
-      setImagePagination(headers);
+      setImageFetchInfo(
+        nextRange && images && images.length > 0
+          ? {
+              status: 'fetching',
+              nextRange,
+            }
+          : { status: 'stopped' }
+      );
     } catch (err) {
       addMessage({
         type: 'Error',
@@ -187,7 +186,17 @@ export const NftContextProvider: FC = ({ children }) => {
         debugMsg: err,
       });
     }
-  }
+  };
+
+  const fetchImages = () => {
+    setImageFetchInfo({
+      status: 'fetching',
+    });
+  };
+
+  useEffect(() => {
+    if (imageFetchInfo.status === 'fetching') fetchImagePage();
+  }, [imageFetchInfo]);
 
   // NFTs
 
@@ -339,7 +348,6 @@ export const NftContextProvider: FC = ({ children }) => {
           list: imagesList,
           getByNftId: getImageByNftId,
           fetch: fetchImages,
-          imagePagination,
         },
         nfts: {
           list: nftsList,
