@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import { v4 as uuidv4 } from 'uuid';
-import { ArtistsType } from 'types/artists';
+import { Artist } from 'types/artists';
 import ArtistCard from '../../../molecules/ArtistCard';
 import styles from './index.module.scss';
 import { separateArrayByArrays } from '../../../../../utils/separateArrayByArrays';
@@ -11,7 +11,7 @@ import right from '../../../../../assets/svg/arrow-right.svg';
 SwiperCore.use([Navigation]);
 
 interface Props {
-  artists: ArtistsType.Artist[];
+  artists: Artist[];
 }
 
 interface ISwiperInstance extends Swiper {

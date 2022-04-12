@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import Explore from 'components/UI/organisms/Home/Explore';
 import { useNftContext } from 'context/NftContext';
 import { useEffect, useState } from 'react';
-import { ArtistsType } from 'types/artists';
+import { Artist } from 'types/artists';
 import { InformationNft } from 'seabug-sdk/src/common';
 
 interface ArtistParam {
@@ -11,7 +11,7 @@ interface ArtistParam {
 
 const ArtistPage = () => {
   const { artistId } = useParams<ArtistParam>();
-  const [artist, setArtist] = useState<ArtistsType.Artist>();
+  const [artist, setArtist] = useState<Artist>();
 
   // TODO: Move into NftContext
   const [artistNfts, setNfts] = useState<InformationNft[]>([]);
