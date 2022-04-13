@@ -1,18 +1,11 @@
-import { ArtistsType } from 'types/artists';
+import { AxiosArtistResponse } from 'types/artists';
+import axios from 'axios';
 
-const baseHash = 'ff00000000';
-
-const makeMockArtists = (count: number): ArtistsType.Artist[] =>
-  [...Array(count).keys()].map((idNum) => {
-    const id = idNum.toString();
-    return {
-      name: `Hennkok ${id}`,
-      createdAt: new Date(),
-      pubKeyHash: baseHash.substring(0, baseHash.length - id.length) + id,
-      id,
-      imagePath: `https://picsum.photos/id/${idNum * 11}/500/500`,
-    };
+// TODO: allow pagination to be controlled via arguments
+export const getArtists = async (range?: string) => {
+  const { data, headers }: AxiosArtistResponse = await axios.get(`artists`, {
+    headers: range ? { range } : {},
   });
 
-export const getArtists = (): Promise<ArtistsType.Artist[]> =>
-  Promise.resolve(makeMockArtists(22));
+  return { artists: data, nextRange: headers['next-range'] };
+};

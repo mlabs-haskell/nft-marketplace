@@ -1,13 +1,21 @@
-import { createContext, useState, FC, useMemo, useContext } from 'react';
+import {
+  createContext,
+  useState,
+  FC,
+  useMemo,
+  useContext,
+  useEffect,
+} from 'react';
 import toast from 'react-hot-toast';
 import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
-import { ArtistsType } from 'types/artists';
-import { ImageType } from 'types/image';
-import { Maybe } from 'types/common';
+import { Artist } from 'types/artists';
 import { AuctionBidParams, SetPriceParams } from 'types/legacy';
+import { Image } from 'types/images';
+import { Maybe } from 'types/common';
 import { Metadata, NftListing } from 'cardano-transaction-lib-seabug';
 import { getCtl } from 'ctl';
+import { hashFromIpfsUrl } from 'utils/hashFromIpfsUrl';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -15,16 +23,21 @@ type AppMessage = {
   debugMsg?: any;
 };
 
+type FetchInfo = {
+  status: 'stopped' | 'fetching';
+  nextRange?: string;
+};
+
 export type NftContextType = {
   artists: {
-    list: ArtistsType.Artist[];
-    listRandomized: ArtistsType.Artist[];
-    getByPubKeyHash: (pkh: string) => Maybe<ArtistsType.Artist>;
+    list: Artist[];
+    listRandomized: Artist[];
+    getByPubKeyHash: (pkh: string) => Maybe<Artist>;
     fetch: () => void;
   };
   images: {
-    list: ImageType.NftImage[];
-    getByNftId: (ipfsHash: string) => Maybe<ImageType.NftImage>;
+    list: Image[];
+    getByNftId: (ipfsHash: string) => Maybe<Image>;
     fetch: () => void;
   };
   nfts: {
@@ -40,7 +53,7 @@ export type NftContextType = {
   search: {
     text: string;
     setText: (searchText: string) => void;
-    getMatchingArtists: () => ArtistsType.Artist[];
+    getMatchingArtists: () => Artist[];
   };
   common: {
     messages: AppMessage[];
@@ -48,50 +61,25 @@ export type NftContextType = {
   };
 };
 
-export const NftContext = createContext<NftContextType>({
-  artists: {
-    list: [],
-    listRandomized: [],
-    getByPubKeyHash: () => undefined,
-    fetch: () => {},
-  },
-  images: {
-    list: [],
-    getByNftId: () => undefined,
-    fetch: () => {},
-  },
-  nfts: {
-    list: [],
-    getById: () => undefined,
-    getLiveAuctionList: () => [],
-    fetch: () => {},
-    buy: () => undefined,
-    bid: () => undefined,
-    setPrice: () => {},
-    getByPubKeyHash: () => [],
-  },
-  search: {
-    text: '',
-    setText: () => {},
-    getMatchingArtists: () => [],
-  },
-  common: {
-    messages: [],
-    fetchAll: () => undefined,
-  },
-});
+export const NftContext = createContext<NftContextType>({} as NftContextType);
 
 export const NftContextProvider: FC = ({ children }) => {
   // Internal state
-  const [artistsByPkh, setArtistsByPkh] = useState<
-    Map<string, ArtistsType.Artist>
-  >(new Map());
-  const [imagesByNftId, setImagesByNftId] = useState<
-    Map<string, ImageType.NftImage>
-  >(new Map());
+  const [artistsByPkh, setArtistsByPkh] = useState<Map<string, Artist>>(
+    new Map()
+  );
+  const [imagesByNftId, setImagesByNftId] = useState<Map<string, Image>>(
+    new Map()
+  );
   const [nftsById, setNftsById] = useState<Map<string, NftListing>>(new Map());
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
+  const [artistFetchInfo, setArtistFetchInfo] = useState<FetchInfo>({
+    status: 'stopped',
+  });
+  const [imageFetchInfo, setImageFetchInfo] = useState<FetchInfo>({
+    status: 'stopped',
+  });
 
   // App Messages
 
@@ -123,18 +111,30 @@ export const NftContextProvider: FC = ({ children }) => {
 
   // Artists
 
-  const artistsList = useMemo(() => [...artistsByPkh.values()], [artistsByPkh]);
+  const artistsList = useMemo<Artist[]>(
+    () => [...artistsByPkh.values()],
+    [artistsByPkh]
+  );
   const artistsListRandomized = artistsList.sort(() => 0.5 - Math.random());
 
   const getArtistByPubKeyHash = (pkh: string) => artistsByPkh.get(pkh);
 
-  const fetchArtists = async () => {
+  // TODO: Improve pagination logic (fetch pages as user scrolls)
+  const fetchArtistPage = async () => {
     try {
-      const newArtists = await getArtists();
-      const newArtistsByPkh = new Map(
-        newArtists.map((artist) => [artist.pubKeyHash, artist])
+      const { artists, nextRange } = await getArtists(
+        artistFetchInfo?.nextRange
       );
+      const newArtistsByPkh = new Map(
+        artists?.map((artist) => [artist.pubKeyHash, artist])
+      );
+      const hasMorePages = nextRange && artists && artists.length > 0;
+
       setArtistsByPkh(newArtistsByPkh);
+      setArtistFetchInfo({
+        status: hasMorePages ? 'fetching' : 'stopped',
+        nextRange: hasMorePages ? nextRange : undefined,
+      });
     } catch (err) {
       addMessage({
         type: 'Error',
@@ -143,6 +143,16 @@ export const NftContextProvider: FC = ({ children }) => {
       });
     }
   };
+
+  const fetchArtists = () => {
+    setArtistFetchInfo({
+      status: 'fetching',
+    });
+  };
+
+  useEffect(() => {
+    if (artistFetchInfo.status === 'fetching') fetchArtistPage();
+  }, [artistFetchInfo]);
 
   // Images
 
@@ -153,13 +163,22 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const getImageByNftId = (ipfsHash: string) => imagesByNftId.get(ipfsHash);
 
-  async function fetchImages() {
+  // TODO: Improve pagination logic (fetch pages as user scrolls)
+  const fetchImagePage = async () => {
     try {
-      const newImages = await getImages();
+      const { images, nextRange } = await getImages(imageFetchInfo?.nextRange);
       const newImagesByNftId = new Map(
-        newImages.map((image) => [image.sha256hash, image])
+        images?.map((image) => [image.sha256hash, image])
       );
       setImagesByNftId(newImagesByNftId);
+      setImageFetchInfo(
+        nextRange && images && images.length > 0
+          ? {
+              status: 'fetching',
+              nextRange,
+            }
+          : { status: 'stopped' }
+      );
     } catch (err) {
       addMessage({
         type: 'Error',
@@ -167,7 +186,17 @@ export const NftContextProvider: FC = ({ children }) => {
         debugMsg: err,
       });
     }
-  }
+  };
+
+  const fetchImages = () => {
+    setImageFetchInfo({
+      status: 'fetching',
+    });
+  };
+
+  useEffect(() => {
+    if (imageFetchInfo.status === 'fetching') fetchImagePage();
+  }, [imageFetchInfo]);
 
   // NFTs
 
@@ -186,7 +215,7 @@ export const NftContextProvider: FC = ({ children }) => {
       console.log({ newNfts });
 
       const newNftsById = new Map(
-        newNfts.map((nft) => [nft.metadata.ipfsHash, nft])
+        newNfts.map((nft) => [hashFromIpfsUrl(nft.metadata.ipfsHash), nft])
       );
 
       setNftsById(newNftsById);

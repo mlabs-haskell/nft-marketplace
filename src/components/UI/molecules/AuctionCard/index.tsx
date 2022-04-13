@@ -1,22 +1,24 @@
 import { Link } from 'react-router-dom';
-import { ImageType } from 'types/image';
 import { priceToADA } from 'utils/priceToADA';
 import dots from 'assets/svg/dots.svg';
 import { useEffect, useState } from 'react';
 import { useNftContext } from 'context/NftContext';
 import { formatTimeLiveAuction } from 'components/Util/formatTime';
 import { NftListing } from 'cardano-transaction-lib-seabug';
+import { Image } from 'types/images';
+import { getAppConfig } from 'utils/appConfig';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 
 interface Props {
   nft?: NftListing;
-  image?: ImageType.NftImage;
+  image?: Image;
 }
 
 const AuctionCard = ({ nft, image }: Props) => {
   const [refresh, setRefresh] = useState(false);
   const { common } = useNftContext();
+  const imagePath = getAppConfig().ipfs.baseUrl;
 
   // TODO: Implement or remove
   const calcRemainingTime = (): number | undefined => {
@@ -67,7 +69,7 @@ const AuctionCard = ({ nft, image }: Props) => {
       </div>
       <Link to={`/itempage/${nft?.metadata.ipfsHash ?? ''}`}>
         <div className={styles.image}>
-          <img src={image?.path} alt="nft-item" />
+          <img src={`${imagePath}${image?.ipfsHash}`} alt="nft-item" />
           {timeRemaining && (
             <div className={styles['time-wrapper']}>
               <span className={styles.time}>

@@ -1,5 +1,7 @@
 export interface AppConfig {
-  baseUrl: string;
+  api: {
+    baseUrl: string;
+  };
   ctl: {
     server: {
       host: string;
@@ -18,6 +20,9 @@ export interface AppConfig {
     };
     networkId: AppConfigNetworkId;
     projectId: string;
+  };
+  ipfs: {
+    baseUrl: string;
   };
 }
 
@@ -82,7 +87,9 @@ let config: AppConfig | undefined;
 export const getAppConfig = (): AppConfig => {
   if (!config) {
     config = Object.freeze({
-      baseUrl: parseStringVar('REACT_APP_BASE_URL'),
+      api: {
+        baseUrl: parseStringVar('REACT_APP_API_BASE_URL'),
+      },
       ctl: {
         server: {
           host: parseStringVar('REACT_APP_CTL_SERVER_HOST'),
@@ -101,6 +108,9 @@ export const getAppConfig = (): AppConfig => {
         },
         networkId: parseNetworkIdVar('REACT_APP_CTL_NETWORK_ID'),
         projectId: parseStringVar('REACT_APP_CTL_PROJECT_ID'),
+      },
+      ipfs: {
+        baseUrl: parseStringVar('REACT_APP_IPFS_BASE_URL'),
       },
     });
   }
