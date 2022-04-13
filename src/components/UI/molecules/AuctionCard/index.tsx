@@ -4,14 +4,14 @@ import dots from 'assets/svg/dots.svg';
 import { useEffect, useState } from 'react';
 import { useNftContext } from 'context/NftContext';
 import { formatTimeLiveAuction } from 'components/Util/formatTime';
-import { NftListing } from 'cardano-transaction-lib-seabug';
 import { Image } from 'types/images';
 import { getAppConfig } from 'utils/appConfig';
+import { Nft } from 'types/nfts';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 
 interface Props {
-  nft?: NftListing;
+  nft?: Nft;
   image?: Image;
 }
 
@@ -28,12 +28,14 @@ const AuctionCard = ({ nft, image }: Props) => {
   const [timeRemaining, setTimeRemaining] = useState(calcRemainingTime());
 
   useEffect(() => {
+    console.log({ nft, image });
+
     setInterval(() => {
       setTimeRemaining(calcRemainingTime());
     }, 1000);
   }, []);
 
-  const price = nft ? priceToADA(nft.metadata.seabugMetadata.ownerPrice) : '';
+  const price = nft ? priceToADA(nft.metadata.ownerPrice) : '';
 
   const handleRefresh = () => {
     common.fetchAll();
@@ -67,7 +69,7 @@ const AuctionCard = ({ nft, image }: Props) => {
           </div>
         </div>
       </div>
-      <Link to={`/itempage/${nft?.metadata.ipfsHash ?? ''}`}>
+      <Link to={`/itempage/${nft?.ipfsHash ?? ''}`}>
         <div className={styles.image}>
           <img src={`${imagePath}${image?.ipfsHash}`} alt="nft-item" />
           {timeRemaining && (

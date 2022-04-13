@@ -6,6 +6,7 @@ import { NftContext } from 'context/NftContext';
 import { WalletContext } from 'context/WalletContext';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { getAppConfig } from 'utils/appConfig';
 import { priceToADA } from 'utils/priceToADA';
 import BuyModal from '../../components/UI/organisms/ItemPage/BuyModal';
 import SetPriceModal from '../../components/UI/organisms/ItemPage/SetPriceModal';
@@ -23,14 +24,14 @@ const ItemPage = ({ type }: Props) => {
     'NONE' | 'BUY' | 'SET_PRICE' | 'PLACE_BID'
   >('NONE');
 
-  const nft = nfts.getById(nftId);
+  const nft = nfts.getByIpfsHash(nftId);
   const artist = nft
-    ? artists.getByPubKeyHash(nft.metadata.seabugMetadata.authorPkh)
+    ? artists.getByPubKeyHash(nft.metadata.authorPkh)
     : undefined;
   const owner = nft
-    ? artists.getByPubKeyHash(nft.metadata.seabugMetadata.ownerPkh)
+    ? artists.getByPubKeyHash(nft.metadata.ownerPkh)
     : undefined;
-  const image = images.getByNftId(nftId ?? '');
+  const image = images.getByIpfsHash(nftId ?? '');
 
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<Set<string>>(
     new Set()
@@ -105,16 +106,19 @@ const ItemPage = ({ type }: Props) => {
   return (
     <>
       <div className={styles.container}>
-        <ItemPhotoCard imageUrl={image?.path} likeCount="167" />
+        <ItemPhotoCard
+          imageUrl={`${getAppConfig().ipfs.baseUrl}${image?.ipfsHash}`}
+          likeCount="167"
+        />
         <div className={styles['item-details-container']}>
           <ItemDetails
             title={image?.title ?? ''}
-            saleValue={priceToADA(nft?.metadata.seabugMetadata.ownerPrice)}
+            saleValue={priceToADA(nft?.metadata.ownerPrice)}
             topBidValue=""
             description={image?.description ?? ''}
             creatorValue={`${
-              nft?.metadata.seabugMetadata.authorShare
-                ? shareToFloat(nft?.metadata.seabugMetadata.authorShare, 2)
+              nft?.metadata.authorShare
+                ? shareToFloat(nft?.metadata.authorShare, 2)
                 : 0
             }% royalties`}
             creatorName={artist?.name ?? ''}
@@ -132,7 +136,7 @@ const ItemPage = ({ type }: Props) => {
         closeModal={closeModal}
         title={image?.title || ''}
         from={artist?.name || ''}
-        nftPrice={nft?.metadata.seabugMetadata.ownerPrice || BigInt(0)}
+        nftPrice={nft?.metadata.ownerPrice || BigInt(0)}
         nftId={nftId}
       />
       <BuyModal
@@ -142,7 +146,7 @@ const ItemPage = ({ type }: Props) => {
         from={artist?.name || ''}
         balance={0}
         percentTax={0.0}
-        nftPrice={nft?.metadata.seabugMetadata.ownerPrice || BigInt(0)}
+        nftPrice={nft?.metadata.ownerPrice || BigInt(0)}
         nftId={nftId}
       />
       <PlaceBidModal

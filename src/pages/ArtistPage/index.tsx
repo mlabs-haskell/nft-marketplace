@@ -3,7 +3,7 @@ import Explore from 'components/UI/organisms/Home/Explore';
 import { useNftContext } from 'context/NftContext';
 import { useEffect, useState } from 'react';
 import { Artist } from 'types/artists';
-import { NftListing } from 'cardano-transaction-lib-seabug';
+import { Nft } from 'types/nfts';
 
 interface ArtistParam {
   artistId: string;
@@ -14,7 +14,7 @@ const ArtistPage = () => {
   const [artist, setArtist] = useState<Artist>();
 
   // TODO: Move into NftContext
-  const [artistNfts, setNfts] = useState<NftListing[]>([]);
+  const [artistNfts, setNfts] = useState<Nft[]>([]);
 
   const { images, nfts, artists, search } = useNftContext();
 
@@ -27,7 +27,7 @@ const ArtistPage = () => {
   const getArtistNfts = () => {
     // TODO: Move into NftContext (and memoize?)
     const newNfts = nfts.list.filter(
-      (nft) => nft.metadata.seabugMetadata.authorPkh === artist?.pubKeyHash
+      (nft) => nft.metadata.authorPkh === artist?.pubKeyHash
     );
     setNfts(newNfts);
   };
@@ -42,7 +42,7 @@ const ArtistPage = () => {
       <h2>{artist?.name}</h2>
       <Explore
         showFilterButtons={false}
-        getImageByNftId={images.getByNftId}
+        getImageByIpfsHash={images.getByIpfsHash}
         nfts={artistNfts}
       />
     </div>

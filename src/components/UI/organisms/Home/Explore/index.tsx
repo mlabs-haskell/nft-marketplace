@@ -9,12 +9,12 @@ import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
 interface Props {
-  getImageByNftId: NftContextType['images']['getByNftId'];
+  getImageByIpfsHash: NftContextType['images']['getByIpfsHash'];
   nfts: NftContextType['nfts']['list'];
   showFilterButtons: boolean;
 }
 
-const Explore = ({ getImageByNftId, nfts, showFilterButtons }: Props) => {
+const Explore = ({ getImageByIpfsHash, nfts, showFilterButtons }: Props) => {
   const { home } = useUIContext();
   const cardsPerPage = 25;
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
@@ -82,13 +82,9 @@ const Explore = ({ getImageByNftId, nfts, showFilterButtons }: Props) => {
               </div>
             ) : (
               limitedNfts.map((nft) => {
-                const image = getImageByNftId(nft.metadata.ipfsHash);
+                const image = getImageByIpfsHash(nft.ipfsHash);
                 return (
-                  <AuctionCard
-                    key={nft.metadata.ipfsHash}
-                    nft={nft}
-                    image={image}
-                  />
+                  <AuctionCard key={nft.ipfsHash} nft={nft} image={image} />
                 );
               })
             )}

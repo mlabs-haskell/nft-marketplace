@@ -13,9 +13,8 @@ import { Artist } from 'types/artists';
 import { AuctionBidParams, SetPriceParams } from 'types/legacy';
 import { Image } from 'types/images';
 import { Maybe } from 'types/common';
-import { Metadata, NftListing } from 'cardano-transaction-lib-seabug';
 import { getCtl } from 'ctl';
-import { hashFromIpfsUrl } from 'utils/hashFromIpfsUrl';
+import { Nft, nftFromNftListing } from 'types/nfts';
 
 type AppMessage = {
   type: 'Success' | 'Error' | 'Info';
@@ -37,18 +36,18 @@ export type NftContextType = {
   };
   images: {
     list: Image[];
-    getByNftId: (ipfsHash: string) => Maybe<Image>;
+    getByIpfsHash: (ipfsHash: string) => Maybe<Image>;
     fetch: () => void;
   };
   nfts: {
-    list: NftListing[];
-    getById: (nftId: string) => Maybe<NftListing>;
-    getLiveAuctionList: () => NftListing[];
+    list: Nft[];
+    getByIpfsHash: (nftId: string) => Maybe<Nft>;
+    getLiveAuctionList: () => Nft[];
     fetch: () => void;
-    buy: (nftMetadata: Metadata) => void;
+    buy: (nft: Nft) => Promise<void>;
     bid: (bidParams: AuctionBidParams) => void;
     setPrice: (setPriceParams: SetPriceParams) => void;
-    getByPubKeyHash: (pkh: string) => Maybe<NftListing[]>;
+    getByPubKeyHash: (pkh: string) => Maybe<Nft[]>;
   };
   search: {
     text: string;
@@ -68,10 +67,12 @@ export const NftContextProvider: FC = ({ children }) => {
   const [artistsByPkh, setArtistsByPkh] = useState<Map<string, Artist>>(
     new Map()
   );
-  const [imagesByNftId, setImagesByNftId] = useState<Map<string, Image>>(
+  const [imagesByIpfsHash, setImagesByIpfsHash] = useState<Map<string, Image>>(
     new Map()
   );
-  const [nftsById, setNftsById] = useState<Map<string, NftListing>>(new Map());
+  const [nftsByIpfsHash, setNftsByIpfsHash] = useState<Map<string, Nft>>(
+    new Map()
+  );
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
   const [artistFetchInfo, setArtistFetchInfo] = useState<FetchInfo>({
@@ -157,20 +158,32 @@ export const NftContextProvider: FC = ({ children }) => {
   // Images
 
   const imagesList = useMemo(
-    () => [...imagesByNftId.values()],
-    [imagesByNftId]
+    () => [...imagesByIpfsHash.values()],
+    [imagesByIpfsHash]
   );
 
-  const getImageByNftId = (ipfsHash: string) => imagesByNftId.get(ipfsHash);
+  const getImageByIpfsHash = (ipfsHash: string) => {
+    console.log(`getImagesByIpfsHash() called`, {
+      ipfsHash,
+      imagesByIpfsHash,
+    });
+
+    return imagesByIpfsHash.get(ipfsHash);
+  };
 
   // TODO: Improve pagination logic (fetch pages as user scrolls)
   const fetchImagePage = async () => {
     try {
       const { images, nextRange } = await getImages(imageFetchInfo?.nextRange);
-      const newImagesByNftId = new Map(
-        images?.map((image) => [image.sha256hash, image])
+      const newImagesByIpfsHash = new Map(
+        images?.map((image) => [image.ipfsHash, image])
       );
-      setImagesByNftId(newImagesByNftId);
+
+      console.log({ newImagesByIpfsHash });
+
+      setImagesByIpfsHash(
+        new Map([...imagesByIpfsHash, ...newImagesByIpfsHash])
+      );
       setImageFetchInfo(
         nextRange && images && images.length > 0
           ? {
@@ -200,9 +213,12 @@ export const NftContextProvider: FC = ({ children }) => {
 
   // NFTs
 
-  const nftsList = useMemo(() => [...nftsById.values()], [nftsById]);
+  const nftsList = useMemo(
+    () => [...nftsByIpfsHash.values()],
+    [nftsByIpfsHash]
+  );
 
-  const getNftById = (nftId: string) => nftsById.get(nftId);
+  const getNftByIpfsHash = (nftId: string) => nftsByIpfsHash.get(nftId);
 
   // TODO: Implement or remove auction logic
   const getLiveAuctionNftsList = () => [];
@@ -214,11 +230,17 @@ export const NftContextProvider: FC = ({ children }) => {
 
       console.log({ newNfts });
 
-      const newNftsById = new Map(
-        newNfts.map((nft) => [hashFromIpfsUrl(nft.metadata.ipfsHash), nft])
+      const newNftsByIpfsHash = new Map(
+        newNfts.map((nftListing) => {
+          const nft = nftFromNftListing(nftListing);
+
+          return [nft.ipfsHash, nft];
+        })
       );
 
-      setNftsById(newNftsById);
+      console.log({ newNftsByIpfsHash });
+
+      setNftsByIpfsHash(new Map([...nftsByIpfsHash, ...newNftsByIpfsHash]));
     } catch (err) {
       addMessage({
         type: 'Error',
@@ -228,25 +250,25 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   }
 
-  async function buyNft(nftMetadata: Metadata) {
+  async function buyNft(nft: Nft) {
     try {
       const ctl = await getCtl();
 
       await ctl.buyNft({
         nftCollectionArgs: {
-          collectionNftCs: nftMetadata.seabugMetadata.collectionNftCS,
+          collectionNftCs: nft.metadata.collectionNftCS,
           lockLockup: 0n,
           lockLockupEnd: 0n,
-          lockingScript: nftMetadata.seabugMetadata.lockingScript,
-          author: nftMetadata.seabugMetadata.authorPkh,
-          daoScript: nftMetadata.seabugMetadata.marketplaceScript,
-          authorShare: nftMetadata.seabugMetadata.authorShare,
-          daoShare: nftMetadata.seabugMetadata.marketplaceShare,
+          lockingScript: nft.metadata.lockingScript,
+          author: nft.metadata.authorPkh,
+          daoScript: nft.metadata.marketplaceScript,
+          authorShare: nft.metadata.authorShare,
+          daoShare: nft.metadata.marketplaceShare,
         },
         nftIdArgs: {
-          collectionNftTn: nftMetadata.seabugMetadata.collectionNftTN,
-          price: nftMetadata.seabugMetadata.ownerPrice,
-          owner: nftMetadata.seabugMetadata.ownerPkh,
+          collectionNftTn: nft.metadata.collectionNftTN,
+          price: nft.metadata.ownerPrice,
+          owner: nft.metadata.ownerPkh,
         },
       });
     } catch (err) {
@@ -266,17 +288,17 @@ export const NftContextProvider: FC = ({ children }) => {
   }
 
   const nftsByArtistPkh = useMemo(() => {
-    const nftsMap = new Map<string, NftListing[]>();
+    const nftsMap = new Map<string, Nft[]>();
 
-    nftsById.forEach((nft) => {
-      nftsMap.set(nft.metadata.seabugMetadata.authorPkh, [
-        ...(nftsMap.get(nft.metadata.seabugMetadata.authorPkh) ?? []),
+    nftsByIpfsHash.forEach((nft) => {
+      nftsMap.set(nft.metadata.authorPkh, [
+        ...(nftsMap.get(nft.metadata.authorPkh) ?? []),
         nft,
       ]);
     });
 
     return nftsMap;
-  }, [nftsById, artistsByPkh]);
+  }, [nftsByIpfsHash, artistsByPkh]);
 
   const getNftsByPubKeyHash = (pkh: string) => nftsByArtistPkh.get(pkh);
 
@@ -308,12 +330,12 @@ export const NftContextProvider: FC = ({ children }) => {
         },
         images: {
           list: imagesList,
-          getByNftId: getImageByNftId,
+          getByIpfsHash: getImageByIpfsHash,
           fetch: fetchImages,
         },
         nfts: {
           list: nftsList,
-          getById: getNftById,
+          getByIpfsHash: getNftByIpfsHash,
           getLiveAuctionList: getLiveAuctionNftsList,
           fetch: fetchNfts,
           buy: buyNft,

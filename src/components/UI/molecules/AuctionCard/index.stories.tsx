@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { NftListing } from 'cardano-transaction-lib-seabug';
 import { Image } from 'types/images';
+import { Nft } from 'types/nfts';
 import AuctionCard from '.';
 
 export default {
@@ -14,7 +14,8 @@ const Template: ComponentStory<typeof AuctionCard> = (args) => (
 );
 
 // TODO: Add sample data for NftListing
-const nft: NftListing = {
+const nft: Nft = {
+  ipfsHash: 'abc123',
   input: {
     transaction_id: '',
     input_index: 0,
@@ -29,20 +30,17 @@ const nft: NftListing = {
     data_hash: '',
   },
   metadata: {
-    seabugMetadata: {
-      policyId: '',
-      mintPolicy: '',
-      collectionNftCS: '',
-      collectionNftTN: '',
-      lockingScript: '',
-      authorPkh: '',
-      authorShare: 0n,
-      marketplaceScript: '',
-      marketplaceShare: 0n,
-      ownerPkh: '',
-      ownerPrice: 0n,
-    },
-    ipfsHash: 'abc123',
+    policyId: '',
+    mintPolicy: '',
+    collectionNftCS: '',
+    collectionNftTN: '',
+    lockingScript: '',
+    authorPkh: '',
+    authorShare: 0n,
+    marketplaceScript: '',
+    marketplaceShare: 0n,
+    ownerPkh: '',
+    ownerPrice: 0n,
   },
 };
 

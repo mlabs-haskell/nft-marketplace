@@ -29,29 +29,26 @@ const BuyModal = ({
   nftPrice,
 }: Props) => {
   const { nfts } = useContext(NftContext);
-  const calculatePercentFee = () => {
+  const calculatePercentFee = (): bigint => {
     const currentFeeSumm = nftPrice
       ? (Number(nftPrice) * percentTax).toFixed(0)
-      : 0;
+      : 0n;
     return BigInt(currentFeeSumm);
   };
 
-  const calculateSummPay = () => {
-    const summPay = nftPrice ? calculatePercentFee() + nftPrice : 0;
-    return BigInt(summPay);
-  };
+  // TODO: Include fee in calculation
+  const calculateSummPay = () => nftPrice;
 
   const onCheckout = async () => {
     // TODO: Leave modal open and show transaction status once wallet
     // integration is ready.
-    const nft = nfts.getById(nftId);
+    const nft = nfts.getByIpfsHash(nftId);
     if (!nft) {
       console.log(`Problem buying NFT: Nft with id '${nftId}' not found.`);
       return;
     }
 
-    nfts.buy(nft.metadata);
-    toast.success('Transaction Complete');
+    nfts.buy(nft);
     closeModal();
   };
 

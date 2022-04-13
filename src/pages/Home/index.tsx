@@ -18,7 +18,7 @@ const Home = () => {
       {nfts.getLiveAuctionList().length > 0 && <Auction />}
       <Explore
         showFilterButtons
-        getImageByNftId={images.getByNftId}
+        getImageByIpfsHash={images.getByIpfsHash}
         nfts={nfts.list}
       />
     </div>

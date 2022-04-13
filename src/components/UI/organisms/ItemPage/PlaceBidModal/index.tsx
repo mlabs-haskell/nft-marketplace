@@ -53,7 +53,6 @@ const PlaceBidModal = ({
     };
 
     nfts.bid(data);
-    toast.success('Transaction Complete');
     closeModal();
   };
 

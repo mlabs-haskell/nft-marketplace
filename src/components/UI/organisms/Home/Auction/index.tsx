@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import { NftContext } from 'context/NftContext';
 import Slider from '../../../molecules/Slider';
 import styles from './index.module.scss';
-import AuctionCard from '../../../molecules/AuctionCard';
 
 function Auction() {
   const { nfts, images } = useContext(NftContext);
