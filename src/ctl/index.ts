@@ -22,9 +22,21 @@ const ctlConfig = {
  */
 export const getCtl = async () => {
   const ctlSeabug = await import('cardano-transaction-lib-seabug');
+
+  console.log({ ctlConfig });
+
   return {
     listNfts: () => ctlSeabug.callMarketPlaceListNft(ctlConfig),
-    buyNft: (buyArgs: ContractArgs) =>
-      ctlSeabug.callMarketPlaceBuy(ctlConfig, buyArgs),
+    buyNft: (buyArgs: ContractArgs) => {
+      /* eslint-disable */
+      console.log(
+        JSON.stringify({ ctlConfig, buyArgs }, (key, val) =>
+          typeof val === 'bigint' ? val.toString() : val
+        )
+      );
+      /* eslint-enable */
+
+      return ctlSeabug.callMarketPlaceBuy(ctlConfig, buyArgs);
+    },
   };
 };

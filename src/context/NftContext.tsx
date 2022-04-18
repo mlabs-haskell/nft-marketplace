@@ -257,8 +257,8 @@ export const NftContextProvider: FC = ({ children }) => {
       await ctl.buyNft({
         nftCollectionArgs: {
           collectionNftCs: nft.metadata.collectionNftCS,
-          lockLockup: 0n,
-          lockLockupEnd: 0n,
+          lockLockup: 5n,
+          lockLockupEnd: 5n,
           lockingScript: nft.metadata.lockingScript,
           author: nft.metadata.authorPkh,
           daoScript: nft.metadata.marketplaceScript,
