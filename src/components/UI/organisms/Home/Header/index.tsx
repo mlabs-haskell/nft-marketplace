@@ -31,7 +31,7 @@ const Header = (props: Props) => {
     return (
       <SwiperSlide className={styles['swiper-slide']}>
         <div className={styles['big-card-wrapper']}>
-          <ArtistCard {...artists[0]} className={styles['card-big']} />
+          <ArtistCard artist={artists[0]} className={styles['card-big']} />
         </div>
       </SwiperSlide>
     );
@@ -49,8 +49,12 @@ const Header = (props: Props) => {
         transition-property={false}
       >
         <div className={styles['small-cards-wrapper']}>
-          {subArray?.map((item) => (
-            <ArtistCard {...item} className={styles.card} key={uuidv4()} />
+          {subArray?.map((artist) => (
+            <ArtistCard
+              artist={artist}
+              className={styles.card}
+              key={uuidv4()}
+            />
           ))}
         </div>
       </SwiperSlide>

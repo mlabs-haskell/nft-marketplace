@@ -131,7 +131,7 @@ export const NftContextProvider: FC = ({ children }) => {
       );
       const hasMorePages = nextRange && artists && artists.length > 0;
 
-      setArtistsByPkh(newArtistsByPkh);
+      setArtistsByPkh(new Map([...artistsByPkh, ...newArtistsByPkh]));
       setArtistFetchInfo({
         status: hasMorePages ? 'fetching' : 'stopped',
         nextRange: hasMorePages ? nextRange : undefined,
