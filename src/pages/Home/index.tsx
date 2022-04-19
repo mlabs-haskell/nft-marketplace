@@ -20,6 +20,7 @@ const Home = () => {
         showFilterButtons
         getImageByIpfsHash={images.getByIpfsHash}
         nfts={nfts.list}
+        nftsFetchStatus={nfts.fetchStatus}
       />
     </div>
   );

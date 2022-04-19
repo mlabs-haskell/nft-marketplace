@@ -28,8 +28,6 @@ const AuctionCard = ({ nft, image }: Props) => {
   const [timeRemaining, setTimeRemaining] = useState(calcRemainingTime());
 
   useEffect(() => {
-    console.log({ nft, image });
-
     setInterval(() => {
       setTimeRemaining(calcRemainingTime());
     }, 1000);

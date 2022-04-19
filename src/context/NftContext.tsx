@@ -22,9 +22,12 @@ type AppMessage = {
   debugMsg?: any;
 };
 
-type FetchInfo = {
-  status: 'stopped' | 'fetching';
+export type FetchStatus = 'stopped' | 'fetching';
+
+type FetchState = {
+  status: FetchStatus;
   nextRange?: string;
+  retryCount?: number;
 };
 
 export type NftContextType = {
@@ -44,6 +47,7 @@ export type NftContextType = {
     getByIpfsHash: (nftId: string) => Maybe<Nft>;
     getLiveAuctionList: () => Nft[];
     fetch: () => void;
+    fetchStatus: FetchStatus;
     buy: (nft: Nft) => Promise<void>;
     bid: (bidParams: AuctionBidParams) => void;
     setPrice: (setPriceParams: SetPriceParams) => void;
@@ -75,10 +79,13 @@ export const NftContextProvider: FC = ({ children }) => {
   );
   const [searchText, setSearchText] = useState('');
   const [messages, setMessages] = useState<AppMessage[]>([]);
-  const [artistFetchInfo, setArtistFetchInfo] = useState<FetchInfo>({
+  const [artistFetchState, setArtistFetchState] = useState<FetchState>({
     status: 'stopped',
   });
-  const [imageFetchInfo, setImageFetchInfo] = useState<FetchInfo>({
+  const [imageFetchState, setImageFetchState] = useState<FetchState>({
+    status: 'stopped',
+  });
+  const [nftFetchState, setNftFetchState] = useState<FetchState>({
     status: 'stopped',
   });
 
@@ -124,7 +131,7 @@ export const NftContextProvider: FC = ({ children }) => {
   const fetchArtistPage = async () => {
     try {
       const { artists, nextRange } = await getArtists(
-        artistFetchInfo?.nextRange
+        artistFetchState?.nextRange
       );
       const newArtistsByPkh = new Map(
         artists?.map((artist) => [artist.pubKeyHash, artist])
@@ -132,7 +139,7 @@ export const NftContextProvider: FC = ({ children }) => {
       const hasMorePages = nextRange && artists && artists.length > 0;
 
       setArtistsByPkh(new Map([...artistsByPkh, ...newArtistsByPkh]));
-      setArtistFetchInfo({
+      setArtistFetchState({
         status: hasMorePages ? 'fetching' : 'stopped',
         nextRange: hasMorePages ? nextRange : undefined,
       });
@@ -146,14 +153,14 @@ export const NftContextProvider: FC = ({ children }) => {
   };
 
   const fetchArtists = () => {
-    setArtistFetchInfo({
+    setArtistFetchState({
       status: 'fetching',
     });
   };
 
   useEffect(() => {
-    if (artistFetchInfo.status === 'fetching') fetchArtistPage();
-  }, [artistFetchInfo]);
+    if (artistFetchState.status === 'fetching') fetchArtistPage();
+  }, [artistFetchState]);
 
   // Images
 
@@ -162,19 +169,13 @@ export const NftContextProvider: FC = ({ children }) => {
     [imagesByIpfsHash]
   );
 
-  const getImageByIpfsHash = (ipfsHash: string) => {
-    console.log(`getImagesByIpfsHash() called`, {
-      ipfsHash,
-      imagesByIpfsHash,
-    });
-
-    return imagesByIpfsHash.get(ipfsHash);
-  };
+  const getImageByIpfsHash = (ipfsHash: string) =>
+    imagesByIpfsHash.get(ipfsHash);
 
   // TODO: Improve pagination logic (fetch pages as user scrolls)
   const fetchImagePage = async () => {
     try {
-      const { images, nextRange } = await getImages(imageFetchInfo?.nextRange);
+      const { images, nextRange } = await getImages(imageFetchState?.nextRange);
       const newImagesByIpfsHash = new Map(
         images?.map((image) => [image.ipfsHash, image])
       );
@@ -184,7 +185,7 @@ export const NftContextProvider: FC = ({ children }) => {
       setImagesByIpfsHash(
         new Map([...imagesByIpfsHash, ...newImagesByIpfsHash])
       );
-      setImageFetchInfo(
+      setImageFetchState(
         nextRange && images && images.length > 0
           ? {
               status: 'fetching',
@@ -202,14 +203,14 @@ export const NftContextProvider: FC = ({ children }) => {
   };
 
   const fetchImages = () => {
-    setImageFetchInfo({
+    setImageFetchState({
       status: 'fetching',
     });
   };
 
   useEffect(() => {
-    if (imageFetchInfo.status === 'fetching') fetchImagePage();
-  }, [imageFetchInfo]);
+    if (imageFetchState.status === 'fetching') fetchImagePage();
+  }, [imageFetchState]);
 
   // NFTs
 
@@ -223,32 +224,57 @@ export const NftContextProvider: FC = ({ children }) => {
   // TODO: Implement or remove auction logic
   const getLiveAuctionNftsList = () => [];
 
-  async function fetchNfts() {
+  const fetchNftList = async () => {
     try {
       const ctl = await getCtl();
+
+      console.log('calling listNfts()');
+
       const newNfts = await ctl.listNfts();
 
-      console.log({ newNfts });
+      console.log('listNfts() finished successfully');
 
       const newNftsByIpfsHash = new Map(
         newNfts.map((nftListing) => {
           const nft = nftFromNftListing(nftListing);
-
           return [nft.ipfsHash, nft];
         })
       );
 
-      console.log({ newNftsByIpfsHash });
-
-      setNftsByIpfsHash(new Map([...nftsByIpfsHash, ...newNftsByIpfsHash]));
+      setNftsByIpfsHash(newNftsByIpfsHash);
     } catch (err) {
-      addMessage({
-        type: 'Error',
-        userMsg: 'Unable to fetch NFTs. Please try again.',
-        debugMsg: err,
-      });
+      if ((nftFetchState.retryCount ?? 0) > 10) {
+        setNftFetchState({ status: 'stopped' });
+        addMessage({
+          type: 'Error',
+          userMsg: 'Unable to fetch NFTs. Please try again.',
+          debugMsg: err,
+        });
+      } else {
+        const waitMs = (nftFetchState.retryCount ?? 0) * 1000;
+        console.log(
+          `Failed to fetch NFTs. Retrying in ${waitMs} milliseconds.`
+        );
+
+        setTimeout(() => {
+          setNftFetchState({
+            status: 'fetching',
+            retryCount: (nftFetchState.retryCount ?? 0) + 1,
+          });
+        }, waitMs);
+      }
     }
-  }
+  };
+
+  const fetchNfts = () => {
+    setNftFetchState({
+      status: 'fetching',
+    });
+  };
+
+  useEffect(() => {
+    if (nftFetchState.status === 'fetching') fetchNftList();
+  }, [nftFetchState]);
 
   async function buyNft(nft: Nft) {
     try {
@@ -338,6 +364,7 @@ export const NftContextProvider: FC = ({ children }) => {
           getByIpfsHash: getNftByIpfsHash,
           getLiveAuctionList: getLiveAuctionNftsList,
           fetch: fetchNfts,
+          fetchStatus: nftFetchState.status,
           buy: buyNft,
           bid: bidNft,
           setPrice: ChangePrice,

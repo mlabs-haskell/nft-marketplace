@@ -27,10 +27,7 @@ const ArtistCard = ({ artist, className }: ArtistProps) => {
     );
   };
   const artistNfts = nfts.getByPubKeyHash(artist.pubKeyHash);
-
   const artistImages = useMemo(() => getImages(artistNfts), [artistNfts]);
-
-  console.log({ artist, artistNfts, artistImages });
 
   return (
     <Link to={`artist/${artist.id}`}>

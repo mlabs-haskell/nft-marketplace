@@ -45,6 +45,7 @@ const ArtistPage = () => {
         showFilterButtons={false}
         getImageByIpfsHash={images.getByIpfsHash}
         nfts={artistNfts}
+        nftsFetchStatus={nfts.fetchStatus}
       />
     </div>
   );

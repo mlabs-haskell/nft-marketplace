@@ -43,11 +43,7 @@ const Header = (props: Props) => {
     const separatedArray = separateArrayByArrays(artists.slice(1), 2);
 
     return separatedArray.map((subArray) => (
-      <SwiperSlide
-        key={uuidv4()}
-        className={styles['swiper-slide']}
-        transition-property={false}
-      >
+      <SwiperSlide key={uuidv4()} className={styles['swiper-slide']}>
         <div className={styles['small-cards-wrapper']}>
           {subArray?.map((artist) => (
             <ArtistCard

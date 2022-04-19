@@ -3,7 +3,8 @@ import ExploreHeader from 'components/UI/molecules/ExploreHeader';
 import { useWalletContext } from 'context/WalletContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useUIContext } from 'context/UIContext';
-import { NftContextType } from 'context/NftContext';
+import { FetchStatus, NftContextType } from 'context/NftContext';
+import { CircularProgress } from 'components/UI/atoms/CircularProgress';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
@@ -11,10 +12,16 @@ import styles from './index.module.scss';
 interface Props {
   getImageByIpfsHash: NftContextType['images']['getByIpfsHash'];
   nfts: NftContextType['nfts']['list'];
+  nftsFetchStatus: FetchStatus;
   showFilterButtons: boolean;
 }
 
-const Explore = ({ getImageByIpfsHash, nfts, showFilterButtons }: Props) => {
+const Explore = ({
+  getImageByIpfsHash,
+  nfts,
+  nftsFetchStatus,
+  showFilterButtons,
+}: Props) => {
   const { home } = useUIContext();
   const cardsPerPage = 25;
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
@@ -78,7 +85,11 @@ const Explore = ({ getImageByIpfsHash, nfts, showFilterButtons }: Props) => {
           <div className={styles['card-container']}>
             {limitedNfts.length === 0 ? (
               <div className="d-flex justify-content-center mt-4 mb-4">
-                <h2>No NFTs found</h2>
+                {nftsFetchStatus === 'fetching' ? (
+                  <h2>Loading NFTs...</h2>
+                ) : (
+                  <h2>No NFTs found</h2>
+                )}
               </div>
             ) : (
               limitedNfts.map((nft) => {
