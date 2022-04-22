@@ -38,7 +38,7 @@ export const getCtl = async () => {
 
       return ctlSeabug.callMarketPlaceBuy(ctlConfig, buyArgs);
     },
-    connectWallet: ctlSeabug.connectWallet,
+    connectWallet: () => ctlSeabug.connectWallet(),
     getWalletLovelace: async () => {
       const balance = await ctlSeabug.getWalletBalance();
       try {
