@@ -1,27 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UIContextProvider } from 'context/UIContext';
 import { WalletContextProvider } from 'context/WalletContext';
 import { NftContextProvider } from 'context/NftContext';
+import { getAppConfig } from 'utils/appConfig';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import './assets/scss/app.scss';
 import './index.scss';
 
-axios.interceptors.request.use((config: AxiosRequestConfig) => {
-  const token = localStorage.getItem('token');
-  if (token != null) {
-    config.headers.common.Authorization = `${token}`;
+axios.interceptors.request.use(
+  async (config) => {
+    config.baseURL = getAppConfig().api.baseUrl;
+
+    config.headers['Content-Type'] = 'application/json';
+    config.headers.Accept = 'application/json';
+
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
   }
-  config.baseURL = process.env.REACT_APP_BASE_URL;
-
-  config.headers.common['Content-Type'] = 'application/json';
-  config.headers.common.Accept = 'application/json';
-
-  return config;
-});
+);
 
 ReactDOM.render(
   <React.StrictMode>

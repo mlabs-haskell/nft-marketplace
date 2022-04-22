@@ -8,10 +8,16 @@ export default {
 } as ComponentMeta<typeof ArtistCard>;
 
 const Template: ComponentStory<typeof ArtistCard> = (args) => (
-  <ArtistCard {...args} />
+  <ArtistCard artist={args.artist} />
 );
 
 export const Default = Template.bind({});
 Default.args = {
-  name: 'John English',
+  artist: {
+    name: 'John English',
+    createdAt: new Date(),
+    pubKeyHash: 'abcd1234',
+    id: 123,
+    imagePath: '',
+  },
 };

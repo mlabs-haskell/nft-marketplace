@@ -1,13 +1,14 @@
-export namespace ArtistsType {
-  export interface Artist {
-    name: string;
-    createdAt: Date;
-    pubKeyHash: string;
-    id: string;
-    imagePath: string;
-  }
+import { PaginationHeaders } from './shared';
 
-  export interface ArtistResponse {
-    name: string;
-  }
+export interface Artist {
+  name: string;
+  createdAt: Date;
+  pubKeyHash: string;
+  id: number;
+  imagePath: string;
+}
+
+export interface AxiosArtistResponse {
+  data: Artist[];
+  headers: PaginationHeaders;
 }

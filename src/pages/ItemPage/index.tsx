@@ -6,7 +6,7 @@ import { NftContext } from 'context/NftContext';
 import { WalletContext } from 'context/WalletContext';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Rational } from 'seabug-sdk/src/common';
+import { getAppConfig } from 'utils/appConfig';
 import { priceToADA } from 'utils/priceToADA';
 import BuyModal from '../../components/UI/organisms/ItemPage/BuyModal';
 import SetPriceModal from '../../components/UI/organisms/ItemPage/SetPriceModal';
@@ -19,17 +19,28 @@ interface Props {
 const ItemPage = ({ type }: Props) => {
   const { nftId } = useParams<{ nftId: string }>();
   const { artists, images, nfts, common } = useContext(NftContext);
-  const { connected, connect, getPubKeyHashes } = useContext(WalletContext);
+  const wallet = useContext(WalletContext);
+  const [walletBalance, setWalletBalance] = useState(0n);
   const [displayModal, setDisplayModal] = useState<
     'NONE' | 'BUY' | 'SET_PRICE' | 'PLACE_BID'
   >('NONE');
 
-  const nft = nfts.getById({ contentHash: nftId ?? '' });
+  useEffect(() => {
+    const setBal = async () => {
+      const walletLovelace = await wallet.getLovelace();
+      setWalletBalance(walletLovelace);
+    };
+    setBal();
+  }, [wallet.connected]);
+
+  const nft = nfts.getByIpfsHash(nftId);
   const artist = nft
-    ? artists.getByPubKeyHash(nft.author.pubKeyHash)
+    ? artists.getByPubKeyHash(nft.metadata.authorPkh)
     : undefined;
-  const owner = nft ? artists.getByPubKeyHash(nft.owner.pubKeyHash) : undefined;
-  const image = images.getByNftId({ contentHash: nftId ?? '' });
+  const owner = nft
+    ? artists.getByPubKeyHash(nft.metadata.ownerPkh)
+    : undefined;
+  const image = images.getByIpfsHash(nftId ?? '');
 
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<Set<string>>(
     new Set()
@@ -39,22 +50,10 @@ const ItemPage = ({ type }: Props) => {
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
     if (!nft || !image) common.fetchAll();
-    connect('Test Wallet');
   }, []);
 
-  useEffect(() => {
-    // TODO
-    const refreshPubKey = async () => {
-      const pubKeyHashes = await getPubKeyHashes();
-      setWalletsPubKeyHashes(
-        new Set([...walletsPubKeyHashes, ...pubKeyHashes])
-      );
-    };
-    refreshPubKey();
-  }, [connected]);
-
-  const rationalToFloat = (share: Rational, decimals: number) => {
-    const sharePercent = (share[0] * 100) / share[1];
+  const shareToFloat = (share: bigint, decimals: number) => {
+    const sharePercent = Number(share) / 10000;
     const multiplier = 10 ** decimals;
 
     return Math.round(sharePercent * multiplier) / multiplier;
@@ -68,18 +67,11 @@ const ItemPage = ({ type }: Props) => {
   };
   HomeExploreLoading();
 
+  // TODO: Implement or remove auction logic
   const renderBuyButtons = () => {
     return (
       <>
         <div className={styles.buttons}>
-          {nft?.auctionState && (
-            <Button
-              label="Place a bid"
-              color="secondary"
-              btnClass={styles.btn}
-              onClick={() => setDisplayModal('PLACE_BID')}
-            />
-          )}
           <Button
             label={type}
             color="primary"
@@ -87,11 +79,6 @@ const ItemPage = ({ type }: Props) => {
             onClick={() => setDisplayModal('BUY')}
           />
         </div>
-        {nft?.auctionState && (
-          <p style={{ fontSize: '12px', lineHeight: '18px' }}>
-            There&apos;s no bids yet. Be the first!
-          </p>
-        )}
       </>
     );
   };
@@ -116,16 +103,20 @@ const ItemPage = ({ type }: Props) => {
   return (
     <>
       <div className={styles.container}>
-        <ItemPhotoCard imageUrl={image?.path} likeCount="167" />
+        <ItemPhotoCard
+          imageUrl={`${getAppConfig().ipfs.baseUrl}${image?.ipfsHash}`}
+          likeCount="167"
+        />
         <div className={styles['item-details-container']}>
           <ItemDetails
             title={image?.title ?? ''}
-            deadline={nft?.auctionState?.deadline}
-            saleValue={priceToADA(nft?.price)}
-            topBidValue={priceToADA(nft?.auctionState?.highestBid?.bid)}
+            saleValue={priceToADA(nft?.metadata.ownerPrice)}
+            topBidValue=""
             description={image?.description ?? ''}
             creatorValue={`${
-              nft?.share ? rationalToFloat(nft?.share, 2) : 0
+              nft?.metadata.authorShare
+                ? shareToFloat(nft?.metadata.authorShare, 2)
+                : 0
             }% royalties`}
             creatorName={artist?.name ?? ''}
             creatorImagePath={artist?.imagePath}
@@ -142,7 +133,7 @@ const ItemPage = ({ type }: Props) => {
         closeModal={closeModal}
         title={image?.title || ''}
         from={artist?.name || ''}
-        nftPrice={nft?.price || BigInt(0)}
+        nftPrice={nft?.metadata.ownerPrice || BigInt(0)}
         nftId={nftId}
       />
       <BuyModal
@@ -150,9 +141,9 @@ const ItemPage = ({ type }: Props) => {
         closeModal={closeModal}
         title={image?.title || ''}
         from={artist?.name || ''}
-        balance={0}
+        balance={walletBalance}
         percentTax={0.0}
-        nftPrice={nft?.price || BigInt(0)}
+        nftPrice={nft?.metadata.ownerPrice || BigInt(0)}
         nftId={nftId}
       />
       <PlaceBidModal
