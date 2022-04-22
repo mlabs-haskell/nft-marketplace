@@ -1,89 +1,71 @@
 # NFT-Marketplace
 
+## Requirements
+
+- Locally installed Node.js (https://nodejs.org/en/download/)
+- Running CTL backend services (https://github.com/Plutonomicon/cardano-transaction-lib)
+
 ## Getting Started
 
-1. Clone the https://github.com/Plutonomicon/cardano-browser-tx repo, switch to the `seabug-deployment` branch and follow the instructions in `/seabug-deployment/npm-packages/seabug-example`.
-2. Clone the `nft-marketplace` repo.
-3. CD into the `nft-marketplace` and run `npm install`.
-4. Run `npm link cardano-transaction-lib-seabug`. This will create link in your 
-   `node_modules` directory to `cardano-transaction-lib-seabug` that you registered in step 1.
+### Using Public CTL Dependency
+
+1. Clone this repo and cd into the `nft-marketplace` directory.
+2. Run `npm install` to install dependencies.
+3. Update the `.env` file (instructions below).
+4. Run `npm start` to launch the app.
+
+### Using Locally Packaged CTL Dependency
+
+1. Clone the https://github.com/Plutonomicon/cardano-transaction-lib repo, switch to the `seabug-deployment` branch and follow the instructions in `/seabug-deployment/npm-packages/seabug-example`.
+2. Clone this repo and cd into the `nft-marketplace` directory.
+3. Run `npm install` to install dependencies.
+4. Run `npm link cardano-transaction-lib-seabug`. This will create a link in your 
+   `node_modules` directory to the `cardano-transaction-lib-seabug` that you registered in step 1.
+5. Update the `.env` file (instructions below).
+6. Run `npm start` to launch the app.
 
 **Important:** each time your run `npm install` or `npm ci`, you will need to run 
 `npm link cardano-transaction-lib-seabug` again.
 
-## Development Policy
+## Environment Variables
 
-If you are working a full day the expectation is:
+There are several environment variables that must be set prior to launching the app. These can be configured in the `.env` file within the project root directory.
 
-- a minimum of 2 mergable PRs per day
-- avoid using rebase, only use PR merges or 'git merge'
-- avoid squashing commits and force-pushing (unless security credentials were accidentally committed)
+### `REACT_APP_API_BASE_URL` 
+The `nft-marketplace-server` base URL. Example: `https://localhost:8008`
 
-PRs will be reviewed and merged on a daily basis.
+### `REACT_APP_CTL_SERVER_HOST`
+The CTL server host. Example: `localhost`
 
-## Available Scripts
+### `REACT_APP_CTL_SERVER_PORT`
+The CTL server port. Example: `8008`
 
-In the project directory, you can run:
+### `REACT_APP_CTL_SERVER_SECURE_CONN`
+Whether or not to use HTTPS for the CTL server connection. Example: `false`
 
-### `yarn start`
+### `REACT_APP_CTL_OGMIOS_HOST`
+The Ogmios host. Example: `localhost`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### `REACT_APP_CTL_OGMIOS_PORT`
+The Ogmios port. Example: `1337`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### `REACT_APP_CTL_OGMIOS_SECURE_CONN`
+Whether or not to use HTTPS for the Ogmios connection. Example: `false`
 
-### `yarn test`
+### `REACT_APP_CTL_DATUM_CACHE_HOST`
+The Ogmios Datum Cache host. Example: `localhost`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `REACT_APP_CTL_DATUM_CACHE_PORT`
+The Ogmos Datum Cache port. Example: `9999`
 
-### `yarn build`
+### `REACT_APP_CTL_DATUM_CACHE_SECURE_CONN`
+Whether or not to use HTTPS for the Ogmios Datum Cache connection. Example: `false`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `REACT_APP_CTL_NETWORK_ID`
+The Cardano network ID. Set to `0` for testnet and `1` for mainnet.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `REACT_APP_CTL_PROJECT_ID`
+The Blockfrost project ID (which can be obtained by signing up at https://blockfrost.io/). Example: `testnetxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### `REACT_APP_IPFS_BASE_URL`
+The base URL for IPFS requests. Example: `https://cloudflare-ipfs.com/ipfs/`
