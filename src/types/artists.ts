@@ -4,7 +4,7 @@ export interface Artist {
   name: string;
   createdAt: Date;
   pubKeyHash: string;
-  id: string;
+  id: number;
   imagePath: string;
 }
 

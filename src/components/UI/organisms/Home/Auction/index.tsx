@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import { NftContext } from 'context/NftContext';
 import Slider from '../../../molecules/Slider';
 import styles from './index.module.scss';
-import AuctionCard from '../../../molecules/AuctionCard';
 
 function Auction() {
   const { nfts, images } = useContext(NftContext);
@@ -44,20 +43,8 @@ function Auction() {
   const renderAuctionCards = () => {
     const now = new Date();
 
-    return nfts.list
-      .filter(
-        (nft) => nft.auctionState?.highestBid && nft.auctionState.deadline > now
-      )
-      .sort(
-        (a, b) =>
-          (a.auctionState?.deadline?.getTime() ?? Infinity) -
-          (b.auctionState?.deadline?.getTime() ?? Infinity)
-      )
-      .map((nft) => (
-        <div key={nft.id.contentHash} className={styles['card-wrapper']}>
-          <AuctionCard image={images.getByNftId(nft.id)} nft={nft} />
-        </div>
-      ));
+    // TODO: Implement or remove auction logic
+    return [];
   };
 
   return (

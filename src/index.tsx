@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { UIContextProvider } from 'context/UIContext';
 import { WalletContextProvider } from 'context/WalletContext';
 import { NftContextProvider } from 'context/NftContext';
+import { getAppConfig } from 'utils/appConfig';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import './assets/scss/app.scss';
@@ -12,7 +13,7 @@ import './index.scss';
 
 axios.interceptors.request.use(
   async (config) => {
-    config.baseURL = process.env.REACT_APP_API_BASE_URL;
+    config.baseURL = getAppConfig().api.baseUrl;
 
     config.headers['Content-Type'] = 'application/json';
     config.headers.Accept = 'application/json';

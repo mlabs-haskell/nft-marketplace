@@ -3,22 +3,28 @@ import ExploreHeader from 'components/UI/molecules/ExploreHeader';
 import { useWalletContext } from 'context/WalletContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useUIContext } from 'context/UIContext';
-import { NftContextType } from 'context/NftContext';
+import { FetchStatus, NftContextType } from 'context/NftContext';
+import { CircularProgress } from 'components/UI/atoms/CircularProgress';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
 interface Props {
-  getImageByNftId: NftContextType['images']['getByNftId'];
+  getImageByIpfsHash: NftContextType['images']['getByIpfsHash'];
   nfts: NftContextType['nfts']['list'];
+  nftsFetchStatus: FetchStatus;
   showFilterButtons: boolean;
 }
 
-const Explore = ({ getImageByNftId, nfts, showFilterButtons }: Props) => {
+const Explore = ({
+  getImageByIpfsHash,
+  nfts,
+  nftsFetchStatus,
+  showFilterButtons,
+}: Props) => {
   const { home } = useUIContext();
   const cardsPerPage = 25;
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
-  const { getPubKeyHashes, connected } = useWalletContext();
 
   const handleMySalesClick = () => home.setFilterState('SALES');
   const handleMyCollectionClick = () => home.setFilterState('COLLECTION');
@@ -38,14 +44,6 @@ const Explore = ({ getImageByNftId, nfts, showFilterButtons }: Props) => {
     home.currentPage * cardsPerPage
   );
 
-  useEffect(() => {
-    // TODO
-    const refreshPubKey = async () => {
-      const pubKeyHashes = await getPubKeyHashes();
-      setWalletsPubKeyHashes(pubKeyHashes);
-    };
-    refreshPubKey();
-  }, [connected]);
   return (
     <>
       <ExploreHeader
@@ -78,17 +76,17 @@ const Explore = ({ getImageByNftId, nfts, showFilterButtons }: Props) => {
           <div className={styles['card-container']}>
             {limitedNfts.length === 0 ? (
               <div className="d-flex justify-content-center mt-4 mb-4">
-                <h2>No NFTs found</h2>
+                {nftsFetchStatus === 'fetching' ? (
+                  <h2>Loading NFTs...</h2>
+                ) : (
+                  <h2>No NFTs found</h2>
+                )}
               </div>
             ) : (
               limitedNfts.map((nft) => {
-                const image = getImageByNftId(nft.id);
+                const image = getImageByIpfsHash(nft.ipfsHash);
                 return (
-                  <AuctionCard
-                    key={nft.id.contentHash}
-                    nft={nft}
-                    image={image}
-                  />
+                  <AuctionCard key={nft.ipfsHash} nft={nft} image={image} />
                 );
               })
             )}
