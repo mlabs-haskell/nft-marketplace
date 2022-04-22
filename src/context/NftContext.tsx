@@ -16,12 +16,7 @@ import { BuyParams } from 'seabug-sdk/src/buy';
 import { SetPriceParams } from 'seabug-sdk/src/setPrice';
 import { AuctionBidParams } from 'seabug-sdk/src/auction';
 import { Image } from 'types/images';
-
-type AppMessage = {
-  type: 'Success' | 'Error' | 'Info';
-  userMsg?: string;
-  debugMsg?: any;
-};
+import { MsgContext } from './MsgContext';
 
 type FetchInfo = {
   status: 'stopped' | 'fetching';
@@ -56,7 +51,6 @@ export type NftContextType = {
     getMatchingArtists: () => Artist[];
   };
   common: {
-    messages: AppMessage[];
     fetchAll: () => void;
   };
 };
@@ -64,6 +58,7 @@ export type NftContextType = {
 export const NftContext = createContext<NftContextType>({} as NftContextType);
 
 export const NftContextProvider: FC = ({ children }) => {
+  const { messages, addMessage } = useContext(MsgContext);
   // Internal state
   const [artistsByPkh, setArtistsByPkh] = useState<Map<string, Artist>>(
     new Map()
@@ -75,41 +70,12 @@ export const NftContextProvider: FC = ({ children }) => {
     new Map()
   );
   const [searchText, setSearchText] = useState('');
-  const [messages, setMessages] = useState<AppMessage[]>([]);
   const [artistFetchInfo, setArtistFetchInfo] = useState<FetchInfo>({
     status: 'stopped',
   });
   const [imageFetchInfo, setImageFetchInfo] = useState<FetchInfo>({
     status: 'stopped',
   });
-
-  // App Messages
-
-  const addMessage = (msg: AppMessage) => {
-    if (!msg.userMsg && !msg.debugMsg) {
-      console.error('Attempted to add message with no content!');
-      return;
-    }
-
-    setMessages([...messages, msg]);
-
-    if (msg.debugMsg) {
-      if (msg.type === 'Error') {
-        console.error(msg.debugMsg);
-      } else {
-        console.log(msg.debugMsg);
-      }
-    }
-    if (msg.userMsg) {
-      if (msg.type === 'Error') {
-        toast.error(msg.userMsg);
-      } else if (msg.type === 'Success') {
-        toast.success(msg.userMsg);
-      } else {
-        toast(msg.userMsg);
-      }
-    }
-  };
 
   // Artists
 
@@ -368,7 +334,6 @@ export const NftContextProvider: FC = ({ children }) => {
           getMatchingArtists,
         },
         common: {
-          messages,
           fetchAll,
         },
       }}
