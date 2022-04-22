@@ -27,7 +27,6 @@ export type FetchStatus = 'stopped' | 'fetching';
 type FetchState = {
   status: FetchStatus;
   nextRange?: string;
-  retryCount?: number;
 };
 
 export type NftContextType = {
@@ -242,27 +241,19 @@ export const NftContextProvider: FC = ({ children }) => {
       );
 
       setNftsByIpfsHash(newNftsByIpfsHash);
-    } catch (err) {
-      if ((nftFetchState.retryCount ?? 0) > 10) {
-        setNftFetchState({ status: 'stopped' });
-        addMessage({
-          type: 'Error',
-          userMsg: 'Unable to fetch NFTs. Please try again.',
-          debugMsg: err,
-        });
-      } else {
-        const waitMs = (nftFetchState.retryCount ?? 0) * 1000;
-        console.log(
-          `Failed to fetch NFTs. Retrying in ${waitMs} milliseconds.`
-        );
+    } catch (err: any) {
+      const isNamiMissing = (err.message as string)?.includes(
+        `Cannot read properties of undefined (reading 'enable')`
+      );
 
-        setTimeout(() => {
-          setNftFetchState({
-            status: 'fetching',
-            retryCount: (nftFetchState.retryCount ?? 0) + 1,
-          });
-        }, waitMs);
-      }
+      setNftFetchState({ status: 'stopped' });
+      addMessage({
+        type: 'Error',
+        userMsg: isNamiMissing
+          ? 'Nami wallet not found.'
+          : 'Unable to fetch NFTs. Please try again.',
+        debugMsg: err,
+      });
     }
   };
 

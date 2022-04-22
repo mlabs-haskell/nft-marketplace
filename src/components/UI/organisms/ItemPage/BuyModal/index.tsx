@@ -11,7 +11,7 @@ type Props = {
   nftId: string;
   title: string;
   from: string;
-  balance: number;
+  balance: bigint;
   percentTax: number;
   nftPrice: bigint;
 
@@ -64,7 +64,7 @@ const BuyModal = ({
         <div className={styles['table-wrapper']}>
           <div className={styles['table-row']}>
             <span className={styles['item-name']}>Balance</span>
-            <span className={styles['item-value']}>{balance} ADA</span>
+            <span className={styles['item-value']}>{priceToADA(balance)}</span>
           </div>
           <div className={styles['table-row']}>
             <span className={styles['item-name']}>

@@ -19,10 +19,19 @@ interface Props {
 const ItemPage = ({ type }: Props) => {
   const { nftId } = useParams<{ nftId: string }>();
   const { artists, images, nfts, common } = useContext(NftContext);
-  const { connected, connect, getPubKeyHashes } = useContext(WalletContext);
+  const wallet = useContext(WalletContext);
+  const [walletBalance, setWalletBalance] = useState(0n);
   const [displayModal, setDisplayModal] = useState<
     'NONE' | 'BUY' | 'SET_PRICE' | 'PLACE_BID'
   >('NONE');
+
+  useEffect(() => {
+    const setBal = async () => {
+      const walletLovelace = await wallet.getLovelace();
+      setWalletBalance(walletLovelace);
+    };
+    setBal();
+  }, [wallet.connected]);
 
   const nft = nfts.getByIpfsHash(nftId);
   const artist = nft
@@ -41,19 +50,7 @@ const ItemPage = ({ type }: Props) => {
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
     if (!nft || !image) common.fetchAll();
-    connect('Test Wallet');
   }, []);
-
-  useEffect(() => {
-    // TODO
-    const refreshPubKey = async () => {
-      const pubKeyHashes = await getPubKeyHashes();
-      setWalletsPubKeyHashes(
-        new Set([...walletsPubKeyHashes, ...pubKeyHashes])
-      );
-    };
-    refreshPubKey();
-  }, [connected]);
 
   const shareToFloat = (share: bigint, decimals: number) => {
     const sharePercent = Number(share) / 10000;
@@ -144,7 +141,7 @@ const ItemPage = ({ type }: Props) => {
         closeModal={closeModal}
         title={image?.title || ''}
         from={artist?.name || ''}
-        balance={0}
+        balance={walletBalance}
         percentTax={0.0}
         nftPrice={nft?.metadata.ownerPrice || BigInt(0)}
         nftId={nftId}

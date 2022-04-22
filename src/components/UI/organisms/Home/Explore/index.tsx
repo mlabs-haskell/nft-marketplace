@@ -25,7 +25,6 @@ const Explore = ({
   const { home } = useUIContext();
   const cardsPerPage = 25;
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
-  const { getPubKeyHashes, connected } = useWalletContext();
 
   const handleMySalesClick = () => home.setFilterState('SALES');
   const handleMyCollectionClick = () => home.setFilterState('COLLECTION');
@@ -45,14 +44,6 @@ const Explore = ({
     home.currentPage * cardsPerPage
   );
 
-  useEffect(() => {
-    // TODO
-    const refreshPubKey = async () => {
-      const pubKeyHashes = await getPubKeyHashes();
-      setWalletsPubKeyHashes(pubKeyHashes);
-    };
-    refreshPubKey();
-  }, [connected]);
   return (
     <>
       <ExploreHeader

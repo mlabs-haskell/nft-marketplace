@@ -38,5 +38,14 @@ export const getCtl = async () => {
 
       return ctlSeabug.callMarketPlaceBuy(ctlConfig, buyArgs);
     },
+    connectWallet: ctlSeabug.connectWallet,
+    getWalletLovelace: async () => {
+      const balance = await ctlSeabug.getWalletBalance();
+      try {
+        return BigInt(balance.value0.coin().to_str());
+      } catch (err) {
+        return 0n;
+      }
+    },
   };
 };
