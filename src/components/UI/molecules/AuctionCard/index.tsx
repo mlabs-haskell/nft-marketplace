@@ -69,7 +69,7 @@ const AuctionCard = ({ nft, image }: Props) => {
       </div>
       <Link to={`/itempage/${nft?.ipfsHash ?? ''}`}>
         <div className={styles.image}>
-          <img src={`${imagePath}${image?.ipfsHash}`} alt="nft-item" />
+          <img src={`${imagePath}${nft?.ipfsHash}`} alt="nft-item" />
           {timeRemaining && (
             <div className={styles['time-wrapper']}>
               <span className={styles.time}>
