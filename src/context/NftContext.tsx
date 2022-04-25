@@ -9,12 +9,12 @@ import {
 import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
 import { Artist } from 'types/artists';
+import { Nft, nftFromNftListing } from 'types/nfts';
 import { AuctionBidParams, SetPriceParams } from 'types/legacy';
 import { Image } from 'types/images';
-import { MsgContext } from './MsgContext';
 import { Maybe } from 'types/common';
 import { getCtl } from 'ctl';
-import { Nft, nftFromNftListing } from 'types/nfts';
+import { MsgContext } from './MsgContext';
 
 export type FetchStatus = 'stopped' | 'fetching';
 
@@ -70,7 +70,7 @@ export const NftContextProvider: FC = ({ children }) => {
   const [nftsByIpfsHash, setNftsByIpfsHash] = useState<Map<string, Nft>>(
     new Map()
   );
-  
+  const [searchText, setSearchText] = useState('');
   const [artistFetchState, setArtistFetchState] = useState<FetchState>({
     status: 'stopped',
   });
