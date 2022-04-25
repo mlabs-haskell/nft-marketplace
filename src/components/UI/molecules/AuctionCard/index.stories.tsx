@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { InformationNft } from 'seabug-sdk/src/common';
 import { Image } from 'types/images';
+import { Nft } from 'types/nfts';
 import AuctionCard from '.';
 
 export default {
@@ -13,16 +13,34 @@ const Template: ComponentStory<typeof AuctionCard> = (args) => (
   <AuctionCard {...args} />
 );
 
-const nft: InformationNft = {
-  id: { contentHash: 'aa00000000' },
-  share: [1, 10],
-  author: { pubKeyHash: 'ff00000000' },
-  owner: { pubKeyHash: 'ff00000000' },
-  price: 25000000n,
-  auctionState: {
-    highestBid: undefined,
-    deadline: new Date(Date.now() + 1000 * 60 * 10),
-    minBid: 10000000n,
+// TODO: Add sample data for NftListing
+const nft: Nft = {
+  ipfsHash: 'abc123',
+  input: {
+    transaction_id: '',
+    input_index: 0,
+  },
+  output: {
+    address: '',
+    value: {
+      currencySymbol: '',
+      tokenName: '',
+      amount: 0n,
+    },
+    data_hash: '',
+  },
+  metadata: {
+    policyId: '',
+    mintPolicy: '',
+    collectionNftCS: '',
+    collectionNftTN: '',
+    lockingScript: '',
+    authorPkh: '',
+    authorShare: 0n,
+    marketplaceScript: '',
+    marketplaceShare: 0n,
+    ownerPkh: '',
+    ownerPrice: 0n,
   },
 };
 

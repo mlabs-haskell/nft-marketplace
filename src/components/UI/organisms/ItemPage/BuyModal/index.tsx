@@ -1,7 +1,6 @@
 import { NftContext } from 'context/NftContext';
 import toast from 'react-hot-toast';
 import { useContext } from 'react';
-import { BuyParams } from 'seabug-sdk/src/buy';
 import { priceToADA } from 'utils/priceToADA';
 import Button from '../../../atoms/Button';
 import Modal from '../../../molecules/Modal';
@@ -12,7 +11,7 @@ type Props = {
   nftId: string;
   title: string;
   from: string;
-  balance: number;
+  balance: bigint;
   percentTax: number;
   nftPrice: bigint;
 
@@ -30,31 +29,26 @@ const BuyModal = ({
   nftPrice,
 }: Props) => {
   const { nfts } = useContext(NftContext);
-  const calculatePercentFee = () => {
+  const calculatePercentFee = (): bigint => {
     const currentFeeSumm = nftPrice
       ? (Number(nftPrice) * percentTax).toFixed(0)
-      : 0;
+      : 0n;
     return BigInt(currentFeeSumm);
   };
 
-  const calculateSummPay = () => {
-    const summPay = nftPrice ? calculatePercentFee() + nftPrice : 0;
-    return BigInt(summPay);
-  };
+  // TODO: Include fee in calculation
+  const calculateSummPay = () => nftPrice;
 
   const onCheckout = async () => {
-    const data: BuyParams = {
-      nftId: {
-        contentHash: nftId,
-      },
-      price: nftPrice,
-      newPrice: undefined,
-    };
-
     // TODO: Leave modal open and show transaction status once wallet
     // integration is ready.
-    nfts.buy(data);
-    toast.success('Transaction Complete');
+    const nft = nfts.getByIpfsHash(nftId);
+    if (!nft) {
+      console.log(`Problem buying NFT: Nft with id '${nftId}' not found.`);
+      return;
+    }
+
+    nfts.buy(nft);
     closeModal();
   };
 
@@ -70,7 +64,7 @@ const BuyModal = ({
         <div className={styles['table-wrapper']}>
           <div className={styles['table-row']}>
             <span className={styles['item-name']}>Balance</span>
-            <span className={styles['item-value']}>{balance} ADA</span>
+            <span className={styles['item-value']}>{priceToADA(balance)}</span>
           </div>
           <div className={styles['table-row']}>
             <span className={styles['item-name']}>
