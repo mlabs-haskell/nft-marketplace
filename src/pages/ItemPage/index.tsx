@@ -104,7 +104,7 @@ const ItemPage = ({ type }: Props) => {
     <>
       <div className={styles.container}>
         <ItemPhotoCard
-          imageUrl={`${getAppConfig().ipfs.baseUrl}${image?.ipfsHash}`}
+          imageUrl={`${getAppConfig().ipfs.baseUrl}${nft?.ipfsHash}`}
           likeCount="167"
         />
         <div className={styles['item-details-container']}>
