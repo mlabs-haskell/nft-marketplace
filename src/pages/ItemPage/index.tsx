@@ -8,6 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getAppConfig } from 'utils/appConfig';
 import { priceToADA } from 'utils/priceToADA';
+import { roundToFixed } from 'utils/roundToFixed';
 import BuyModal from '../../components/UI/organisms/ItemPage/BuyModal';
 import SetPriceModal from '../../components/UI/organisms/ItemPage/SetPriceModal';
 import styles from './index.module.scss';
@@ -48,11 +49,13 @@ const ItemPage = ({ type }: Props) => {
     if (!nft || !image) common.fetchAll();
   }, []);
 
-  const shareToFloat = (share: bigint, decimals: number) => {
-    const sharePercent = Number(share) / 10000;
-    const multiplier = 10 ** decimals;
+  const shareToPercentRoyalties = (share?: bigint) => {
+    if (!share) return '';
 
-    return Math.round(sharePercent * multiplier) / multiplier;
+    // Convert share from fraction of 10000 to fraction of 100
+    const sharePercent = Number(share) / 100;
+
+    return `${roundToFixed(sharePercent, 2)}% royalties`;
   };
 
   const closeModal = () => setDisplayModal('NONE');
@@ -100,7 +103,7 @@ const ItemPage = ({ type }: Props) => {
     <>
       <div className={styles.container}>
         <ItemPhotoCard
-          imageUrl={`${getAppConfig().ipfs.baseUrl}${image?.ipfsHash}`}
+          imageUrl={`${getAppConfig().ipfs.baseUrl}${nft?.ipfsHash}`}
         />
         <div className={styles['item-details-container']}>
           <ItemDetails
@@ -108,11 +111,7 @@ const ItemPage = ({ type }: Props) => {
             saleValue={priceToADA(nft?.metadata.ownerPrice)}
             topBidValue=""
             description={image?.description ?? ''}
-            creatorValue={`${
-              nft?.metadata.authorShare
-                ? shareToFloat(nft?.metadata.authorShare, 2)
-                : 0
-            }% royalties`}
+            creatorValue={shareToPercentRoyalties(nft?.metadata.authorShare)}
             creatorName={artist?.name ?? ''}
             creatorImagePath={artist?.imagePath}
             ownerPKH={owner?.pubKeyHash ?? ''}
