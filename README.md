@@ -2,19 +2,29 @@
 
 ## Requirements
 
-- Locally installed Node.js (https://nodejs.org/en/download/)
+- Locally installed Node.js (https://nodejs.org/en/download)
+- Nami browser extension (https://namiwallet.io)
 - Running CTL backend services (https://github.com/Plutonomicon/cardano-transaction-lib)
+- Running NFT marketplace server (https://github.com/mlabs-haskell/nft-marketplace-server)
 
 ## Getting Started
 
-### Using Public CTL Dependency
+### Configuring Nami Wallet
+
+1. Install the Nami wallet extension from https://namiwallet.io and complete the setup process.
+2. In the settings, change the network from `Mainnet` to `Testnet`.
+3. Click the `Receive` button in the wallet and copy the address.
+4. Go to https://testnets.cardano.org/en/testnets/cardano/tools/faucet/ and request `tAda` to your address.
+5. Wait until the test Ada shows up in your wallet and then add collateral of `5 tAda`.
+
+### Build Using Public CTL Dependency
 
 1. Clone this repo and cd into the `nft-marketplace` directory.
 2. Run `npm install` to install dependencies.
 3. Update the `.env` file (instructions below).
 4. Run `npm start` to launch the app.
 
-### Using Locally Packaged CTL Dependency
+### Build Using Locally Packaged CTL Dependency
 
 1. Clone the https://github.com/Plutonomicon/cardano-transaction-lib repo, switch to the `seabug-deployment` branch and follow the instructions in `/seabug-deployment/npm-packages/seabug-example`.
 2. Clone this repo and cd into the `nft-marketplace` directory.
