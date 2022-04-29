@@ -6,21 +6,15 @@ import {
   useContext,
   useEffect,
 } from 'react';
-import toast from 'react-hot-toast';
 import { getImages } from 'api/image';
 import { getArtists } from 'api/artist';
 import { Artist } from 'types/artists';
+import { Nft, nftFromNftListing } from 'types/nfts';
 import { AuctionBidParams, SetPriceParams } from 'types/legacy';
 import { Image } from 'types/images';
 import { Maybe } from 'types/common';
 import { getCtl } from 'ctl';
-import { Nft, nftFromNftListing } from 'types/nfts';
-
-type AppMessage = {
-  type: 'Success' | 'Error' | 'Info';
-  userMsg?: string;
-  debugMsg?: any;
-};
+import { MsgContext } from './MsgContext';
 
 export type FetchStatus = 'stopped' | 'fetching';
 
@@ -58,7 +52,6 @@ export type NftContextType = {
     getMatchingArtists: () => Artist[];
   };
   common: {
-    messages: AppMessage[];
     fetchAll: () => void;
   };
 };
@@ -66,6 +59,7 @@ export type NftContextType = {
 export const NftContext = createContext<NftContextType>({} as NftContextType);
 
 export const NftContextProvider: FC = ({ children }) => {
+  const { messages, addMessage } = useContext(MsgContext);
   // Internal state
   const [artistsByPkh, setArtistsByPkh] = useState<Map<string, Artist>>(
     new Map()
@@ -77,7 +71,6 @@ export const NftContextProvider: FC = ({ children }) => {
     new Map()
   );
   const [searchText, setSearchText] = useState('');
-  const [messages, setMessages] = useState<AppMessage[]>([]);
   const [artistFetchState, setArtistFetchState] = useState<FetchState>({
     status: 'stopped',
   });
@@ -87,35 +80,6 @@ export const NftContextProvider: FC = ({ children }) => {
   const [nftFetchState, setNftFetchState] = useState<FetchState>({
     status: 'stopped',
   });
-
-  // App Messages
-
-  const addMessage = (msg: AppMessage) => {
-    if (!msg.userMsg && !msg.debugMsg) {
-      return;
-    }
-
-    setMessages([...messages, msg]);
-
-    if (msg.debugMsg) {
-      if (msg.type === 'Error') {
-        // eslint-disable-next-line no-console
-        console.error(msg.debugMsg);
-      } else {
-        // eslint-disable-next-line no-console
-        console.log(msg.debugMsg);
-      }
-    }
-    if (msg.userMsg) {
-      if (msg.type === 'Error') {
-        toast.error(msg.userMsg);
-      } else if (msg.type === 'Success') {
-        toast.success(msg.userMsg);
-      } else {
-        toast(msg.userMsg);
-      }
-    }
-  };
 
   // Artists
 
@@ -368,7 +332,6 @@ export const NftContextProvider: FC = ({ children }) => {
           getMatchingArtists,
         },
         common: {
-          messages,
           fetchAll,
         },
       }}
