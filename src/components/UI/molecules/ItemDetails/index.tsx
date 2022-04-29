@@ -1,9 +1,8 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import person from 'assets/svg/navIcons/person-icon.svg';
 import { formtTimeItemDetail } from 'components/Util/formatTime';
 import UserPhoto from '../UserPhoto';
 import styles from './index.module.scss';
-import Button from '../../atoms/Button';
 
 interface Props {
   title: string;
@@ -115,7 +114,7 @@ const ItemDetails = ({
             <span className={styles['time-text']}>Auction ends in</span>
             <div className={styles['time-wrapper']}>
               {Object.entries(formtTimeItemDetail(timeRemaining)).map(
-                (item, i) => (
+                (item) => (
                   <div key={`${item[0]}`} className={styles['time-div']}>
                     <span className={styles.time}>{item[1]}</span>
                     <span className={styles['time-text']}>{item[0]}</span>

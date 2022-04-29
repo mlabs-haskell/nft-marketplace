@@ -1,4 +1,3 @@
-import { NftListing } from 'cardano-transaction-lib-seabug';
 import {
   createContext,
   useState,
