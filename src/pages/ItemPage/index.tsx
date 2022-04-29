@@ -42,10 +42,6 @@ const ItemPage = ({ type }: Props) => {
     : undefined;
   const image = images.getByIpfsHash(nftId ?? '');
 
-  const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<Set<string>>(
-    new Set()
-  );
-
   useEffect(() => {
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
@@ -83,8 +79,8 @@ const ItemPage = ({ type }: Props) => {
     );
   };
 
-  const isOwner = (id = '') => {
-    return walletsPubKeyHashes.has(id);
+  const isOwner = (pkh = '') => {
+    return wallet.connected?.pkh === pkh;
   };
 
   const renderSellerButtons = () => {
