@@ -17,13 +17,15 @@ const ctlConfig = {
   projectId: appConfig.ctl.projectId,
 };
 
+let ctlSeabug: typeof import('cardano-transaction-lib-seabug');
+
 /**
  * Seabug CTL functions for querying and generating transactions.
  */
 export const getCtl = async () => {
-  const ctlSeabug = await import('cardano-transaction-lib-seabug');
-
-  console.log({ ctlConfig });
+  if (!ctlSeabug) {
+    ctlSeabug = await import('cardano-transaction-lib-seabug');
+  }
 
   return {
     listNfts: () => ctlSeabug.callMarketPlaceListNft(ctlConfig),
