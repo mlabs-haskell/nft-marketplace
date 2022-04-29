@@ -92,7 +92,6 @@ export const NftContextProvider: FC = ({ children }) => {
 
   const addMessage = (msg: AppMessage) => {
     if (!msg.userMsg && !msg.debugMsg) {
-      console.error('Attempted to add message with no content!');
       return;
     }
 
@@ -100,8 +99,10 @@ export const NftContextProvider: FC = ({ children }) => {
 
     if (msg.debugMsg) {
       if (msg.type === 'Error') {
+        // eslint-disable-next-line no-console
         console.error(msg.debugMsg);
       } else {
+        // eslint-disable-next-line no-console
         console.log(msg.debugMsg);
       }
     }

@@ -1,5 +1,4 @@
 import { NftContext } from 'context/NftContext';
-import toast from 'react-hot-toast';
 import { useContext } from 'react';
 import { priceToADA } from 'utils/priceToADA';
 import Button from '../../../atoms/Button';

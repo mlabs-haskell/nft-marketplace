@@ -12,6 +12,3 @@ const Template: ComponentStory<typeof ItemPhotoCard> = (args) => (
 );
 
 export const Default = Template.bind({});
-Default.args = {
-  likeCount: '0',
-};
