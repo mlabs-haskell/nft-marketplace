@@ -2,45 +2,26 @@
 import Box from 'components/UI/atoms/Box';
 import { truncatePubKeyHash } from 'components/Util/TruncateKey';
 import { useWalletContext, WalletName } from 'context/WalletContext';
+import { connect } from 'http2';
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../assets/svg/navIcons/logo.svg';
-import wallet from '../../../assets/svg/navIcons/wallet.svg';
+import walletIcon from '../../../assets/svg/navIcons/wallet.svg';
 import SearchInput from '../../UI/molecules/SearchInput';
 import styles from './index.module.scss';
 
 function NavBar() {
-  const { wallets, connect, connected, fetchWallets, getPubKeyHashes } =
+  const wallet =
     useWalletContext();
 
   const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
   const [connectedWallet, setConnectedWallet] = useState(false);
   const [showWallets, setShowWallets] = useState(false);
 
-  const handleWalletSelection = (e: any) => {
-    if(wallets.includes(e.target.innerText)){
-      setConnectedWallet(true);
-      connect(e.target.innerText);
-    } else {
-      setConnectedWallet(false);
-    }
-    setShowWallets(!showWallets);
+  const handleWalletSelection = () => {
+    wallet.connect();
+    setShowWallets(false);
   };
-  useEffect(() => {
-    const fetch = async () => {
-      fetchWallets();
-    };
-    fetch();
-  }, []);
-
-  useEffect(() => {
-    // TODO
-    const refreshPubKey = async () => {
-      const pubKeyHashes = await getPubKeyHashes();
-      setWalletsPubKeyHashes(pubKeyHashes);
-    };
-    refreshPubKey();
-  }, [connected]);
 
   return (
     <div className={styles.container}>
@@ -82,7 +63,7 @@ function NavBar() {
               role="presentation"
               onClick={() => setShowWallets(!showWallets)}
             >
-              <img src={wallet} alt="wallet" />
+              <img src={walletIcon} alt="wallet" />
               {connectedWallet &&
                 <p className={`${styles['wallet-name']}`}>
                   {walletsPubKeyHashes.length !== 0 && connectedWallet
@@ -94,16 +75,10 @@ function NavBar() {
             {showWallets ? (
               <Box boxClass={styles.option}>
                 <ul
-                  onClick={(e) => handleWalletSelection(e)}
+                  onClick={handleWalletSelection}
                   role="presentation"
                 >
-                  {wallets.length === 0 ? (
-                    <li>No Wallets Found</li>
-                  ) : (
-                    wallets?.map((item, index) => (
-                      <li key={item[index]}>{item}</li>
-                    ))
-                  )}
+                  <li>Nami</li>
                 </ul>
               </Box>
             ) : (

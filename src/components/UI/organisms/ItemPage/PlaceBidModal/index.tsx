@@ -1,9 +1,8 @@
 import { NftContext } from 'context/NftContext';
-import toast from 'react-hot-toast';
 import Input from 'components/UI/atoms/Input';
 import Dropdown from 'components/UI/molecules/Dropdown';
 import { useContext, useState } from 'react';
-import { AuctionBidParams } from 'seabug-sdk/src/auction';
+import { AuctionBidParams } from 'types/legacy';
 import { adaToLovelace } from 'utils/adaToLovelace';
 import Button from '../../../atoms/Button';
 import Modal from '../../../molecules/Modal';
@@ -53,7 +52,6 @@ const PlaceBidModal = ({
     };
 
     nfts.bid(data);
-    toast.success('Transaction Complete');
     closeModal();
   };
 

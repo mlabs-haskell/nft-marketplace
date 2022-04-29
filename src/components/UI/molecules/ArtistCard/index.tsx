@@ -1,45 +1,47 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useMemo } from 'react';
 import classNames from 'classnames';
 import { useNftContext } from 'context/NftContext';
-import { InformationNft } from 'seabug-sdk/src/common';
 import { Link } from 'react-router-dom';
-import { ArtistsType } from 'types/artists';
+import { Artist } from 'types/artists';
+import { Nft } from 'types/nfts';
+import { getAppConfig } from 'utils/appConfig';
 import Box from '../../atoms/Box';
 import styles from './index.module.scss';
 
-interface Props extends ArtistsType.Artist {
+interface ArtistProps {
+  artist: Artist;
   className?: string;
 }
 
-const ArtistCard = ({ name, className, id, pubKeyHash }: Props) => {
+const ArtistCard = ({ artist, className }: ArtistProps) => {
+  const ipfsBaseUrl = getAppConfig().ipfs.baseUrl;
   const isLight = true;
   const { nfts, images } = useNftContext();
 
-  const getImages = (artistNfts: InformationNft[] | undefined) => {
+  const getImages = (artistNfts: Nft[] | undefined) => {
     if (!artistNfts) return [];
 
     const random = Math.floor(Math.random() * artistNfts.length);
     return images.list.filter(
-      (items) => items.sha256hash === artistNfts[random]?.id?.contentHash
+      (image) => image.ipfsHash === artistNfts[random]?.ipfsHash
     );
   };
-  const artistNfts = nfts.getByPubKeyHash(pubKeyHash);
+  const artistNfts = nfts.getByPubKeyHash(artist.pubKeyHash);
   const artistImages = useMemo(() => getImages(artistNfts), [artistNfts]);
 
   return (
-    <Link to={`artist/${id}`}>
+    <Link to={`artist/${artist.id}`}>
       <Box
         boxClass={classNames(styles.container, className)}
         style={{
-          backgroundImage: `url(${artistImages[0]?.path})`,
+          backgroundImage: `url(${ipfsBaseUrl}${artistImages[0]?.ipfsHash})`,
         }}
       >
         <h4
           className={styles.title}
           style={{ color: isLight ? `white` : 'black' }}
         >
-          {name}
+          {artist.name}
         </h4>
       </Box>
     </Link>

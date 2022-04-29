@@ -4,7 +4,6 @@ import Box from 'components/UI/atoms/Box';
 import { useNftContext } from 'context/NftContext';
 import { Link } from 'react-router-dom';
 import searchIcon from '../../../../assets/svg/search.svg';
-import arrow from '../../../../assets/svg/arrow-down.svg';
 import styles from './index.module.scss';
 
 interface Props {
@@ -13,7 +12,7 @@ interface Props {
 
 const SearchInput = ({ placeholder }: Props) => {
   const { search } = useNftContext();
-  const [value, setValue] = useState(search.text);
+  const [value, setValue] = useState('');
   const [display, setDisplay] = useState(false);
 
   const handleClose = () => {

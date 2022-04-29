@@ -1,77 +1,53 @@
 import { createContext, useState, FC, useContext } from 'react';
+import { getCtl } from 'ctl';
 
-export type WalletAddress = {
-  pubKeyHash: string;
+export type WalletName = 'Nami';
+
+export type WalletInfo = {
+  name: WalletName;
+  pkh: string;
 };
-
-export type WalletName = 'NONE' | 'Test Wallet';
 
 export type TransactionCborHex = string;
 
 export type TransactionHash = string;
 
 export type WalletContextType = {
-  wallets: WalletName[];
-  connected: WalletName;
-  getPubKeyHashes: () => Promise<string[]>;
-  signAndSubmitTx: (tx: TransactionCborHex) => Promise<TransactionHash>;
-  connect: (wallet: WalletName) => void;
-  fetchWallets: () => void;
+  connected?: WalletInfo;
+  connect: () => void;
+  getLovelace: () => Promise<any>;
 };
 
 export const WalletContext = createContext<WalletContextType>({
-  wallets: [],
-  connected: 'NONE',
-  getPubKeyHashes: () => Promise.resolve([]),
-  signAndSubmitTx: () => Promise.resolve(''),
   connect: () => {},
-  fetchWallets: () => {},
+  getLovelace: () => Promise.reject(),
 });
 
 // TODO: Implement actual wallet connection logic
 export const WalletContextProvider: FC = ({ children }) => {
-  const [wallets, setWallets] = useState<WalletName[]>([]);
-  const [connected, setConnected] = useState<WalletName>('NONE');
+  const [connected, setConnected] = useState<WalletInfo>();
 
-  const connect = (wallet: WalletName): void => {
-    /* if (!wallets.includes(wallet)) {
-      console.error(
-        `Attempted to connect to wallet (${wallet}) that is not available`
-      );
-      return;
-    } */
+  const connect = async (): Promise<void> => {
+    const ctlSeabug = await getCtl();
+    await ctlSeabug.connectWallet();
 
-    setConnected(wallet);
-  };
-  const getPubKeyHashes = () => {
-    switch (connected) {
-      case 'Test Wallet':
-        return Promise.resolve(['ff00000001']);
-      default:
-        return Promise.resolve([]);
-    }
+    setConnected({
+      name: 'Nami',
+      pkh: '', // TODO: add actual pub key hash
+    });
   };
 
-  const fetchWallets = () => {
-    const walletList: WalletName[] = ['Test Wallet'];
-
-    setWallets(walletList);
+  const getLovelace = async (): Promise<any> => {
+    const ctlSeabug = await getCtl();
+    return ctlSeabug.getWalletLovelace();
   };
-
-  const signAndSubmitTx = (tx: TransactionCborHex) =>
-    Promise.resolve(`abcd1234${tx}`);
-  // Tx value will be used in the future.
-  // This lie is to fix the eslint warning.
 
   return (
     <WalletContext.Provider
       value={{
-        wallets,
         connected,
-        getPubKeyHashes,
         connect,
-        signAndSubmitTx,
-        fetchWallets,
+        getLovelace,
       }}
     >
       {children}
