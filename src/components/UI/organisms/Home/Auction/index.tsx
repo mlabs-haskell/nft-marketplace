@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { NftContext } from 'context/NftContext';
+import { useEffect, useState } from 'react';
 import Slider from '../../../molecules/Slider';
 import styles from './index.module.scss';
 
 function Auction() {
-  const { nfts, images } = useContext(NftContext);
   const [carrocelNum, setCarrocelNum] = useState(1);
 
   function getWindowDimensions() {
@@ -41,8 +39,6 @@ function Auction() {
   }, [windowDimensions]);
 
   const renderAuctionCards = () => {
-    const now = new Date();
-
     // TODO: Implement or remove auction logic
     return [];
   };

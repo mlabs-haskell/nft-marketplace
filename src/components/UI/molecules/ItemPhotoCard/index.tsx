@@ -1,15 +1,13 @@
 import styles from './index.module.scss';
-import heart from '../../../../assets/svg/like-heart.svg';
-import image1 from '../../../../assets/svg/image1.svg';
 
 interface Props {
   imageUrl?: string;
-  likeCount: string;
 }
 
 // TODO: Uncomment heart code once feature is ready
 
-function ItemPhotoCard({ imageUrl, likeCount }: Props) {
+// This line is for eslit error unused likeCount
+function ItemPhotoCard({ imageUrl }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.photobox}>
