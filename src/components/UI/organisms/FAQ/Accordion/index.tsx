@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { faqContent } from 'context/FaqContext';
 import styles from './index.module.scss';

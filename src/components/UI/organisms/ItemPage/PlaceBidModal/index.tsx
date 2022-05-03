@@ -1,5 +1,4 @@
 import { NftContext } from 'context/NftContext';
-import toast from 'react-hot-toast';
 import Input from 'components/UI/atoms/Input';
 import Dropdown from 'components/UI/molecules/Dropdown';
 import { useContext, useState } from 'react';

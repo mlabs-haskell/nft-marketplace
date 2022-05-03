@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
 import ExploreHeader from 'components/UI/molecules/ExploreHeader';
-import { useWalletContext } from 'context/WalletContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useUIContext } from 'context/UIContext';
 import { FetchStatus, NftContextType } from 'context/NftContext';
-import { CircularProgress } from 'components/UI/atoms/CircularProgress';
+import { useWalletContext } from 'context/WalletContext';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
@@ -23,15 +21,15 @@ const Explore = ({
   showFilterButtons,
 }: Props) => {
   const { home } = useUIContext();
+  const wallet = useWalletContext();
   const cardsPerPage = 25;
-  const [walletsPubKeyHashes, setWalletsPubKeyHashes] = useState<string[]>([]);
 
   const handleMySalesClick = () => home.setFilterState('SALES');
   const handleMyCollectionClick = () => home.setFilterState('COLLECTION');
   const handleAllClick = () => home.setFilterState('ALL');
   const nftsAfterOwnerFilter =
     home.filterState === 'COLLECTION' || home.filterState === 'SALES'
-      ? home.filterByOwner(nfts, walletsPubKeyHashes)
+      ? home.filterByOwner(nfts, wallet.connected ? [wallet.connected.pkh] : [])
       : nfts;
 
   const nftsAfterSaleFilter =
