@@ -95,7 +95,7 @@ const AuctionCard = ({ nft, image }: Props) => {
       </div>
       {refresh && (
         <div
-          className={styles.memb}
+          className={styles.layer}
           onClick={() => setRefresh(false)}
           role="button"
           tabIndex={0}
