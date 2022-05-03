@@ -1,5 +1,5 @@
 export const ipfsUrlToHash = (url: string) => {
-  const [_, hash] = url.split('//');
+  const [, hash] = url.split('//');
 
   return hash ?? url;
 };
