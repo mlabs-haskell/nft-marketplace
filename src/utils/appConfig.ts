@@ -1,6 +1,7 @@
 export interface AppConfig {
   api: {
     baseUrl: string;
+    engageBayBaseUrl: string;
   };
   ctl: {
     server: {
@@ -28,7 +29,7 @@ export interface AppConfig {
 
 type AppConfigNetworkId = 0 | 1;
 
-const parseStringVar = (name: string) => {
+export const parseStringVar = (name: string) => {
   const envVar = process.env[name];
   if (envVar === undefined) {
     throw new Error(`'${name}' environment variable is missing.`);
@@ -89,6 +90,7 @@ export const getAppConfig = (): AppConfig => {
     config = Object.freeze({
       api: {
         baseUrl: parseStringVar('REACT_APP_API_BASE_URL'),
+        engageBayBaseUrl: parseStringVar('REACT_APP_ENGAGEBAY_BASE_URL'),
       },
       ctl: {
         server: {
