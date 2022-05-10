@@ -1,3 +1,4 @@
+import React from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
 import { faqContent } from 'context/FaqContext';
 import ButhrefnInput from '../../UI/molecules/ButtonInput';
@@ -11,6 +12,11 @@ import Dropdown from '../../UI/molecules/Dropdown';
 
 const Footer = () => {
   const option = ['English', 'Spanish'];
+  const [email, setEmail] = React.useState<string>('');
+
+  const onSubscribe = () => {
+    console.log(email);
+  };
 
   const capitalizeFistLetter = (word: string) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
@@ -21,8 +27,11 @@ const Footer = () => {
         <div className="col-lg-6">
           <p>Get the latest Seabug updates</p>
           <ButhrefnInput
+            value={email}
             placeholder="Your Email.:"
+            onChange={(e) => setEmail(e.target.value)}
             btnClass={styles.buthrefn}
+            onSubmit={onSubscribe}
           />
           <ul className={styles['social-links']}>
             <li>
