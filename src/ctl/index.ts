@@ -1,4 +1,4 @@
-import { ContractArgs } from 'cardano-transaction-lib-seabug';
+import { ContractArgs } from 'seabug-contracts';
 import { getAppConfig } from 'utils/appConfig';
 
 const appConfig = getAppConfig();
@@ -17,14 +17,14 @@ const ctlConfig = {
   projectId: appConfig.ctl.projectId,
 };
 
-let ctlSeabug: typeof import('cardano-transaction-lib-seabug');
+let ctlSeabug: typeof import('seabug-contracts');
 
 /**
  * Seabug CTL functions for querying and generating transactions.
  */
 export const getCtl = async () => {
   if (!ctlSeabug) {
-    ctlSeabug = await import('cardano-transaction-lib-seabug');
+    ctlSeabug = await import('seabug-contracts');
   }
 
   return {
@@ -46,6 +46,7 @@ export const getCtl = async () => {
       try {
         return BigInt(balance.value0.coin().to_str());
       } catch (err) {
+        console.log('getWalletBalance() failed', err);
         return 0n;
       }
     },
