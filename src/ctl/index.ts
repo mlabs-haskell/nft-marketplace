@@ -15,6 +15,7 @@ const ctlConfig = {
   datumCacheSecureConn: appConfig.ctl.datumCache.secureConn,
   networkId: appConfig.ctl.networkId,
   projectId: appConfig.ctl.projectId,
+  logLevel: 'Trace',
 };
 
 let ctlSeabug: typeof import('seabug-contracts');
