@@ -46,8 +46,12 @@ const ItemPage = ({ type }: Props) => {
   useEffect(() => {
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
-    if (!nft || !image) common.fetchAll();
-  }, []);
+    // if (!nft || !image) common.fetchAll();
+    console.log('Fetching nft...');
+    if (nft?.input) {
+      nfts.fetchOne(nft?.input);
+    }
+  }, [nft]);
 
   const shareToPercentRoyalties = (share?: bigint) => {
     if (!share) return '';

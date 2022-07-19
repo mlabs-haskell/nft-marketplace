@@ -70,7 +70,7 @@ const parseBoolVar = (name: string) => {
   throw new Error(`'${name}' environment variable is invalid.`);
 };
 
-const parseNetworkIdVar = (name: string) => {
+const parseNetworkIdVar = (name: string): AppConfigNetworkId => {
   const parsed = parseNumberVar(name);
 
   if (parsed === 0 || parsed === 1) {

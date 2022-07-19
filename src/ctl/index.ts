@@ -1,4 +1,4 @@
-import { ContractArgs } from 'seabug-contracts';
+import { ContractArgs, FetchNftArgs } from 'seabug-contracts';
 import { getAppConfig } from 'utils/appConfig';
 
 const appConfig = getAppConfig();
@@ -40,6 +40,9 @@ export const getCtl = async () => {
       /* eslint-enable */
 
       return ctlSeabug.callMarketPlaceBuy(ctlConfig, buyArgs);
+    },
+    fetchNft: (fetchArgs: FetchNftArgs) => {
+      return ctlSeabug.callMarketPlaceFetchNft(ctlConfig, fetchArgs);
     },
     connectWallet: () => ctlSeabug.connectWallet(),
     getWalletLovelace: async () => {

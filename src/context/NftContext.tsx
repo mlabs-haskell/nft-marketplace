@@ -14,6 +14,7 @@ import { AuctionBidParams, SetPriceParams } from 'types/legacy';
 import { Image } from 'types/images';
 import { Maybe } from 'types/common';
 import { getCtl } from 'ctl';
+import { Input } from 'seabug-contracts';
 import { MsgContext } from './MsgContext';
 
 export type FetchStatus = 'stopped' | 'fetching';
@@ -40,6 +41,7 @@ export type NftContextType = {
     getByIpfsHash: (nftId: string) => Maybe<Nft>;
     getLiveAuctionList: () => Nft[];
     fetch: () => void;
+    fetchOne: (input: Input) => void;
     fetchStatus: FetchStatus;
     buy: (nft: Nft) => Promise<void>;
     bid: (bidParams: AuctionBidParams) => void;
@@ -222,6 +224,32 @@ export const NftContextProvider: FC = ({ children }) => {
     }
   };
 
+  const fetchNft = async (input: Input) => {
+    try {
+      const ctl = await getCtl();
+
+      console.log('calling fetchNft()');
+
+      const nft = await ctl.fetchNft(input);
+
+      console.log('fetchNft() finished successfully');
+
+      console.log(`nft: ${nft}`);
+    } catch (err: any) {
+      const isNamiMissing = (err.message as string)?.includes(
+        `Cannot read properties of undefined (reading 'enable')`
+      );
+
+      addMessage({
+        type: 'Error',
+        userMsg: isNamiMissing
+          ? 'Nami wallet not found.'
+          : 'Unable to fetch NFT. Please try again.',
+        debugMsg: err,
+      });
+    }
+  };
+
   const fetchNfts = () => {
     setNftFetchState({
       status: 'fetching',
@@ -320,6 +348,7 @@ export const NftContextProvider: FC = ({ children }) => {
           getByIpfsHash: getNftByIpfsHash,
           getLiveAuctionList: getLiveAuctionNftsList,
           fetch: fetchNfts,
+          fetchOne: fetchNft,
           fetchStatus: nftFetchState.status,
           buy: buyNft,
           bid: bidNft,
