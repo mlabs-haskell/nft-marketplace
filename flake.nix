@@ -23,7 +23,7 @@
       };
 
     d2nFlakeOutputs = dream2nix.lib.makeFlakeOutputs {
-      systems = ["x86_64-linux"];
+      systems = supportedSystems;
       config.projectRoot = ./.;
       source = ./.;
       settings = [
@@ -33,37 +33,43 @@
         }
       ];
     };
+  in {
+    # The following add a check that run `npm run test` (i.e. `craco test`)
+    # uncomment when some tests will be implemented
 
-    checks = d2nFlakeOutputs.packages;
+    # checks = perSystem (system: let
+    #   pkgs = pkgsFor system;
+    # in {
+    #   cracoTest = d2nFlakeOutputs.packages.${system}.default.overrideAttrs (old: {
+    #     doCheck = true;
+    #     dontInstall = true;
+    #     checkPhase = ''
+    #       npm run test
+    #     '';
+    #   });
+    # });
 
     packages = perSystem (
       system: let
-        pkgs = pkgsFor system; in {
-          default = pkgs.stdenv.mkDerivation {
-            name = "nft-marketplace";
-            dontUnpack = true;
-            dontBuild = true;
-            installPhase = ''
-              cp -r ${d2nFlakeOutputs.packages.${system}.default}/lib/node_modules/nft-marketplace/build/ $out/
-            '';
-          };
-      });
-
-    apps = perSystem (
-      system: let
         pkgs = pkgsFor system;
       in {
-        default = { # TODO: npm run start? nginx?
-          type = "app";
-          program = "${pkgs.writeShellScript "run-nft-marketplace" ''
-
-          ''}";
+        default = pkgs.stdenv.mkDerivation {
+          name = "nft-marketplace";
+          dontUnpack = true;
+          dontBuild = true;
+          installPhase = ''
+            cp -r ${d2nFlakeOutputs.packages.${system}.default}/lib/node_modules/nft-marketplace/build/ $out/
+          '';
         };
       }
     );
 
-    devShells = perSystem (system: d2nFlakeOutputs.packages.${system}.default);
-  in {
-    inherit packages apps checks devShells;
+    devShells = perSystem (system: let
+      pkgs = pkgsFor system;
+    in {
+      default = pkgs.mkShell {
+        buildInputs = with pkgs; [nodePackages.npm];
+      };
+    });
   };
 }
