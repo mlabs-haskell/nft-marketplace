@@ -12,7 +12,7 @@ import { Artist } from 'types/artists';
 import { Nft, nftFromNftListing } from 'types/nfts';
 import { AuctionBidParams, SetPriceParams } from 'types/legacy';
 import { Image } from 'types/images';
-import { Maybe } from 'types/common';
+import { Maybe, NftImage } from 'types/common';
 import { getCtl } from 'ctl';
 import { MsgContext } from './MsgContext';
 
@@ -37,6 +37,7 @@ export type NftContextType = {
   };
   nfts: {
     list: Nft[];
+    withImages: NftImage[];
     getByIpfsHash: (nftId: string) => Maybe<Nft>;
     getLiveAuctionList: () => Nft[];
     fetch: () => void;
@@ -282,6 +283,21 @@ export const NftContextProvider: FC = ({ children }) => {
     return nftsMap;
   }, [nftsByIpfsHash, artistsByPkh]);
 
+  const nftsWithImages = useMemo<NftImage[]>(() => {
+    const nftImages: NftImage[] = [];
+
+    nftsByIpfsHash.forEach((nft) => {
+      const image = getImageByIpfsHash(nft.ipfsHash);
+      if (image) {
+        nftImages.push({ nft, image });
+      }
+    });
+
+    console.log({ nftImages });
+
+    return nftImages;
+  }, [nftsByIpfsHash, imagesByIpfsHash]);
+
   const getNftsByPubKeyHash = (pkh: string) => nftsByArtistPkh.get(pkh);
 
   // Search
@@ -317,6 +333,7 @@ export const NftContextProvider: FC = ({ children }) => {
         },
         nfts: {
           list: nftsList,
+          withImages: nftsWithImages,
           getByIpfsHash: getNftByIpfsHash,
           getLiveAuctionList: getLiveAuctionNftsList,
           fetch: fetchNfts,

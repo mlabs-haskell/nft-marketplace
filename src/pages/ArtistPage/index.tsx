@@ -3,7 +3,7 @@ import Explore from 'components/UI/organisms/Home/Explore';
 import { useNftContext } from 'context/NftContext';
 import { useEffect, useState } from 'react';
 import { Artist } from 'types/artists';
-import { Nft } from 'types/nfts';
+import { NftImage } from 'types/common';
 
 interface ArtistParam {
   artistId: string;
@@ -14,9 +14,9 @@ const ArtistPage = () => {
   const [artist, setArtist] = useState<Artist>();
 
   // TODO: Move into NftContext
-  const [artistNfts, setNfts] = useState<Nft[]>([]);
+  const [artistNfts, setNfts] = useState<NftImage[]>([]);
 
-  const { images, nfts, artists } = useNftContext();
+  const { nfts, artists } = useNftContext();
 
   const getArtist = () => {
     const newArtist = artists.list.find(
@@ -27,8 +27,8 @@ const ArtistPage = () => {
 
   const getArtistNfts = () => {
     // TODO: Move into NftContext (and memoize?)
-    const newNfts = nfts.list.filter(
-      (nft) => nft.metadata.authorPkh === artist?.pubKeyHash
+    const newNfts = nfts.withImages.filter(
+      (nftImage) => nftImage.nft.metadata.authorPkh === artist?.pubKeyHash
     );
     setNfts(newNfts);
   };
@@ -43,8 +43,7 @@ const ArtistPage = () => {
       <h2>{artist?.name}</h2>
       <Explore
         showFilterButtons={false}
-        getImageByIpfsHash={images.getByIpfsHash}
-        nfts={artistNfts}
+        nftImages={artistNfts}
         nftsFetchStatus={nfts.fetchStatus}
       />
     </div>

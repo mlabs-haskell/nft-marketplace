@@ -8,18 +8,12 @@ import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
 interface Props {
-  getImageByIpfsHash: NftContextType['images']['getByIpfsHash'];
-  nfts: NftContextType['nfts']['list'];
+  nftImages: NftContextType['nfts']['withImages'];
   nftsFetchStatus: FetchStatus;
   showFilterButtons: boolean;
 }
 
-const Explore = ({
-  getImageByIpfsHash,
-  nfts,
-  nftsFetchStatus,
-  showFilterButtons,
-}: Props) => {
+const Explore = ({ nftImages, nftsFetchStatus, showFilterButtons }: Props) => {
   const { home } = useUIContext();
   const wallet = useWalletContext();
   const cardsPerPage = 25;
@@ -29,8 +23,11 @@ const Explore = ({
   const handleAllClick = () => home.setFilterState('ALL');
   const nftsAfterOwnerFilter =
     home.filterState === 'COLLECTION' || home.filterState === 'SALES'
-      ? home.filterByOwner(nfts, wallet.connected ? [wallet.connected.pkh] : [])
-      : nfts;
+      ? home.filterByOwner(
+          nftImages,
+          wallet.connected ? [wallet.connected.pkh] : []
+        )
+      : nftImages;
 
   const nftsAfterSaleFilter =
     home.filterState === 'SALES'
@@ -81,10 +78,13 @@ const Explore = ({
                 )}
               </div>
             ) : (
-              limitedNfts.map((nft) => {
-                const image = getImageByIpfsHash(nft.ipfsHash);
+              limitedNfts.map((nftImage) => {
                 return (
-                  <AuctionCard key={nft.ipfsHash} nft={nft} image={image} />
+                  <AuctionCard
+                    key={nftImage.nft.ipfsHash}
+                    nft={nftImage.nft}
+                    image={nftImage.image}
+                  />
                 );
               })
             )}

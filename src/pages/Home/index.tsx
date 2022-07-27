@@ -5,7 +5,7 @@ import Explore from 'components/UI/organisms/Home/Explore';
 import Header from 'components/UI/organisms/Home/Header';
 
 const Home = () => {
-  const { artists, images, nfts, common, search } = useContext(NftContext);
+  const { artists, nfts, common, search } = useContext(NftContext);
 
   useEffect(() => {
     search.setText('');
@@ -18,8 +18,7 @@ const Home = () => {
       {nfts.getLiveAuctionList().length > 0 && <Auction />}
       <Explore
         showFilterButtons
-        getImageByIpfsHash={images.getByIpfsHash}
-        nfts={nfts.list}
+        nftImages={nfts.withImages}
         nftsFetchStatus={nfts.fetchStatus}
       />
     </div>
