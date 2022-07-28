@@ -27,6 +27,7 @@ export type NftContextType = {
   artists: {
     list: Artist[];
     listRandomized: Artist[];
+    getById: (id: number) => Maybe<Artist>;
     getByPubKeyHash: (pkh: string) => Maybe<Artist>;
     fetch: () => void;
   };
@@ -37,7 +38,6 @@ export type NftContextType = {
   };
   nfts: {
     list: Nft[];
-    withImages: NftImage[];
     getByIpfsHash: (nftId: string) => Maybe<Nft>;
     getLiveAuctionList: () => Nft[];
     fetch: () => void;
@@ -45,7 +45,11 @@ export type NftContextType = {
     buy: (nft: Nft) => Promise<void>;
     bid: (bidParams: AuctionBidParams) => void;
     setPrice: (setPriceParams: SetPriceParams) => void;
-    getByPubKeyHash: (pkh: string) => Maybe<Nft[]>;
+  };
+  nftImages: {
+    list: NftImage[];
+    getByArtist: (pkh: string) => NftImage[];
+    getByOwner: (pkh: string) => NftImage[];
   };
   search: {
     text: string;
@@ -62,6 +66,9 @@ export const NftContext = createContext<NftContextType>({} as NftContextType);
 export const NftContextProvider: FC = ({ children }) => {
   const { messages, addMessage } = useContext(MsgContext);
   // Internal state
+  const [artistsById, setArtistsById] = useState<Map<number, Artist>>(
+    new Map()
+  );
   const [artistsByPkh, setArtistsByPkh] = useState<Map<string, Artist>>(
     new Map()
   );
@@ -84,12 +91,14 @@ export const NftContextProvider: FC = ({ children }) => {
 
   // Artists
 
-  const artistsList = useMemo<Artist[]>(
-    () => [...artistsByPkh.values()],
+  const artistsList = useMemo(() => [...artistsByPkh.values()], [artistsByPkh]);
+
+  const artistsListRandomized = useMemo(
+    () => artistsList.sort(() => 0.5 - Math.random()),
     [artistsByPkh]
   );
-  const artistsListRandomized = artistsList.sort(() => 0.5 - Math.random());
 
+  const getArtistById = (id: number) => artistsById.get(id);
   const getArtistByPubKeyHash = (pkh: string) => artistsByPkh.get(pkh);
 
   // TODO: Improve pagination logic (fetch pages as user scrolls)
@@ -98,11 +107,15 @@ export const NftContextProvider: FC = ({ children }) => {
       const { artists, nextRange } = await getArtists(
         artistFetchState?.nextRange
       );
+      const newArtistsById = new Map(
+        artists?.map((artist) => [artist.id, artist])
+      );
       const newArtistsByPkh = new Map(
         artists?.map((artist) => [artist.pubKeyHash, artist])
       );
       const hasMorePages = nextRange && artists && artists.length > 0;
 
+      setArtistsById(new Map([...artistsById, ...newArtistsById]));
       setArtistsByPkh(new Map([...artistsByPkh, ...newArtistsByPkh]));
       setArtistFetchState({
         status: hasMorePages ? 'fetching' : 'stopped',
@@ -144,8 +157,6 @@ export const NftContextProvider: FC = ({ children }) => {
       const newImagesByIpfsHash = new Map(
         images?.map((image) => [image.ipfsHash, image])
       );
-
-      console.log({ newImagesByIpfsHash });
 
       setImagesByIpfsHash(
         new Map([...imagesByIpfsHash, ...newImagesByIpfsHash])
@@ -270,35 +281,43 @@ export const NftContextProvider: FC = ({ children }) => {
     // TODO: Add price change logic
   }
 
-  const nftsByArtistPkh = useMemo(() => {
-    const nftsMap = new Map<string, Nft[]>();
+  // Nfts combined with image data (excluding nfts without corresponding image records)
 
-    nftsByIpfsHash.forEach((nft) => {
-      nftsMap.set(nft.metadata.authorPkh, [
-        ...(nftsMap.get(nft.metadata.authorPkh) ?? []),
-        nft,
-      ]);
-    });
-
-    return nftsMap;
-  }, [nftsByIpfsHash, artistsByPkh]);
-
-  const nftsWithImages = useMemo<NftImage[]>(() => {
-    const nftImages: NftImage[] = [];
+  const nftImages = useMemo(() => {
+    const nftImagesList: NftImage[] = [];
+    const byArtist = new Map<string, NftImage[]>();
+    const byOwner = new Map<string, NftImage[]>();
 
     nftsByIpfsHash.forEach((nft) => {
       const image = getImageByIpfsHash(nft.ipfsHash);
-      if (image) {
-        nftImages.push({ nft, image });
-      }
+      if (!image) return;
+
+      const nftImage = { nft, image };
+
+      nftImagesList.push(nftImage);
+
+      byArtist.set(nft.metadata.authorPkh, [
+        ...(byArtist.get(nft.metadata.authorPkh) ?? []),
+        nftImage,
+      ]);
+
+      byOwner.set(nft.metadata.ownerPkh, [
+        ...(byOwner.get(nft.metadata.ownerPkh) ?? []),
+        nftImage,
+      ]);
     });
 
-    console.log({ nftImages });
-
-    return nftImages;
+    return {
+      list: nftImagesList,
+      byArtist,
+      byOwner,
+    };
   }, [nftsByIpfsHash, imagesByIpfsHash]);
 
-  const getNftsByPubKeyHash = (pkh: string) => nftsByArtistPkh.get(pkh);
+  const getNftImagesByArtist = (pkh: string) =>
+    nftImages.byArtist.get(pkh) ?? [];
+
+  const getNftImagesByOwner = (pkh: string) => nftImages.byOwner.get(pkh) ?? [];
 
   // Search
 
@@ -323,6 +342,7 @@ export const NftContextProvider: FC = ({ children }) => {
         artists: {
           list: artistsList,
           listRandomized: artistsListRandomized,
+          getById: getArtistById,
           getByPubKeyHash: getArtistByPubKeyHash,
           fetch: fetchArtists,
         },
@@ -333,7 +353,6 @@ export const NftContextProvider: FC = ({ children }) => {
         },
         nfts: {
           list: nftsList,
-          withImages: nftsWithImages,
           getByIpfsHash: getNftByIpfsHash,
           getLiveAuctionList: getLiveAuctionNftsList,
           fetch: fetchNfts,
@@ -341,7 +360,11 @@ export const NftContextProvider: FC = ({ children }) => {
           buy: buyNft,
           bid: bidNft,
           setPrice: ChangePrice,
-          getByPubKeyHash: getNftsByPubKeyHash,
+        },
+        nftImages: {
+          list: nftImages.list,
+          getByArtist: getNftImagesByArtist,
+          getByOwner: getNftImagesByOwner,
         },
         search: {
           text: searchText,

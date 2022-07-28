@@ -6,7 +6,6 @@ import {
   SetStateAction,
   Dispatch,
 } from 'react';
-import { NftImage } from 'types/common';
 
 export type UIContextType = {
   home: {
@@ -15,8 +14,6 @@ export type UIContextType = {
     currentPage: number;
     setCurrentPage: Dispatch<SetStateAction<number>>;
     incrementCurrentPage: () => void;
-    filterByOwner: (value: NftImage[], key: string[]) => NftImage[];
-    filterByOnSale: (value: NftImage[]) => NftImage[];
     filterState: FilterState;
     setFilterState: Dispatch<SetStateAction<FilterState>>;
   };
@@ -38,14 +35,6 @@ export const UIContextProvider: FC = ({ children }) => {
     setCurrentPage(currentPage + 1);
   };
 
-  const filterByOwner = (ownerNfts: NftImage[], key: string[]) =>
-    ownerNfts.filter((nftImage) =>
-      key.includes(nftImage.nft.metadata.ownerPkh)
-    );
-
-  // TODO: Remove filter logic if no longer required
-  const filterByOnSale = (ownerNfts: NftImage[]) => ownerNfts;
-
   return (
     <UIContext.Provider
       value={{
@@ -55,8 +44,6 @@ export const UIContextProvider: FC = ({ children }) => {
           currentPage,
           setCurrentPage,
           incrementCurrentPage,
-          filterByOwner,
-          filterByOnSale,
           filterState,
           setFilterState,
         },

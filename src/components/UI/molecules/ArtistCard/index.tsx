@@ -14,17 +14,17 @@ interface ArtistProps {
 const ArtistCard = ({ artist, className }: ArtistProps) => {
   const ipfsBaseUrl = getAppConfig().ipfs.baseUrl;
   const isLight = true;
-  const { nfts } = useNftContext();
+  const { nftImages } = useNftContext();
 
-  const artistNfts = nfts.getByPubKeyHash(artist.pubKeyHash) ?? [];
-  const nft = artistNfts[Math.floor(Math.random() * artistNfts.length)];
+  const artistNfts = nftImages.getByArtist(artist.pubKeyHash);
+  const nftImage = artistNfts[Math.floor(Math.random() * artistNfts.length)];
 
   return (
     <Link to={`artist/${artist.id}`}>
       <Box
         boxClass={classNames(styles.container, className)}
         style={{
-          backgroundImage: `url(${ipfsBaseUrl}${nft?.ipfsHash})`,
+          backgroundImage: `url(${ipfsBaseUrl}${nftImage?.nft.ipfsHash})`,
         }}
       >
         <h4
