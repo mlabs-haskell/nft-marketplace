@@ -43,7 +43,7 @@ export const getCtl = async () => {
     },
     connectWallet: () => ctlSeabug.connectWallet(),
     getWalletLovelace: async () => {
-      const balance = await ctlSeabug.getWalletBalance();
+      const balance = await ctlSeabug.getWalletBalance(ctlConfig);
       try {
         return BigInt(balance.value0.coin().to_str());
       } catch (err) {
