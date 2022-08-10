@@ -72,37 +72,41 @@
   }
 }
 
-.wallet-list{
+.wallet-list {
   display: inline-flex;
   list-style: none;
   font-size: pxToRem(14);
   font-weight: 700;
   padding: 0;
   margin: 0;
-};
+}
 
 .wallet-icon {
   display: flex;
   align-items: flex-start;
   height: 44px;
   border-radius: 16px;
-  background-color: #3983F2;
+  background-color: #3983f2;
   display: flex;
   overflow: hidden;
-};
+}
+
 .wallet-wrapper {
   z-index: 170;
   display: flex;
   flex-direction: row;
 }
-.wallet-name{
+
+.wallet-name {
   font-size: 13px;
   line-height: 21px;
   color: #fff;
   margin-right: 15px;
+
   @media only screen and (max-width: $breakpointPhone) {
     min-width: 50px;
   }
+
   letter-spacing: -0.02em;
 }
 
@@ -117,11 +121,18 @@
   background-color: #fff;
   max-height: fit-content;
   padding: 20px;
+
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
     cursor: pointer;
+
+    li {
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+    }
 
     a {
       color: #000;
@@ -132,12 +143,14 @@
       li {
         color: #000;
         padding-left: 20px;
+
         &:hover {
           background-color: #f7f7f7;
           padding: 10px 0 10px 20px;
           border: 5px;
         }
       }
+
       &:last-child {
         margin-bottom: 0;
       }

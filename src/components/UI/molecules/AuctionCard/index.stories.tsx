@@ -17,8 +17,8 @@ const Template: ComponentStory<typeof AuctionCard> = (args) => (
 const nft: Nft = {
   ipfsHash: 'abc123',
   input: {
-    transaction_id: '',
-    input_index: 0,
+    transactionId: '',
+    inputIndex: 0,
   },
   output: {
     address: '',

@@ -1,4 +1,4 @@
-import { ContractArgs } from 'seabug-contracts';
+import { ContractArgs, WalletOption } from 'seabug-contracts';
 import { getAppConfig } from 'utils/appConfig';
 
 const appConfig = getAppConfig();
@@ -40,9 +40,10 @@ export const getCtl = async () => {
 
       return ctlSeabug.callMarketPlaceBuy(ctlConfig, buyArgs);
     },
-    connectWallet: () => ctlSeabug.connectWallet(),
+    connectWallet: (walletOption: WalletOption) =>
+      ctlSeabug.connectWallet(walletOption),
     getWalletLovelace: async () => {
-      const balance = await ctlSeabug.getWalletBalance();
+      const balance = await ctlSeabug.getWalletBalance(ctlConfig);
       try {
         return BigInt(balance.value0.coin().to_str());
       } catch (err) {
