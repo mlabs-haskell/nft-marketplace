@@ -6,6 +6,7 @@ export interface AppConfig {
     server: {
       host: string;
       port: number;
+      logLevel: string;
       secureConn: boolean;
     };
     ogmios: {
@@ -94,6 +95,7 @@ export const getAppConfig = (): AppConfig => {
         server: {
           host: parseStringVar('REACT_APP_CTL_SERVER_HOST'),
           port: parseNumberVar('REACT_APP_CTL_SERVER_PORT'),
+          logLevel: parseStringVar('REACT_APP_CTL_LOG_LEVEL'),
           secureConn: parseBoolVar('REACT_APP_CTL_SERVER_SECURE_CONN'),
         },
         ogmios: {
