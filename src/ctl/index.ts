@@ -1,4 +1,4 @@
-import { ContractArgs } from 'seabug-contracts';
+import { ContractArgs, WalletOption } from 'seabug-contracts';
 import { getAppConfig } from 'utils/appConfig';
 
 const appConfig = getAppConfig();
@@ -6,6 +6,7 @@ const appConfig = getAppConfig();
 const ctlConfig = {
   serverHost: appConfig.ctl.server.host,
   serverPort: appConfig.ctl.server.port,
+  logLevel: appConfig.ctl.server.logLevel,
   serverSecureConn: appConfig.ctl.server.secureConn,
   ogmiosHost: appConfig.ctl.ogmios.host,
   ogmiosPort: appConfig.ctl.ogmios.port,
@@ -41,9 +42,10 @@ export const getCtl = async () => {
 
       return ctlSeabug.callMarketPlaceBuy(ctlConfig, buyArgs);
     },
-    connectWallet: () => ctlSeabug.connectWallet(),
+    connectWallet: (walletOption: WalletOption) =>
+      ctlSeabug.connectWallet(walletOption),
     getWalletLovelace: async () => {
-      const balance = await ctlSeabug.getWalletBalance();
+      const balance = await ctlSeabug.getWalletBalance(ctlConfig);
       try {
         return BigInt(balance.value0.coin().to_str());
       } catch (err) {
