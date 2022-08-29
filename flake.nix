@@ -4,7 +4,7 @@
     nixpkgs.url = github:NixOs/nixpkgs/nixos-unstable;
     dream2nix = {
       url = github:nix-community/dream2nix;
-      inputs.nixpgks.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
