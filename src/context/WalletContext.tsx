@@ -1,10 +1,9 @@
 import { createContext, useState, FC, useContext } from 'react';
 import { getCtl } from 'ctl';
-
-export type WalletName = 'Nami';
+import { WalletOption } from 'seabug-contracts';
 
 export type WalletInfo = {
-  name: WalletName;
+  name: WalletOption;
   pkh: string;
 };
 
@@ -14,7 +13,7 @@ export type TransactionHash = string;
 
 export type WalletContextType = {
   connected?: WalletInfo;
-  connect: () => void;
+  connect: (walletOption: WalletOption) => void;
   getLovelace: () => Promise<any>;
 };
 
@@ -27,12 +26,12 @@ export const WalletContext = createContext<WalletContextType>({
 export const WalletContextProvider: FC = ({ children }) => {
   const [connected, setConnected] = useState<WalletInfo>();
 
-  const connect = async (): Promise<void> => {
+  const connect = async (walletOption: WalletOption): Promise<void> => {
     const ctlSeabug = await getCtl();
-    await ctlSeabug.connectWallet();
+    await ctlSeabug.connectWallet(walletOption);
 
     setConnected({
-      name: 'Nami',
+      name: walletOption,
       pkh: '', // TODO: add actual pub key hash
     });
   };
