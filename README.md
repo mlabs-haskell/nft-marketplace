@@ -72,10 +72,10 @@ The Ogmos Datum Cache port. Example: `9999`
 Whether or not to use HTTPS for the Ogmios Datum Cache connection. Example: `false`
 
 ### `REACT_APP_CTL_NETWORK_ID`
-The Cardano network ID. Set to `2` for preview, `1` for pre-production, and `0` for mainnet (see [here](https://book.world.dev.cardano.org/environments.html) in the "byron genesis" links)
+The Cardano network ID/tag, see [CIP19](https://cips.cardano.org/cips/cip19/#networktag). Set to 0 for testnets (pre-prod, preview), and 1 for mainnet.
 
 ### `REACT_APP_CTL_PROJECT_ID`
-The Blockfrost project ID (which can be obtained by signing up at https://blockfrost.io/). Example: `testnetxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+The Blockfrost project ID (which can be obtained by signing up at https://blockfrost.io/). Example: `previewxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
 
 ### `REACT_APP_IPFS_BASE_URL`
 The base URL for IPFS requests. Example: `https://cloudflare-ipfs.com/ipfs/`
