@@ -51,20 +51,20 @@
 
       packages = lib.perSystem (system: {
         default = pkgsFor.${system}.stdenv.mkDerivation {
-            name = "nft-marketplace";
-            dontUnpack = true;
-            dontBuild = true;
-            installPhase = ''
-              cp -r ${d2nFlakeOutputs.packages.${system}.default}/lib/node_modules/nft-marketplace/build $out
-            '';
-          };
-        }
+          name = "nft-marketplace";
+          dontUnpack = true;
+          dontBuild = true;
+          installPhase = ''
+            cp -r ${d2nFlakeOutputs.packages.${system}.default}/lib/node_modules/nft-marketplace/build $out
+          '';
+        };
+      }
       );
 
       devShells = lib.perSystem (system: {
         default = with pkgsFor.${system}; mkShell {
-            buildInputs = [ nodePackages.npm ];
-          };
-        });
+          buildInputs = [ nodePackages.npm ];
+        };
+      });
     };
 }
