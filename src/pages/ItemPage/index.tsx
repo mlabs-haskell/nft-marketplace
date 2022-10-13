@@ -44,6 +44,7 @@ const ItemPage = ({ type }: Props) => {
   const image = images.getByIpfsHash(nftId ?? '');
 
   useEffect(() => {
+    wallet.connect('Nami');
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
     if (!nft || !image) common.fetchAll();
@@ -117,9 +118,10 @@ const ItemPage = ({ type }: Props) => {
             ownerPKH={owner?.pubKeyHash ?? ''}
             ownerImagePath={owner?.imagePath}
           />
-          {isOwner(owner?.pubKeyHash)
-            ? renderSellerButtons()
-            : renderBuyButtons()}
+          {owner?.pubKeyHash &&
+            (isOwner(owner?.pubKeyHash)
+              ? renderSellerButtons()
+              : renderBuyButtons())}
         </div>
       </div>
       <SetPriceModal

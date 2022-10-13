@@ -81,11 +81,11 @@ function NavBar() {
                   >
                     Nami
                   </li>
-                  <li
+                  {/* <li
                     onClick={() => handleWalletSelection('Gero')}
                   >
                     Gero
-                  </li>
+                  </li> */}
                 </ul>
               </Box>
             ) : (

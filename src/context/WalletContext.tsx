@@ -28,11 +28,11 @@ export const WalletContextProvider: FC = ({ children }) => {
 
   const connect = async (walletOption: WalletOption): Promise<void> => {
     const ctlSeabug = await getCtl();
-    await ctlSeabug.connectWallet(walletOption);
+    const pkh = await ctlSeabug.getWalletPkh();
 
     setConnected({
       name: walletOption,
-      pkh: '', // TODO: add actual pub key hash
+      pkh: pkh || '',
     });
   };
 

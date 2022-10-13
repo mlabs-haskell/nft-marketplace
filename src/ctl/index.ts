@@ -41,16 +41,14 @@ export const getCtl = async () => {
 
       return ctlSeabug.callMarketPlaceBuy(ctlConfig, buyArgs);
     },
-    connectWallet: (walletOption: WalletOption) =>
-      ctlSeabug.connectWallet(walletOption),
-    getWalletLovelace: async () => {
+    getWalletLovelace: async (): Promise<bigint> => {
       const balance = await ctlSeabug.getWalletBalance(ctlConfig);
-      try {
-        return BigInt(balance.value0.coin().to_str());
-      } catch (err) {
-        console.log('getWalletBalance() failed', err);
+      if (typeof balance !== 'bigint') {
         return 0n;
       }
+      return balance;
     },
+    getWalletPkh: (): Promise<string | null> =>
+      ctlSeabug.getWalletPkh(ctlConfig),
   };
 };
