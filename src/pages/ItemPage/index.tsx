@@ -28,8 +28,7 @@ const ItemPage = ({ type }: Props) => {
 
   useEffect(() => {
     const setBal = async () => {
-      const walletLovelace = await wallet.getLovelace();
-      setWalletBalance(walletLovelace);
+      setWalletBalance(wallet.getLovelace());
     };
     setBal();
   }, [wallet.connected]);

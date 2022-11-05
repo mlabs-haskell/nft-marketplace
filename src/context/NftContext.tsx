@@ -268,7 +268,8 @@ export const NftContextProvider: FC = ({ children }) => {
     } catch (err) {
       addMessage({
         type: 'Error',
-        userMsg: 'Unable to buy NFT',
+        userMsg:
+          'Unable to buy NFT, please ensure Nami is installed and try again.',
         debugMsg: err,
       });
     }
