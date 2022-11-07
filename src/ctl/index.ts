@@ -42,7 +42,7 @@ export const getCtl = async () => {
       return ctlSeabug.callMarketPlaceBuy(ctlConfig, buyArgs);
     },
     getWalletLovelace: async (): Promise<bigint> => {
-      const balance = (await ctlSeabug.getWalletBalance(ctlConfig)).value;
+      const balance = (await ctlSeabug.getWalletLovelace(ctlConfig)).value;
       if (typeof balance !== 'bigint') {
         return 0n;
       }
