@@ -16,13 +16,13 @@ export type TransactionHash = string;
 export type WalletContextType = {
   connected?: WalletInfo;
   connect: (walletOption: WalletOption) => void;
-  /** Returns the lovelace amount in the wallet from the last time `connect` was called */
-  getLovelace: () => any;
+  /** Updates `connected` with the wallet's current lovelace balance */
+  updateLovelace: () => Promise<void>;
 };
 
 export const WalletContext = createContext<WalletContextType>({
   connect: () => {},
-  getLovelace: () => Promise.reject(),
+  updateLovelace: () => Promise.reject(),
 });
 
 // TODO: Implement actual wallet connection logic
@@ -50,8 +50,14 @@ export const WalletContextProvider: FC = ({ children }) => {
     }
   };
 
-  const getLovelace = () => {
-    return connected?.lovelace;
+  const updateLovelace = async () => {
+    if (!connected) return;
+    const ctlSeabug = await getCtl();
+    const lovelace = await ctlSeabug.getWalletLovelace();
+    setConnected((c) => {
+      if (!c) return undefined;
+      return { ...c, lovelace };
+    });
   };
 
   return (
@@ -59,7 +65,7 @@ export const WalletContextProvider: FC = ({ children }) => {
       value={{
         connected,
         connect,
-        getLovelace,
+        updateLovelace,
       }}
     >
       {children}

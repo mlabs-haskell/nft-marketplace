@@ -21,17 +21,9 @@ const ItemPage = ({ type }: Props) => {
   const { nftId } = useParams<{ nftId: string }>();
   const { artists, images, nfts, common } = useContext(NftContext);
   const wallet = useContext(WalletContext);
-  const [walletBalance, setWalletBalance] = useState(0n);
   const [displayModal, setDisplayModal] = useState<
     'NONE' | 'BUY' | 'SET_PRICE' | 'PLACE_BID'
   >('NONE');
-
-  useEffect(() => {
-    const setBal = async () => {
-      setWalletBalance(wallet.getLovelace());
-    };
-    setBal();
-  }, [wallet.connected]);
 
   const nft = nfts.getByIpfsHash(nftId);
   const artist = nft
@@ -75,7 +67,10 @@ const ItemPage = ({ type }: Props) => {
             label={type}
             color="primary"
             btnClass={styles.btn}
-            onClick={() => setDisplayModal('BUY')}
+            onClick={() => {
+              wallet.updateLovelace();
+              return setDisplayModal('BUY');
+            }}
           />
         </div>
       </>
@@ -136,7 +131,7 @@ const ItemPage = ({ type }: Props) => {
         closeModal={closeModal}
         title={image?.title || ''}
         from={artist?.name || ''}
-        balance={walletBalance}
+        balance={wallet.connected?.lovelace ?? 0n}
         percentTax={0.0}
         nftPrice={nft?.metadata.ownerPrice || BigInt(0)}
         nftId={nftId}
