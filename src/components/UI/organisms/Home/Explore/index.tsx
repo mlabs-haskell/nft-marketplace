@@ -1,46 +1,27 @@
 import ExploreHeader from 'components/UI/molecules/ExploreHeader';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useUIContext } from 'context/UIContext';
-import { FetchStatus, NftContextType } from 'context/NftContext';
-import { useWalletContext } from 'context/WalletContext';
+import { FetchStatus, useNftContext } from 'context/NftContext';
+import { NftImage } from 'types/common';
 import Button from '../../../atoms/Button';
 import AuctionCard from '../../../molecules/AuctionCard';
 import styles from './index.module.scss';
 
 interface Props {
-  getImageByIpfsHash: NftContextType['images']['getByIpfsHash'];
-  nfts: NftContextType['nfts']['list'];
+  nftImages: NftImage[];
   nftsFetchStatus: FetchStatus;
   showFilterButtons: boolean;
 }
 
-const Explore = ({
-  getImageByIpfsHash,
-  nfts,
-  nftsFetchStatus,
-  showFilterButtons,
-}: Props) => {
+const Explore = ({ nftImages, nftsFetchStatus, showFilterButtons }: Props) => {
   const { home } = useUIContext();
-  const wallet = useWalletContext();
   const cardsPerPage = 25;
 
   const handleMySalesClick = () => home.setFilterState('SALES');
   const handleMyCollectionClick = () => home.setFilterState('COLLECTION');
   const handleAllClick = () => home.setFilterState('ALL');
-  const nftsAfterOwnerFilter =
-    home.filterState === 'COLLECTION' || home.filterState === 'SALES'
-      ? home.filterByOwner(nfts, wallet.connected ? [wallet.connected.pkh] : [])
-      : nfts;
 
-  const nftsAfterSaleFilter =
-    home.filterState === 'SALES'
-      ? home.filterByOnSale(nftsAfterOwnerFilter)
-      : nftsAfterOwnerFilter;
-
-  const limitedNfts = nftsAfterSaleFilter.slice(
-    0,
-    home.currentPage * cardsPerPage
-  );
+  const limitedNfts = nftImages.slice(0, home.currentPage * cardsPerPage);
 
   return (
     <>
@@ -81,15 +62,18 @@ const Explore = ({
                 )}
               </div>
             ) : (
-              limitedNfts.map((nft) => {
-                const image = getImageByIpfsHash(nft.ipfsHash);
+              limitedNfts.map((nftImage) => {
                 return (
-                  <AuctionCard key={nft.ipfsHash} nft={nft} image={image} />
+                  <AuctionCard
+                    key={nftImage.nft.ipfsHash}
+                    nft={nftImage.nft}
+                    image={nftImage.image}
+                  />
                 );
               })
             )}
           </div>
-          {home.currentPage === 1 && nftsAfterSaleFilter.length > cardsPerPage && (
+          {home.currentPage === 1 && nftImages.length > cardsPerPage && (
             <div className={styles.btn}>
               <Button
                 label="Load More"

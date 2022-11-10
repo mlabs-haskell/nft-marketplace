@@ -1,9 +1,4 @@
-import {
-  Input,
-  NftListing,
-  Output,
-  SeabugMetadata,
-} from 'cardano-transaction-lib-seabug';
+import { Input, NftListing, Output, SeabugMetadata } from 'seabug-contracts';
 import { ipfsUrlFromHash, ipfsUrlToHash } from 'utils/ipfs';
 
 export interface Nft {
