@@ -15,7 +15,6 @@ in
       type = lib.types.package;
       default = with cfg; (artifactsBuilder
         {
-          SKIP_PREFLIGHT_CHECK = true; # TODO do we really need this?
           REACT_APP_API_BASE_URL = api.baseUrl;
           REACT_APP_CTL_LOG_LEVEL = ctl.logLevel;
           REACT_APP_CTL_SERVER_HOST = ctl.server.host;
