@@ -59,7 +59,7 @@
       #   });
       # });
 
-      packages = lib.perSystem (system: {
+      packages = perSystem (system: {
         nft-marketplace-frontend-artifacts =
           let
             nft-marketplace-frontend = d2nFlakeOutputs.packages.${system}.default.overrideAttrs (old: {
@@ -108,7 +108,7 @@
         inherit (d2nFlakeOutputs.packages.${system}) resolveImpure;
       });
 
-      devShells = lib.perSystem (system: {
+      devShells = perSystem (system: {
         default = with pkgsFor.${system}; mkShell {
           buildInputs = [ nodePackages.npm ];
         };
