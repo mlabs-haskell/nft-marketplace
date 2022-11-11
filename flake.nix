@@ -87,7 +87,7 @@
                     '';
                   });
                 in
-                (if old ? preBuild then old.preBuild else "") + ''
+                (old.preBuild or "") + ''
                   mkdir seabug-contracts-module
                   cp -r $out/lib/node_modules/nft-marketplace/node_modules/seabug-contracts/* seabug-contracts-module
                   cp ${seabug-contracts-output-js}/output.js seabug-contracts-module
