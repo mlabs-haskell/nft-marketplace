@@ -7,6 +7,7 @@
       url = github:nix-community/dream2nix;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # TODO: use `main` when this is merged
     seabug-contracts.url = github:mlabs-haskell/seabug-contracts/calum/fixing-buy-button;
   };
 
