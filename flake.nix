@@ -20,11 +20,11 @@
     let
       supportedSystems = [ "x86_64-linux" "x86_64-darwin" ];
 
+      lib = nixpkgs.lib;
+
       pkgsFor = lib.genAttrs supportedSystems (system: nixpkgs.legacyPackages.${system});
 
-      lib = nixpkgs.lib.extend (self: super: {
-        perSystem = super.genAttrs supportedSystems;
-      });
+      perSystem = lib.genAttrs supportedSystems;
 
       d2nFlakeOutputs =
         let
