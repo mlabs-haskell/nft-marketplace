@@ -139,7 +139,7 @@
 
       hydraJobs = {
         inherit (self.packages.x86_64-linux) nft-marketplace-frontend-artifacts;
-        nixos-module = self.nixosConfiguration.test.system.build.toplevel;
+        nixos-module = self.nixosConfigurations.test.system.build.toplevel;
       };
     };
 }
