@@ -25,22 +25,24 @@
         perSystem = super.genAttrs supportedSystems;
       });
 
-      d2nFlakeOutputs = let
-        src = builtins.path {
-          path = ./.;
-          filter = path: _: builtins.baseNameOf path != "package-lock.json";
+      d2nFlakeOutputs =
+        let
+          src = builtins.path {
+            path = ./.;
+            filter = path: _: builtins.baseNameOf path != "package-lock.json";
+          };
+        in
+        dream2nix.lib.makeFlakeOutputs {
+          systems = supportedSystems;
+          config.projectRoot = src;
+          source = src;
+          settings = [
+            {
+              subsystemInfo.noDev = false;
+              subsystemInfo.nodejs = 16;
+            }
+          ];
         };
-      in dream2nix.lib.makeFlakeOutputs {
-        systems = supportedSystems;
-        config.projectRoot = src;
-        source = src;
-        settings = [
-          {
-            subsystemInfo.noDev = false;
-            subsystemInfo.nodejs = 16;
-          }
-        ];
-      };
     in
     {
       # The following add a check that run `npm run test` (i.e. `craco test`)
@@ -124,6 +126,10 @@
           nft-marketplace-frontend-artifacts = self.packages.${pkgsSelf.system}.nft-marketplace-frontend-artifacts;
         };
         default = self.overlays.nft-marketplace-frontend;
+      };
+
+      hydraJobs = {
+        inherit (self.packages.x86_64-linux) nft-marketplace-frontend-artifacts;
       };
     };
 }

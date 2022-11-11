@@ -28,10 +28,7 @@ in
         "seabug" = {
           root = pkgs.nft-marketplace-frontend-artifacts;
         };
-
-
       };
-
     };
 
   };
