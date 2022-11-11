@@ -5,7 +5,7 @@ let
 in
 {
 
-  options.nft-marketplace-frontend.enable = lib.mkEnableOption "Enable nft-marketplace frontend";
+  options.services.nft-marketplace-frontend.enable = lib.mkEnableOption "Enable nft-marketplace frontend";
 
   config = lib.mkIf cfg.enable {
 

@@ -129,8 +129,17 @@
         default = self.overlays.nft-marketplace-frontend;
       };
 
+      nixosConfigurations.test = lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          self.nixosModules.default
+          ./test-module.nix
+        ];
+      };
+
       hydraJobs = {
         inherit (self.packages.x86_64-linux) nft-marketplace-frontend-artifacts;
+        nixos-module = self.nixosConfiguration.test.system.build.toplevel;
       };
     };
 }
