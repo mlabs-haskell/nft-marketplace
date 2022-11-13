@@ -45,6 +45,8 @@
           cp ${make-seabug-contracts-output-js system}/output.js seabug-contracts-module
           rm -rf $out/lib/node_modules/nft-marketplace/node_modules/seabug-contracts
           cp -r seabug-contracts-module $out/lib/node_modules/nft-marketplace/node_modules/seabug-contracts
+          # avoid Error: error:0308010C:digital envelope routines::unsupported
+          export NODE_OPTIONS=--openssl-legacy-provider
         '';
         installPhase = ''
           cp -r $out/lib/node_modules/nft-marketplace/build $out
