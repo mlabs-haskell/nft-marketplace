@@ -7,6 +7,7 @@
       url = github:nix-community/dream2nix;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    styleguide.url = github:mlabs-haskell/styleguide;
     # TODO: use `main` when this is merged
     seabug-contracts.url = github:mlabs-haskell/seabug-contracts/calum/fixing-buy-button;
   };
@@ -52,6 +53,7 @@
     in
     {
       checks = perSystem (system: {
+        format = inputs.styleguide.lib.${system}.mkCheck self;
         cracoTest = self.packages.${system}.default.overrideAttrs (old: {
           doCheck = true;
           dontInstall = true;
@@ -92,6 +94,8 @@
           buildInputs = [ nodePackages.npm ];
         };
       });
+
+      formatter = perSystem (system: inputs.styleguide.lib.${system}.mkFormatter self);
 
       hydraJobs = {
         inherit (self.packages.x86_64-linux) nft-marketplace-frontend-artifacts;
