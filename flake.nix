@@ -84,9 +84,9 @@
       };
 
       packages = perSystem (system: rec {
-        seabug-frontend = make-frontend system self.lib.exampleBuildEnvVars;
+        nft-marketplace-frontend = make-frontend system self.lib.exampleBuildEnvVars;
         inherit (d2nFlake.packages.${system}) resolveImpure;
-        default = seabug-frontend;
+        default = nft-marketplace-frontend;
       });
 
       devShells = perSystem (system: {
@@ -97,8 +97,10 @@
 
       formatter = perSystem (system: inputs.styleguide.lib.${system}.mkFormatter self);
 
-      hydraJobs = {
-        inherit (self.packages.x86_64-linux) nft-marketplace-frontend-artifacts;
-      };
+      hydraJobs.required = pkgs.x86_64-linux.runCommand "required"
+        {
+          inherit (self.packages.x86_64-linux) nft-marketplace-frontend;
+          inherit (self.checks.x86_64-linux) format cracoTest;
+        } "touch $out";
     };
 }
