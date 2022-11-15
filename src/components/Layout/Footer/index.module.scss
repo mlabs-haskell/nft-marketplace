@@ -9,6 +9,12 @@
   position: absolute;
   left: 0;
 
+  .modalText {
+    color: $darkBlue;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
   a {
     color: #fff;
   }

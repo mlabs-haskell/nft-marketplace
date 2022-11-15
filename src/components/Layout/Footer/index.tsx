@@ -1,5 +1,9 @@
+import React from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
 import { faqContent } from 'context/FaqContext';
+import Modal from 'components/UI/molecules/Modal';
+import { getAppConfig, parseStringVar } from 'utils/appConfig';
+import axios, { AxiosRequestConfig } from 'axios';
 import ButhrefnInput from '../../UI/molecules/ButtonInput';
 import styles from './index.module.scss';
 import instagram from '../../../assets/svg/instagram.svg';
@@ -11,6 +15,42 @@ import Dropdown from '../../UI/molecules/Dropdown';
 
 const Footer = () => {
   const option = ['English', 'Spanish'];
+  const [email, setEmail] = React.useState<string>('');
+  const [showModal, setShowModal] = React.useState<boolean>(false);
+
+  const onSubscribe = () => {
+    const data = {
+      properties: [
+        {
+          name: 'email',
+          value: email,
+          type: 'SYSTEM',
+        },
+      ],
+      tags: [],
+    };
+
+    const header = {
+      headers: {
+        Authorization: parseStringVar('REACT_APP_ENGAGEBAY_API_KEY'),
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    } as AxiosRequestConfig;
+
+    axios
+      .post(
+        `${
+          getAppConfig().api.engageBayBaseUrl
+        }dev/api/panel/subscribers/subscriber`,
+        data,
+        header
+      )
+      .then(() => {
+        setShowModal(true);
+      })
+      .catch(() => setShowModal(true));
+  };
 
   const capitalizeFistLetter = (word: string) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
@@ -21,8 +61,11 @@ const Footer = () => {
         <div className="col-lg-6">
           <p>Get the latest Seabug updates</p>
           <ButhrefnInput
+            value={email}
             placeholder="Your Email.:"
+            onChange={(e) => setEmail(e.target.value)}
             btnClass={styles.buthrefn}
+            onSubmit={onSubscribe}
           />
           <ul className={styles['social-links']}>
             <li>
@@ -81,6 +124,15 @@ const Footer = () => {
           <p>© Seabug, Inc. All rights reserved.</p>
         </div>
       </div>
+      <Modal
+        showModal={showModal}
+        onClose={() => setShowModal(false)}
+        title="Success!"
+      >
+        <p className={styles.modalText}>
+          Now check your email (and spam folder) to confirm your submission.
+        </p>
+      </Modal>
     </div>
   );
 };
