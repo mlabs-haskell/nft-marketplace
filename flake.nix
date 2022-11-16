@@ -18,12 +18,13 @@
       perSystem = nixpkgs.lib.genAttrs systems;
       pkgs = perSystem (system: nixpkgs.legacyPackages.${system});
 
-      d2nFlake = dream2nix.lib.makeFlakeOutputs rec {
-        inherit systems;
-        source = builtins.path {
-          path = ./.;
-          filter = path: _: builtins.baseNameOf path != "package-lock.json";
-        };
+      source = builtins.path {
+        path = ./.;
+        filter = path: _: builtins.baseNameOf path != "package-lock.json";
+      };
+
+      d2nFlake = dream2nix.lib.makeFlakeOutputs {
+        inherit systems source;
         config.projectRoot = source;
         settings = [{
           subsystemInfo.noDev = false;
@@ -85,10 +86,10 @@
         };
       };
 
-      packages = perSystem (system: rec {
+      packages = perSystem (system: {
         nft-marketplace-frontend = make-frontend system self.lib.exampleBuildEnvVars;
         inherit (d2nFlake.packages.${system}) resolveImpure;
-        default = nft-marketplace-frontend;
+        default = self.packages.${system}.nft-marketplace-frontend;
       });
 
       devShells = perSystem (system: {
