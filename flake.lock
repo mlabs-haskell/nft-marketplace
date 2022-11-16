@@ -911,6 +911,21 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "locked": {
+        "lastModified": 1652776076,
+        "narHash": "sha256-gzTw/v1vj4dOVbpBSJX4J0DwUR6LIyXo7/SuuTJp1kM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "04c1b180862888302ddfb2e3ad9eaa63afc60cf8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "flakeCompat": {
       "flake": false,
       "locked": {
@@ -1473,15 +1488,15 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1658015103,
-        "narHash": "sha256-mO+23f3SO+fBzEvbxRe6GkSB5Xp43CT2sV8Rs8MYdz8=",
-        "owner": "NixOs",
+        "lastModified": 1668087632,
+        "narHash": "sha256-T/cUx44aYDuLMFfaiVpMdTjL4kpG7bh0VkN6JEM78/E=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8f485713f5e6b6883a9b6959afa98688360a3ecb",
+        "rev": "5f588eb4a958f1a526ed8da02d6ea1bea0047b9f",
         "type": "github"
       },
       "original": {
-        "owner": "NixOs",
+        "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -1621,6 +1636,21 @@
         "id": "nixpkgs",
         "ref": "nixos-21.05-small",
         "type": "indirect"
+      }
+    },
+    "nixpkgs_6": {
+      "locked": {
+        "lastModified": 1652969555,
+        "narHash": "sha256-F+yPkuCudylgJvTIogiw6833Iis5tgFsVMMBisldS6s=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "00e9d7ab7a184d23027ee994771904d69dcc7c07",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "node2nix": {
@@ -2035,7 +2065,8 @@
       "inputs": {
         "dream2nix": "dream2nix",
         "nixpkgs": "nixpkgs",
-        "seabug-contracts": "seabug-contracts"
+        "seabug-contracts": "seabug-contracts",
+        "styleguide": "styleguide"
       }
     },
     "seabug-contracts": {
@@ -2110,6 +2141,25 @@
       "original": {
         "owner": "input-output-hk",
         "repo": "stackage.nix",
+        "type": "github"
+      }
+    },
+    "styleguide": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs_6"
+      },
+      "locked": {
+        "lastModified": 1663873358,
+        "narHash": "sha256-LvzPUF1oMhH3xXRyMirfKurfg4AmjLUUpufxhs5nycM=",
+        "owner": "mlabs-haskell",
+        "repo": "styleguide",
+        "rev": "5a451f05f417aeb6eda65ebb1c94f77698d85ded",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mlabs-haskell",
+        "repo": "styleguide",
         "type": "github"
       }
     },

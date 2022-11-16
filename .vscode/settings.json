@@ -4,5 +4,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[typescriptreact]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[nix]": {
+    "editor.defaultFormatter": "aaronduino.nix-lsp"
   }
 }
