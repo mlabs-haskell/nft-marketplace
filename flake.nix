@@ -50,7 +50,7 @@
           export NODE_OPTIONS=--openssl-legacy-provider
         '';
         installPhase = ''
-          cp -r $out/lib/node_modules/nft-marketplace/build $out
+          cp -r $out/lib/node_modules/nft-marketplace/build/* $out
         '';
       } // buildEnvVars);
     in

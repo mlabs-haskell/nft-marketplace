@@ -2080,11 +2080,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1666900950,
-        "narHash": "sha256-eULe5paW7QsZLAUVTSXHY6X0xRvcapANelSd+jYBNeg=",
+        "lastModified": 1667859970,
+        "narHash": "sha256-RGkY/xjMVRztrfw5eQSnI+PJH1LGVTHjoK+7CuWFbbA=",
         "owner": "mlabs-haskell",
         "repo": "seabug-contracts",
-        "rev": "9821a894f31b6834e785257bf5a92a4bbf96b04f",
+        "rev": "d1f796956acf6c8a32a93f5d8dd20ee073be3b58",
         "type": "github"
       },
       "original": {
