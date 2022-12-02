@@ -2,14 +2,14 @@
   description = "Seabug frontend";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     dream2nix = {
-      url = github:nix-community/dream2nix;
+      url = "github:nix-community/dream2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    styleguide.url = github:mlabs-haskell/styleguide;
+    styleguide.url = "github:mlabs-haskell/styleguide";
     # TODO: use `main` when this is merged
-    seabug-contracts.url = github:mlabs-haskell/seabug-contracts/calum/fixing-buy-button;
+    seabug-contracts.url = "github:mlabs-haskell/seabug-contracts/calum/fixing-buy-button";
   };
 
   outputs = inputs @  { self, nixpkgs, dream2nix, ... }:
