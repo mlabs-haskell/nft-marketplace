@@ -105,5 +105,7 @@
           inherit (self.packages.x86_64-linux) nft-marketplace-frontend;
           inherit (self.checks.x86_64-linux) format cracoTest;
         } "touch $out";
+
+      herculesCI.ciSystems = [ "x86_64-linux" ];
     };
 }
