@@ -269,7 +269,7 @@ export const NftContextProvider: FC = ({ children }) => {
       addMessage({
         type: 'Error',
         userMsg:
-          'Unable to buy NFT, please ensure Nami is installed and try again.',
+          "Unable to buy NFT, please ensure Nami is installed and try again. Note: Buying is not currently supported if you have any UTxOs with CIP-32 inline datums at your wallet's address",
         debugMsg: err,
       });
     }
