@@ -1,4 +1,4 @@
-import { ContractArgs } from 'cardano-transaction-lib-seabug';
+import { ContractArgs, WalletOption } from 'seabug-contracts';
 import { getAppConfig } from 'utils/appConfig';
 
 const appConfig = getAppConfig();
@@ -6,6 +6,7 @@ const appConfig = getAppConfig();
 const ctlConfig = {
   serverHost: appConfig.ctl.server.host,
   serverPort: appConfig.ctl.server.port,
+  logLevel: appConfig.ctl.server.logLevel,
   serverSecureConn: appConfig.ctl.server.secureConn,
   ogmiosHost: appConfig.ctl.ogmios.host,
   ogmiosPort: appConfig.ctl.ogmios.port,
@@ -17,14 +18,14 @@ const ctlConfig = {
   projectId: appConfig.ctl.projectId,
 };
 
-let ctlSeabug: typeof import('cardano-transaction-lib-seabug');
+let ctlSeabug: typeof import('seabug-contracts');
 
 /**
  * Seabug CTL functions for querying and generating transactions.
  */
 export const getCtl = async () => {
   if (!ctlSeabug) {
-    ctlSeabug = await import('cardano-transaction-lib-seabug');
+    ctlSeabug = await import('seabug-contracts');
   }
 
   return {
@@ -40,14 +41,14 @@ export const getCtl = async () => {
 
       return ctlSeabug.callMarketPlaceBuy(ctlConfig, buyArgs);
     },
-    connectWallet: () => ctlSeabug.connectWallet(),
-    getWalletLovelace: async () => {
-      const balance = await ctlSeabug.getWalletBalance();
-      try {
-        return BigInt(balance.value0.coin().to_str());
-      } catch (err) {
+    getWalletLovelace: async (): Promise<bigint> => {
+      const balance = (await ctlSeabug.getWalletLovelace(ctlConfig)).value;
+      if (typeof balance !== 'bigint') {
         return 0n;
       }
+      return balance;
     },
+    getWalletPkh: (): Promise<string | null> =>
+      ctlSeabug.getWalletPkh(ctlConfig),
   };
 };

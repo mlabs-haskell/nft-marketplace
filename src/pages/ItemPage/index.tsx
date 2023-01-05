@@ -21,18 +21,9 @@ const ItemPage = ({ type }: Props) => {
   const { nftId } = useParams<{ nftId: string }>();
   const { artists, images, nfts, common } = useContext(NftContext);
   const wallet = useContext(WalletContext);
-  const [walletBalance, setWalletBalance] = useState(0n);
   const [displayModal, setDisplayModal] = useState<
     'NONE' | 'BUY' | 'SET_PRICE' | 'PLACE_BID'
   >('NONE');
-
-  useEffect(() => {
-    const setBal = async () => {
-      const walletLovelace = await wallet.getLovelace();
-      setWalletBalance(walletLovelace);
-    };
-    setBal();
-  }, [wallet.connected]);
 
   const nft = nfts.getByIpfsHash(nftId);
   const artist = nft
@@ -44,6 +35,7 @@ const ItemPage = ({ type }: Props) => {
   const image = images.getByIpfsHash(nftId ?? '');
 
   useEffect(() => {
+    wallet.connect('Nami');
     // If the user navigates directly to item page, the nfts or images may not
     // have been fetched yet.
     if (!nft || !image) common.fetchAll();
@@ -75,7 +67,10 @@ const ItemPage = ({ type }: Props) => {
             label={type}
             color="primary"
             btnClass={styles.btn}
-            onClick={() => setDisplayModal('BUY')}
+            onClick={() => {
+              wallet.updateLovelace();
+              return setDisplayModal('BUY');
+            }}
           />
         </div>
       </>
@@ -117,9 +112,10 @@ const ItemPage = ({ type }: Props) => {
             ownerPKH={owner?.pubKeyHash ?? ''}
             ownerImagePath={owner?.imagePath}
           />
-          {isOwner(owner?.pubKeyHash)
-            ? renderSellerButtons()
-            : renderBuyButtons()}
+          {owner?.pubKeyHash &&
+            (isOwner(owner?.pubKeyHash)
+              ? renderSellerButtons()
+              : renderBuyButtons())}
         </div>
       </div>
       <SetPriceModal
@@ -135,7 +131,7 @@ const ItemPage = ({ type }: Props) => {
         closeModal={closeModal}
         title={image?.title || ''}
         from={artist?.name || ''}
-        balance={walletBalance}
+        balance={wallet.connected?.lovelace ?? 0n}
         percentTax={0.0}
         nftPrice={nft?.metadata.ownerPrice || BigInt(0)}
         nftId={nftId}

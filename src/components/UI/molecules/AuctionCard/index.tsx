@@ -35,7 +35,9 @@ const AuctionCard = ({ nft, image }: Props) => {
 
   const price = nft ? priceToADA(nft.metadata.ownerPrice) : '';
 
-  const handleRefresh = () => {
+  const handleRefresh = (e: any) => {
+    setRefresh(false);
+    e.stopPropagation();
     common.fetchAll();
   };
 
@@ -56,7 +58,7 @@ const AuctionCard = ({ nft, image }: Props) => {
               <img src={dots} className={styles.dots} alt="more" />
               {refresh ? (
                 <Box boxClass={styles.option}>
-                  <ul onClick={() => handleRefresh()} role="presentation">
+                  <ul onClick={(e) => handleRefresh(e)} role="presentation">
                     <li>Refresh</li>
                   </ul>
                 </Box>
@@ -91,6 +93,14 @@ const AuctionCard = ({ nft, image }: Props) => {
           </div> */}
         </div>
       </div>
+      {refresh && (
+        <div
+          className={styles.layer}
+          onClick={() => setRefresh(false)}
+          role="button"
+          tabIndex={0}
+        />
+      )}
     </Box>
   );
 };

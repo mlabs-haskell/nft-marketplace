@@ -1,10 +1,11 @@
 /*eslint-disable  */
 import Box from 'components/UI/atoms/Box';
 import { truncatePubKeyHash } from 'components/Util/TruncateKey';
-import { useWalletContext, WalletName } from 'context/WalletContext';
+import { useWalletContext } from 'context/WalletContext';
 import { connect } from 'http2';
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { WalletOption } from 'seabug-contracts';
 import logo from '../../../assets/svg/navIcons/logo.svg';
 import walletIcon from '../../../assets/svg/navIcons/wallet.svg';
 import SearchInput from '../../UI/molecules/SearchInput';
@@ -18,8 +19,8 @@ function NavBar() {
   const [connectedWallet, setConnectedWallet] = useState(false);
   const [showWallets, setShowWallets] = useState(false);
 
-  const handleWalletSelection = () => {
-    wallet.connect();
+  const handleWalletSelection = (walletOption: WalletOption) => {
+    wallet.connect(walletOption);
     setShowWallets(false);
   };
 
@@ -74,11 +75,17 @@ function NavBar() {
             </div>
             {showWallets ? (
               <Box boxClass={styles.option}>
-                <ul
-                  onClick={handleWalletSelection}
-                  role="presentation"
-                >
-                  <li>Nami</li>
+                <ul role="presentation">
+                  <li
+                    onClick={() => handleWalletSelection('Nami')}
+                  >
+                    Nami
+                  </li>
+                  {/* <li
+                    onClick={() => handleWalletSelection('Gero')}
+                  >
+                    Gero
+                  </li> */}
                 </ul>
               </Box>
             ) : (

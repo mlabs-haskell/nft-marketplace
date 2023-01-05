@@ -1,11 +1,12 @@
 import { createContext, useState, FC, useContext } from 'react';
 import { getCtl } from 'ctl';
-
-export type WalletName = 'Nami';
+import { WalletOption } from 'seabug-contracts';
+import { MsgContext } from './MsgContext';
 
 export type WalletInfo = {
-  name: WalletName;
+  name: WalletOption;
   pkh: string;
+  lovelace: bigint;
 };
 
 export type TransactionCborHex = string;
@@ -14,32 +15,49 @@ export type TransactionHash = string;
 
 export type WalletContextType = {
   connected?: WalletInfo;
-  connect: () => void;
-  getLovelace: () => Promise<any>;
+  connect: (walletOption: WalletOption) => void;
+  /** Updates `connected` with the wallet's current lovelace balance */
+  updateLovelace: () => Promise<void>;
 };
 
 export const WalletContext = createContext<WalletContextType>({
   connect: () => {},
-  getLovelace: () => Promise.reject(),
+  updateLovelace: () => Promise.reject(),
 });
 
 // TODO: Implement actual wallet connection logic
 export const WalletContextProvider: FC = ({ children }) => {
+  const { messages, addMessage } = useContext(MsgContext);
   const [connected, setConnected] = useState<WalletInfo>();
 
-  const connect = async (): Promise<void> => {
-    const ctlSeabug = await getCtl();
-    await ctlSeabug.connectWallet();
-
-    setConnected({
-      name: 'Nami',
-      pkh: '', // TODO: add actual pub key hash
-    });
+  const connect = async (walletOption: WalletOption): Promise<void> => {
+    try {
+      const ctlSeabug = await getCtl();
+      const pkh = await ctlSeabug.getWalletPkh();
+      const lovelace = await ctlSeabug.getWalletLovelace();
+      setConnected({
+        name: walletOption,
+        pkh: pkh || '',
+        lovelace,
+      });
+    } catch (err) {
+      addMessage({
+        type: 'Error',
+        userMsg:
+          'Unable to connect to wallet, please ensure Nami is installed and reload the page.',
+        debugMsg: err,
+      });
+    }
   };
 
-  const getLovelace = async (): Promise<any> => {
+  const updateLovelace = async () => {
+    if (!connected) return;
     const ctlSeabug = await getCtl();
-    return ctlSeabug.getWalletLovelace();
+    const lovelace = await ctlSeabug.getWalletLovelace();
+    setConnected((c) => {
+      if (!c) return undefined;
+      return { ...c, lovelace };
+    });
   };
 
   return (
@@ -47,7 +65,7 @@ export const WalletContextProvider: FC = ({ children }) => {
       value={{
         connected,
         connect,
-        getLovelace,
+        updateLovelace,
       }}
     >
       {children}
